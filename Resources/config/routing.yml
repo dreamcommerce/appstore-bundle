@@ -1,0 +1,3 @@
+dream_commerce_shop_appstore_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: DreamCommerceShopAppstoreBundle:Default:index }

@@ -1,0 +1,4 @@
+services:
+#    dream_commerce_shop_appstore.example:
+#        class: DreamCommerce\ShopAppstoreBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
