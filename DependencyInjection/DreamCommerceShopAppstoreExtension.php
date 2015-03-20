@@ -4,6 +4,8 @@ namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -26,6 +28,20 @@ class DreamCommerceShopAppstoreExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter($this->getAlias().'.applications', $config['applications']);
+
+        // todo: checking if not already defined
+
+        foreach($config['applications'] as $app=>$data){
+
+            $definition = new Definition('DreamCommerce\\ShopAppstoreBundle\\Handler\\Application');
+            $definition->addArgument(new Reference('logger'));
+            $definition->addArgument($data['app_id']);
+            $definition->addArgument($data['app_secret']);
+            $definition->addArgument($data['appstore_secret']);
+
+            $container->setDefinition($this->getAlias().'.'.$app, $definition);
+        }
+
     }
 
     public function getAlias(){
