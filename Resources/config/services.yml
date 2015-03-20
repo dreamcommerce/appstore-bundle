@@ -1,0 +1,8 @@
+parameters:
+
+
+
+services:
+    dream_commerce_shop_appstore.client:
+        class: DreamCommerce\ShopAppstoreBundle\Client
+        arguments: [@logger, %dream_commerce_shop_appstore.applications%, @request_stack]

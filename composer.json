@@ -1,0 +1,23 @@
+{
+    "name": "dreamcommerce/shop-appstore-bundle",
+    "description": "Symfony bundle for DreamCommerce-based shops",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "dreamcommerce/shop-appstore-lib": "dev-master"        
+    },
+    "autoload": {
+        "psr-0": {
+            "DreamCommerce\\ShopAppstoreBundle": ""
+        }
+    },
+    "authors": [
+        {
+            "name": "Przemysław eRIZ Pawliczuk",
+            "email": "przemyslaw.pawliczuk@shoper.pl"
+        }
+    ],
+    "version": "0.1-dev",    
+    "target-dir" : "DreamCommerce/ShopAppstoreBundle",
+    "minimum-stability": "dev"
+}
