@@ -1,3 +1,4 @@
-dream_commerce_shop_appstore_homepage:
-    path:     /hello
-    defaults: { _controller: DreamCommerceShopAppstoreBundle:Default:index }
+dream_commerce_shop_appstore_responder:
+    path:     /
+    defaults: { _controller: DreamCommerceShopAppstoreBundle:Responder:index }
+    methods: [POST]
