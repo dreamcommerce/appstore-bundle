@@ -20,6 +20,8 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('dream_commerce_shop_appstore');
 
+
+        //todo: entities and their validation
         $rootNode
             ->children()
                 ->arrayNode('applications')
