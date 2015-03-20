@@ -17,7 +17,7 @@ class Client{
     protected $logger;
     protected $requestStack;
 
-    function __construct(Logger $logger, $dupa, RequestStack $requestStack){
+    function __construct(Logger $logger, $dataStack, RequestStack $requestStack = null){
 
         $this->logger = $logger;
 
