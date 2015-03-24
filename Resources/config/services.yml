@@ -9,9 +9,10 @@ services:
 
     dream_commerce_shop_appstore.controller_filter:
             class: DreamCommerce\ShopAppstoreBundle\EventListener\FilterControllerListener
-            arguments: [@request_stack]
+            arguments: [%dream_commerce_shop_appstore.applications%]
             tags:
                 - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+                - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     #dream_commerce_shop_appstore.shop_manager:
 #        arguments: [@dream_commerce_shop_appstore.shop_manager]
