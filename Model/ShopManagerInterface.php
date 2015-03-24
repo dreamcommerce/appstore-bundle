@@ -9,4 +9,12 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 interface ShopManagerInterface
 {
+    public function findShopByName($name);
+
+    /**
+     * @param $name
+     * @param $application
+     * @return ShopInterface
+     */
+    public function findShopByNameAndApplication($name, $application);
 }

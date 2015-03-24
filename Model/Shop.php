@@ -5,6 +5,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+//todo: multiple applications database structure
 abstract class Shop implements ShopInterface
 {
     protected $id;
@@ -12,6 +13,8 @@ abstract class Shop implements ShopInterface
     protected $name;
 
     protected $shopUrl;
+
+    protected $app;
 
     //protected $billing;
 
@@ -56,5 +59,21 @@ abstract class Shop implements ShopInterface
 
     public function setToken(TokenInterface $token){
         $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApp()
+    {
+        return $this->app;
+    }
+
+    /**
+     * @param mixed $app
+     */
+    public function setApp($app)
+    {
+        $this->app = $app;
     }
 }

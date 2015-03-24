@@ -23,4 +23,14 @@ interface ShopInterface
     public function getToken();
 
     public function setToken(TokenInterface $token);
+
+    /**
+     * @return mixed
+     */
+    public function getApp();
+
+    /**
+     * @param mixed $app
+     */
+    public function setApp($app);
 }

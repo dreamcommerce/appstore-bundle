@@ -11,17 +11,22 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 use DreamCommerce\Client;
 use DreamCommerce\ShopAppstoreBundle\Controller\FilteredController;
+use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+// todo: invalid token handling/refreshing
 class FilterControllerListener{
 
     protected $applications;
+    protected $shopManager;
 
-    public function __construct($applications){
+    public function __construct($applications, ShopManagerInterface $shopManager){
         $this->applications = $applications;
+        $this->shopManager = $shopManager;
     }
 
     public function onKernelController(FilterControllerEvent $event)
@@ -41,13 +46,35 @@ class FilterControllerListener{
 
         if ($controller[0] instanceof FilteredController) {
 
-            $client = new Client('http://example.com', '1234', '3214');
+            $request = $event->getRequest();
+            $appId = $request->query->get('app_id');
+            if(!$appId){
+                throw new BadRequestHttpException('Missing application identifier');
+            }
+
+            if(!isset($this->applications[$appId])){
+                throw new BadRequestHttpException('Application not exists');
+            }
+
+            $appData = $this->applications[$appId];
+
+            // todo: get rid of hardcoded
+            $shop = $this->shopManager->findShopByNameAndApplication('4534ff392039f', $appId);
+
+            if(!$shop){
+                throw new AccessDeniedHttpException('Application not found');
+            }
+
+            $token = $shop->getToken();
+
+            $client = new Client($shop->getShopUrl(), $appData['app_id'], $appData['app_secret']);
+            $client->setAccessToken($token->getAccessToken());
+
             $event->getRequest()->attributes->add(array(
-                'shopId'=>'asd'
+                'app_id'=>$appId
             ));
 
             $controller[0]->injectClient($client);
-            //throw new AccessDeniedHttpException('This action needs a valid token!');
         }
     }
 
@@ -55,10 +82,10 @@ class FilterControllerListener{
         $response = $event->getResponse();
         if($response instanceof RedirectResponse){
             $attributes = $event->getRequest()->attributes;
-            if($attributes->has('shopId')){
+            if($attributes->has('app_id')){
                 // todo: url building
                 $url = $response->getTargetUrl();
-                $response->setTargetUrl($url.'?shopId='.$attributes->get('shopId'));
+                $response->setTargetUrl($url.'?app_id='.$attributes->get('app_id'));
             }
         }
     }

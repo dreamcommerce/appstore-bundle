@@ -31,4 +31,8 @@ class ShopManager extends BaseManager
         return $this->repository->findAll();
     }
 
+    public function findByCriteria($criteria){
+        return $this->repository->findBy($criteria);
+    }
+
 }
