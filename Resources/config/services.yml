@@ -7,5 +7,11 @@ services:
         arguments: [@logger, %dream_commerce_shop_appstore.applications%, @request_stack]
         private: true
 
+    dream_commerce_shop_appstore.controller_filter:
+            class: DreamCommerce\ShopAppstoreBundle\EventListener\FilterControllerListener
+            arguments: [@request_stack]
+            tags:
+                - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
     #dream_commerce_shop_appstore.shop_manager:
 #        arguments: [@dream_commerce_shop_appstore.shop_manager]
