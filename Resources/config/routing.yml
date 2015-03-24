@@ -1,4 +1,4 @@
 dream_commerce_shop_appstore_responder:
     path:     /
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Responder:index }
-    methods: [POST]
+    #methods: [POST]

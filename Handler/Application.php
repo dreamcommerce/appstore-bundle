@@ -10,10 +10,11 @@ namespace DreamCommerce\ShopAppstoreBundle\Handler;
 
 
 use Monolog\Logger;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Application {
 
-    public function __construct(Logger $logger, $appId, $appSecret, $appstoreSecret){
+    public function __construct(Logger $logger, $appId, $appSecret, $appstoreSecret, RequestStack $request){
         $logger->addNotice('application added', func_get_args());
     }
 

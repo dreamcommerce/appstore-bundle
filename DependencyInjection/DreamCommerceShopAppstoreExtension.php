@@ -2,6 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
@@ -38,8 +39,17 @@ class DreamCommerceShopAppstoreExtension extends Extension
             $definition->addArgument($data['app_id']);
             $definition->addArgument($data['app_secret']);
             $definition->addArgument($data['appstore_secret']);
+            $definition->addArgument(new Reference('request_stack'));
 
             $container->setDefinition($this->getAlias().'.'.$app, $definition);
+        }
+
+        // todo setting from options
+        $config['db_driver'] = 'orm';
+
+        if ('custom' !== $config['db_driver']) {
+            $loader->load(sprintf('%s.yml', $config['db_driver']));
+            $container->setParameter($this->getAlias() . '.backend_type_' . $config['db_driver'], true);
         }
 
     }

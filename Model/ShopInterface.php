@@ -2,48 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: eRIZ
- * Date: 2015-03-18
- * Time: 16:53
+ * Date: 2015-03-23
+ * Time: 17:27
  */
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
-
-/**
- * Shop
- *
- * @ORM\Table(name="Shop", indexes={@ORM\Index(name="shop", columns={"shop"})})
- * @ORM\Entity
- * @ORM\HasLifecycleCallbacks
- */
 interface ShopInterface
 {
-    /**
-     * Set shop
-     *
-     * @param string $shop
-     * @return Shop
-     */
-    public function setShop($shop);
+    public function setName($name);
 
-    /**
-     * Get shop
-     *
-     * @return string
-     */
-    public function getShop();
+    public function getName();
 
-    /**
-     * Set shopUrl
-     *
-     * @param string $shopUrl
-     * @return Shop
-     */
     public function setShopUrl($shopUrl);
 
-    /**
-     * Get shopUrl
-     *
-     * @return string
-     */
     public function getShopUrl();
+
+    /**
+     * @return TokenInterface
+     */
+    public function getToken();
+
+    public function setToken(TokenInterface $token);
 }
