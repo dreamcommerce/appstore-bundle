@@ -79,9 +79,13 @@ class FilterControllerListener{
             $client = new Client($shop->getShopUrl(), $appData['app_id'], $appData['app_secret']);
             $client->setAccessToken($token->getAccessToken());
 
-            $event->getRequest()->attributes->add(array(
-                'app_id'=>$appId
-            ));
+            $parameters = array(
+                'validation_params'=>
+                    $requestValidator->getValidationParams() + array(
+                        'app_id' => $appId
+                    )
+            );
+            $event->getRequest()->attributes->add($parameters);
 
             $controller[0]->injectClient($client);
         }
@@ -91,10 +95,19 @@ class FilterControllerListener{
         $response = $event->getResponse();
         if($response instanceof RedirectResponse){
             $attributes = $event->getRequest()->attributes;
-            if($attributes->has('app_id')){
-                // todo: url building
+            if($attributes->has('validation_params')){
                 $url = $response->getTargetUrl();
-                $response->setTargetUrl($url.'?app_id='.$attributes->get('app_id'));
+
+                $components = parse_url($url);
+                $query = array();
+
+                parse_str($components['query'], $query);
+                $query = $query+$attributes->get('validation_params');
+                $components['query'] = http_build_query($query);
+
+                $url = http_build_url($components);
+
+                $response->setTargetUrl($url);
             }
         }
     }

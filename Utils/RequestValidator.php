@@ -21,9 +21,13 @@ class RequestValidator {
         $this->application = $application;
     }
 
+    protected function getCheckedFields(){
+        return array('translation', 'place', 'shop', 'timestamp');
+    }
+
     public function validate(){
 
-        foreach(array('translation', 'place', 'shop', 'timestamp') as $param){
+        foreach($this->getCheckedFields() as $param){
             if(!$this->request->query->has($param)){
                 throw new InvalidRequestException(sprintf('Missing %s parameter', $param));
             }
@@ -35,6 +39,14 @@ class RequestValidator {
             throw new InvalidRequestException('Invalid hash');
         }
 
+    }
+
+    public function getValidationParams(){
+        $result = array();
+        foreach($this->getCheckedFields() as $f){
+            $result[$f] = $this->request->query->get($f);
+        }
+        return $result;
     }
 
     protected function validateHash(){
