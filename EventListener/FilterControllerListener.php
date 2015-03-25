@@ -12,6 +12,8 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 use DreamCommerce\Client;
 use DreamCommerce\ShopAppstoreBundle\Controller\FilteredController;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
+use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -57,6 +59,13 @@ class FilterControllerListener{
             }
 
             $appData = $this->applications[$appId];
+
+            $requestValidator = new RequestValidator($request, $appData);
+            try{
+                $requestValidator->validate();
+            }catch(InvalidRequestException $ex){
+                throw new BadRequestHttpException('Invalid request');
+            }
 
             // todo: get rid of hardcoded
             $shop = $this->shopManager->findShopByNameAndApplication('4534ff392039f', $appId);
