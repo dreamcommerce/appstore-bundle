@@ -3,19 +3,8 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass name="DreamCommerce\ShopAppstoreBundle\Model\Token">
-        <indexes>
-            <index name="shop_id" columns="shop_id"/>
-        </indexes>
-        <id name="id" type="integer" column="id">
-            <generator strategy="IDENTITY"/>
-        </id>
         <field name="expiresAt" type="datetime" column="expires_at" nullable="true"/>
         <field name="accessToken" type="string" column="access_token" length="50" nullable="true"/>
         <field name="refreshToken" type="string" column="refresh_token" length="50" nullable="true"/>
-        <one-to-one field="shop" target-entity="DreamCommerce\ShopAppstoreBundle\Model\ShopInterface">
-            <join-columns>
-                <join-column name="shop_id" referenced-column-name="id"/>
-            </join-columns>
-        </one-to-one>
     </mapped-superclass>
 </doctrine-mapping>

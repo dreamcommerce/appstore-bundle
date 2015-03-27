@@ -2,13 +2,15 @@ parameters:
     dream_commerce_shop_appstore.model_manager_name: null
 
 services:
+    #todo: read from config - default is default
     dream_commerce_shop_appstore.shop_manager:
-          class: DreamCommerce\ShopAppstoreBundle\Entity\ShopManager
-          arguments: ["@dream_commerce_shop_appstore.entity_manager",DreamCommerce\ShopAppstoreBundle\Entity\Shop]
+          class: DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManager
+          #todo: class reading
+          arguments: ["@doctrine.orm.entity_manager",BillingBundle\Entity\Shop]
 
-    dream_commerce_shop_appstore.entity_manager:
-          factory_service:  doctrine
-          factory_method:   getManager
-          class: Doctrine\ORM\EntityManager
-          arguments: [%dream_commerce_shop_appstore.model_manager_name%]
+    #dream_commerce_shop_appstore.entity_manager:
+#          factory_service:  doctrine
+#          factory_method:   getManager
+#          class: Doctrine\ORM\EntityManager
+#          arguments: [%dream_commerce_shop_appstore.model_manager_name%]
           #public: false

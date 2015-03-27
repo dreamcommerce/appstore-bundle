@@ -8,8 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 //todo: multiple applications database structure
 abstract class Shop implements ShopInterface
 {
-    protected $id;
-
     protected $name;
 
     protected $shopUrl;
@@ -24,10 +22,6 @@ abstract class Shop implements ShopInterface
         $this->billing = new ArrayCollection();
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function setName($name)
     {

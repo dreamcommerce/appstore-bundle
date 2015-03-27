@@ -4,8 +4,6 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 abstract class Token implements TokenInterface
 {
-    protected $id;
-
     protected $expiresAt;
 
     protected $accessToken;

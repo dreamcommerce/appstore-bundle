@@ -4,16 +4,9 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 abstract class Subscription implements SubscriptionInterface
 {
-    protected $id;
-
     protected $expiresAt;
 
     protected $shop;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     public function setExpiresAt(\DateTime $expiresAt)
     {

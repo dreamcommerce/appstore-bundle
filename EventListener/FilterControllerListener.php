@@ -11,7 +11,7 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 use DreamCommerce\Client;
 use DreamCommerce\ShopAppstoreBundle\Controller\FilteredController;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use Symfony\Component\HttpFoundation\RedirectResponse;

@@ -13,8 +13,7 @@ class DreamCommerceShopAppstoreBundle extends Bundle
         //parent::build($container);
 
         $mappings = array(
-            realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model',
-            realpath(__DIR__ . '/Resources/config/doctrine') => 'DreamCommerce\ShopAppstoreBundle\Entity',
+            realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model'
         );
 
         $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
