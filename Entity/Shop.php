@@ -5,7 +5,6 @@
  * Date: 2015-03-24
  * Time: 12:22
  */
-//todo: schema create is empty
 
 namespace DreamCommerce\ShopAppstoreBundle\Entity;
 
