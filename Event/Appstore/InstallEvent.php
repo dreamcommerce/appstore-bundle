@@ -8,8 +8,6 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
 
-
-use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Event\AppstoreEvent;
 use DreamCommerce\ShopAppstoreBundle\Model\TokenManagerInterface;
 
