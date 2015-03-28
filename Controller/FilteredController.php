@@ -2,17 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: eRIZ
- * Date: 2015-03-24
- * Time: 16:36
+ * Date: 2015-03-28
+ * Time: 15:10
  */
 
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 
 use DreamCommerce\Client;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-interface FilteredController {
+abstract class FilteredController extends Controller implements FilteredControllerInterface{
 
-    public function injectClient(Client $client);
+    /**
+     * @var Client
+     */
+    protected $client;
+
+    public function injectClient(Client $client){
+        $this->client = $client;
+    }
 
 }
