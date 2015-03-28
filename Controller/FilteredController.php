@@ -10,6 +10,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 
 use DreamCommerce\Client;
+use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 abstract class FilteredController extends Controller implements FilteredControllerInterface{
@@ -19,8 +20,14 @@ abstract class FilteredController extends Controller implements FilteredControll
      */
     protected $client;
 
-    public function injectClient(Client $client){
+    /**
+     * @var ShopInterface
+     */
+    protected $shop;
+
+    public function injectClient(Client $client, ShopInterface $shop){
         $this->client = $client;
+        $this->shop = $shop;
     }
 
 }

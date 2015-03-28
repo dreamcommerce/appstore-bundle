@@ -10,7 +10,7 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
 use DreamCommerce\Client;
-use DreamCommerce\ShopAppstoreBundle\Controller\FilteredController;
+use DreamCommerce\ShopAppstoreBundle\Controller\FilteredControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
@@ -34,7 +34,7 @@ class FilterControllerListener{
     public function onKernelController(FilterControllerEvent $event)
     {
         /**
-         * @var $controller FilteredController
+         * @var $controller FilteredControllerInterface
          */
         $controller = $event->getController();
         /*
@@ -46,7 +46,7 @@ class FilterControllerListener{
             return;
         }
 
-        if ($controller[0] instanceof FilteredController) {
+        if ($controller[0] instanceof FilteredControllerInterface) {
 
             $request = $event->getRequest();
             $appId = $request->query->get('app_id');
@@ -86,7 +86,7 @@ class FilterControllerListener{
             );
             $event->getRequest()->attributes->add($parameters);
 
-            $controller[0]->injectClient($client);
+            $controller[0]->injectClient($client, $shop);
         }
     }
 

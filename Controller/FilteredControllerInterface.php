@@ -10,9 +10,10 @@ namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 
 use DreamCommerce\Client;
+use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 
 interface FilteredControllerInterface {
 
-    public function injectClient(Client $client);
+    public function injectClient(Client $client, ShopInterface $shop);
 
 }
