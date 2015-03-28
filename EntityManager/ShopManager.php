@@ -45,6 +45,16 @@ class ShopManager implements ShopManagerInterface
      */
     public function findShopByNameAndApplication($name, $application)
     {
-        // TODO: Implement findShopByNameAndApplication() method.
+
+        $result = $this->findByCriteria(array(
+            'name'=>$name,
+            'app'=>$application
+        ));
+
+        if($result){
+            return $result[0];
+        }else{
+            return false;
+        }
     }
 }

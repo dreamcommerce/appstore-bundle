@@ -6,7 +6,7 @@
  * Time: 13:32
  */
 
-namespace DreamCommerce\ShopAppstoreBundle\EventListener;
+namespace DreamCommerce\ShopAppstoreBundle\Event;
 
 
 use Symfony\Component\EventDispatcher\Event;

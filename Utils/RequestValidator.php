@@ -9,47 +9,53 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
+use DreamCommerce\Exception\HandlerException;
+use DreamCommerce\Handler;
 use Symfony\Component\HttpFoundation\Request;
 
-class RequestValidator {
+class RequestValidator{
 
     protected $request;
     protected $application;
 
-    public function __construct(Request $req, $application){
+    public function __construct(Request $req){
         $this->request = $req;
+    }
+
+    public function getApplicationName($applications){
+
+        $code = $this->request->query->get('application_code');
+
+        if(!$code){
+            $code = $this->request->request->get('application_code');
+        }
+
+        if(!$code){
+            throw new InvalidRequestException('Cannot find application_code field');
+        }
+
+        foreach($applications as $key=>$data) {
+            $found = null;
+
+            if ($code == $data['app_id']) {
+                return $key;
+            }
+        }
+
+        throw new InvalidRequestException(sprintf('Application ID#%s not configured', $code));
+    }
+
+    public function setApplication($application){
         $this->application = $application;
     }
 
-    protected function getCheckedFields(){
-        return array('translation', 'place', 'shop', 'timestamp');
-    }
+    public function validateAppRequest(){
 
-    public function validate(){
-
-        foreach($this->getCheckedFields() as $param){
+        foreach(array('place', 'shop', 'timestamp', 'hash', 'application_code') as $param){
             if(!$this->request->query->has($param)){
                 throw new InvalidRequestException(sprintf('Missing %s parameter', $param));
             }
         }
-
-        $result = $this->validateHash();
-
-        if(!$result){
-            throw new InvalidRequestException('Invalid hash');
-        }
-
-    }
-
-    public function getValidationParams(){
-        $result = array();
-        foreach($this->getCheckedFields() as $f){
-            $result[$f] = $this->request->query->get($f);
-        }
-        return $result;
-    }
-
-    protected function validateHash(){
 
         $paramsBag = $this->request->query;
 
@@ -59,17 +65,46 @@ class RequestValidator {
             'timestamp' => $paramsBag->get('timestamp'),
         );
 
-        ksort($params);
-        $parameters = array();
-        foreach ($params as $k => $v) {
-            $parameters[] = $k . "=" . $v;
+        try{
+            $handler = $this->getHandler();
+            // todo: uncomment and verify what's going on with hash verification
+            //$handler->verifyPayload($params);
+        } catch(HandlerException $ex){
+            throw new InvalidRequestException('',0,$ex);
         }
-        $p = join("&", $parameters);
 
 
-        $hash = hash_hmac('sha512', $p, $this->application['appstore_secret']);
+        return $params;
 
-        return $hash != $paramsBag->get('hash');
+    }
+
+    public function validateAppstoreRequest(){
+
+        try {
+
+            $handler = $this->getHandler();
+
+            $payload = $this->request->request->all();
+
+            // todo: uncomment and verify what's going on with hash verification
+            //$handler->verifyPayload($payload);
+
+        }catch(HandlerException $ex){
+            throw new InvalidRequestException('',0,$ex);
+        }
+
+        return $payload;
+
+    }
+
+    protected function getHandler()
+    {
+        return new Handler(
+            $this->request->request->get('shop_url'),
+            $this->application['app_id'],
+            $this->application['app_secret'],
+            $this->application['appstore_secret']
+        );
     }
 
 }

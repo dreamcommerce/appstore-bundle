@@ -9,8 +9,11 @@ use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class ResponderController extends Controller
 {
@@ -23,48 +26,30 @@ class ResponderController extends Controller
          */
         $logger = $this->get('logger');
 
-        $content = '';
-
-        // todo: perhaps move this logic to RequestValidator to be performed
         $apps = $this->container->getParameter('dream_commerce_shop_appstore.applications');
 
-        $defaults = array();
-        $form = $this->createForm(new AppstoreRequestType(), $defaults);
-        $form->handleRequest($request);
-
-        if(!$form->isValid()){
-            throw new InvalidRequestException('Incorrect callback');
-        }
-
-        $found = null;
-
-        foreach($apps as $id=>$data){
-            if($form->get('application_code')->getData()==$data['app_id']){
-                $found = $data;
-                break;
-            }
-        }
-
-        if(!$found){
-            throw new InvalidRequestException(sprintf('Application ID#%s not configured', $id));
-        }
+        $validator = new RequestValidator($request);
 
         try {
-            $validator = new RequestValidator($request, $found);
-            $validator->validate();
+            $appName = $validator->getApplicationName($apps);
+            $validator->setApplication($apps[$appName]);
+            $params = $validator->validateAppstoreRequest();
         }catch (InvalidRequestException $ex){
-            $logger->addDebug('Sth wrong', (array)$ex);
+            throw new BadRequestHttpException($ex->getMessage());
         }
 
-        $content = 'yeh';
 
-
-        //$application = $this->get('dream_commerce_shop_appstore.test_app');
         /**
          * @var $manager ShopManagerInterface
          */
-        /*$manager = $this->get('dream_commerce_shop_appstore.shop_manager');
-        $data = $manager->findShopByName('4534ff392039f');
+        $manager = $this->get('dream_commerce_shop_appstore.shop_manager');
+        $data = $manager->findShopByNameAndApplication($params['shop'], $appName);
+
+        if($data){
+            throw new ConflictHttpException(sprintf('Shop %s already exists', $params['shop']));
+        }
+
+
 
         /**
          * @var $data ShopInterface

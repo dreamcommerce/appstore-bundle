@@ -62,13 +62,12 @@ class FilterControllerListener{
 
             $requestValidator = new RequestValidator($request, $appData);
             try{
-                $requestValidator->validate();
+                $params = $requestValidator->validate();
             }catch(InvalidRequestException $ex){
                 throw new BadRequestHttpException('Invalid request');
             }
 
-            // todo: get rid of hardcoded
-            $shop = $this->shopManager->findShopByNameAndApplication('4534ff392039f', $appId);
+            $shop = $this->shopManager->findShopByNameAndApplication($params['shop'], $appId);
 
             if(!$shop){
                 throw new AccessDeniedHttpException('Application not found');
@@ -81,7 +80,7 @@ class FilterControllerListener{
 
             $parameters = array(
                 'validation_params'=>
-                    $requestValidator->getValidationParams() + array(
+                    $params + array(
                         'app_id' => $appId
                     )
             );
