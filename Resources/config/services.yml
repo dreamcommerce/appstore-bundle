@@ -1,5 +1,5 @@
 parameters:
-
+    dream_commerce_shop_appstore.logger: logger
 
 services:
     dream_commerce_shop_appstore.client:
@@ -8,11 +8,18 @@ services:
         private: true
 
     dream_commerce_shop_appstore.controller_filter:
-            class: DreamCommerce\ShopAppstoreBundle\EventListener\FilterControllerListener
-            arguments: [%dream_commerce_shop_appstore.applications%, @dream_commerce_shop_appstore.shop_manager]
-            tags:
-                - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-                - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+        class: DreamCommerce\ShopAppstoreBundle\EventListener\FilterControllerListener
+        arguments: [%dream_commerce_shop_appstore.applications%, @dream_commerce_shop_appstore.shop_manager]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    dream_commerce_shop_appstore.event.install:
+        class: DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener
+        arguments: [@dream_commerce_shop_appstore.shop_manager,@dream_commerce_shop_appstore.token_manager]
+        tags:
+            # todo: event names constants (probably have to convert to xml)
+            - { name: kernel.event_listener, event: dream_commerce_shop_appstore.install, method: onInstall }
 
     #dream_commerce_shop_appstore.shop_manager:
 #        arguments: [@dream_commerce_shop_appstore.shop_manager]

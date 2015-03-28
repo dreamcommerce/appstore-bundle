@@ -7,6 +7,8 @@
  */
 namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 
+use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+
 interface ShopManagerInterface
 {
     public function findShopByName($name);
@@ -17,4 +19,11 @@ interface ShopManagerInterface
      * @return ShopInterface
      */
     public function findShopByNameAndApplication($name, $application);
+
+    /**
+     * @return ShopInterface
+     */
+    public function create();
+
+    public function save(ShopInterface $shop);
 }

@@ -13,5 +13,5 @@ use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
 
 interface ActionListenerInterface {
 
-    public function __construct(ShopManagerInterface $manager);
+    //
 }

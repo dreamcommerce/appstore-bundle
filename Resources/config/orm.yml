@@ -5,8 +5,13 @@ services:
     #todo: read from config - default is default
     dream_commerce_shop_appstore.shop_manager:
           class: DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManager
-          #todo: class reading
+          #todo: class reading from options
           arguments: ["@doctrine.orm.entity_manager",BillingBundle\Entity\Shop]
+
+    dream_commerce_shop_appstore.token_manager:
+          class: DreamCommerce\ShopAppstoreBundle\EntityManager\TokenManager
+          #todo: class reading from options
+          arguments: ["@doctrine.orm.entity_manager",BillingBundle\Entity\Token]
 
     #dream_commerce_shop_appstore.entity_manager:
 #          factory_service:  doctrine

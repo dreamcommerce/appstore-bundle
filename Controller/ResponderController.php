@@ -2,18 +2,17 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
-use DreamCommerce\ShopAppstoreBundle\Form\AppstoreRequestType;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class ResponderController extends Controller
 {
@@ -38,29 +37,19 @@ class ResponderController extends Controller
             throw new BadRequestHttpException($ex->getMessage());
         }
 
-
         /**
-         * @var $manager ShopManagerInterface
+         * @var $eventDispatcher EventDispatcher
          */
-        $manager = $this->get('dream_commerce_shop_appstore.shop_manager');
-        $data = $manager->findShopByNameAndApplication($params['shop'], $appName);
+        $eventDispatcher = $this->get('event_dispatcher');
 
-        if($data){
-            throw new ConflictHttpException(sprintf('Shop %s already exists', $params['shop']));
+        switch($params['action']){
+            case 'install':
+                $event = new InstallEvent($appName, $apps[$appName], $params);
+                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_INSTALLED, $event);
+            break;
         }
 
+        return new Response();
 
-
-        /**
-         * @var $data ShopInterface
-         */
-        /*$res = '';
-        if($data){
-            $t = $data->getToken();
-            $date = $t->getExpiresAt()->format('c');
-            $res .= $date.PHP_EOL;
-        }*/
-
-        return $this->render('default/index.html.twig');
     }
 }

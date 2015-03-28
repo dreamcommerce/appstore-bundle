@@ -11,7 +11,6 @@ namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 
 use Doctrine\ORM\EntityManager;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
-use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 
 class ShopManager implements ShopManagerInterface
 {
@@ -35,7 +34,29 @@ class ShopManager implements ShopManagerInterface
 
     public function findShopByName($name)
     {
-        // TODO: Implement findShopByName() method.
+        $result = $this->findByCriteria(array(
+            'name'=>$name,
+        ));
+
+        if($result){
+            return $result[0];
+        }else{
+            return false;
+        }
+    }
+
+    public function create(){
+        /**
+         * @var $class ShopInterface
+         */
+        $className = $this->repository->getClassName();
+        $class = new $className;
+        return $class;
+    }
+
+    public function save(ShopInterface $shop){
+        $this->em->persist($shop);
+        $this->em->flush();
     }
 
     /**
