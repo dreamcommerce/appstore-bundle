@@ -32,6 +32,11 @@ class DreamCommerceShopAppstoreBundle extends Bundle
 
     protected function enableLibraryDebugging()
     {
+
+        if(in_array('dreamcommercelogger', stream_get_wrappers())){
+            return;
+        }
+
         /**
          * @var $logger LoggerInterface
          */
