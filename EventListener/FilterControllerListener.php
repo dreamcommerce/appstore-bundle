@@ -49,25 +49,19 @@ class FilterControllerListener{
         if ($controller[0] instanceof FilteredControllerInterface) {
 
             $request = $event->getRequest();
-            $appId = $request->query->get('app_id');
-            if(!$appId){
-                throw new BadRequestHttpException('Missing application identifier');
-            }
 
-            if(!isset($this->applications[$appId])){
-                throw new BadRequestHttpException('Application not exists');
-            }
+            $requestValidator = new RequestValidator($request);
 
-            $appData = $this->applications[$appId];
-
-            $requestValidator = new RequestValidator($request, $appData);
             try{
-                $params = $requestValidator->validate();
+                $appName = $requestValidator->getApplicationName($this->applications);
+                $appData = $this->applications[$appName];
+                $requestValidator->setApplication($appData);
+                $params = $requestValidator->validateAppRequest();
             }catch(InvalidRequestException $ex){
                 throw new BadRequestHttpException('Invalid request');
             }
 
-            $shop = $this->shopManager->findShopByNameAndApplication($params['shop'], $appId);
+            $shop = $this->shopManager->findShopByNameAndApplication($params['shop'], $appName);
 
             if(!$shop){
                 throw new AccessDeniedHttpException('Application not found');
@@ -79,11 +73,9 @@ class FilterControllerListener{
             $client->setAccessToken($token->getAccessToken());
 
             $parameters = array(
-                'validation_params'=>
-                    $params + array(
-                        'app_id' => $appId
-                    )
+                'validation_params'=>$params
             );
+
             $event->getRequest()->attributes->add($parameters);
 
             $controller[0]->injectClient($client, $shop);
@@ -93,21 +85,30 @@ class FilterControllerListener{
     public function onKernelResponse(FilterResponseEvent $event){
         $response = $event->getResponse();
         if($response instanceof RedirectResponse){
-            $attributes = $event->getRequest()->attributes;
-            if($attributes->has('validation_params')){
-                $url = $response->getTargetUrl();
+            $this->adjustRedirectUrl($event, $response);
+        }
+    }
 
-                $components = parse_url($url);
-                $query = array();
+    /**
+     * @param FilterResponseEvent $event
+     * @param $response
+     */
+    protected function adjustRedirectUrl(FilterResponseEvent $event, $response)
+    {
+        $attributes = $event->getRequest()->attributes;
+        if ($attributes->has('validation_params')) {
+            $url = $response->getTargetUrl();
 
-                parse_str($components['query'], $query);
-                $query = $query+$attributes->get('validation_params');
-                $components['query'] = http_build_query($query);
+            $components = parse_url($url);
+            $query = array();
 
-                $url = http_build_url($components);
+            parse_str($components['query'], $query);
+            $query = $query + $attributes->get('validation_params');
+            $components['query'] = http_build_query($query);
 
-                $response->setTargetUrl($url);
-            }
+            $url = http_build_url($components);
+
+            $response->setTargetUrl($url);
         }
     }
 }

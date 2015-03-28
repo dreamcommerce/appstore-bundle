@@ -24,7 +24,7 @@ class RequestValidator{
 
     public function getApplicationName($applications){
 
-        $code = $this->request->query->get('application_code');
+        $code = $this->request->query->get('application');
 
         if(!$code){
             $code = $this->request->request->get('application_code');
@@ -51,22 +51,11 @@ class RequestValidator{
 
     public function validateAppRequest(){
 
-        foreach(array('place', 'shop', 'timestamp', 'hash', 'application_code') as $param){
-            if(!$this->request->query->has($param)){
-                throw new InvalidRequestException(sprintf('Missing %s parameter', $param));
-            }
-        }
-
-        $paramsBag = $this->request->query;
-
-        $params = array(
-            'place' => $paramsBag->get('place'),
-            'shop' => $paramsBag->get('shop'),
-            'timestamp' => $paramsBag->get('timestamp'),
-        );
-
         try{
             $handler = $this->getHandler();
+
+            $params = $this->request->query->all();
+
             // todo: uncomment and verify what's going on with hash verification
             //$handler->verifyPayload($params);
         } catch(HandlerException $ex){
@@ -100,7 +89,7 @@ class RequestValidator{
     protected function getHandler()
     {
         return new Handler(
-            $this->request->request->get('shop_url'),
+            $this->request->request->get('shop_url', 'https://example.org'),
             $this->application['app_id'],
             $this->application['app_secret'],
             $this->application['appstore_secret']
