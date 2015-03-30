@@ -54,16 +54,18 @@ class RequestValidator{
         try{
             $handler = $this->getHandler();
 
-            $params = $this->request->query->all();
+            $payload = array();
+            foreach(array('place','shop','timestamp','hash') as $f){
+                $payload[$f] = $this->request->query->get($f);
+            }
 
-            // todo: uncomment and verify what's going on with hash verification
-            //$handler->verifyPayload($params);
+            $handler->verifyPayload($payload);
         } catch(HandlerException $ex){
             throw new InvalidRequestException('',0,$ex);
         }
 
 
-        return $params;
+        return $payload;
 
     }
 
@@ -75,8 +77,7 @@ class RequestValidator{
 
             $payload = $this->request->request->all();
 
-            // todo: uncomment and verify what's going on with hash verification
-            //$handler->verifyPayload($payload);
+            $handler->verifyPayload($payload);
 
         }catch(HandlerException $ex){
             throw new InvalidRequestException('',0,$ex);
