@@ -54,10 +54,7 @@ class RequestValidator{
         try{
             $handler = $this->getHandler();
 
-            $payload = array();
-            foreach(array('place','shop','timestamp','hash') as $f){
-                $payload[$f] = $this->request->query->get($f);
-            }
+            $payload = $this->getAppValidationParams();
 
             $handler->verifyPayload($payload);
         } catch(HandlerException $ex){
@@ -95,6 +92,18 @@ class RequestValidator{
             $this->application['app_secret'],
             $this->application['appstore_secret']
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getAppValidationParams()
+    {
+        $payload = array();
+        foreach (array('place', 'shop', 'timestamp', 'hash') as $f) {
+            $payload[$f] = $this->request->query->get($f);
+        }
+        return $payload;
     }
 
 }
