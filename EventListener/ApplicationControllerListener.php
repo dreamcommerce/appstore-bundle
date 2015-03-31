@@ -10,19 +10,16 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
 use DreamCommerce\Client;
-use DreamCommerce\ShopAppstoreBundle\Controller\FilteredControllerInterface;
+use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
-use DreamCommerce\ShopAppstoreBundle\Utils\Url;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 // todo: invalid token handling/refreshing
-class FilterControllerListener{
+class ApplicationControllerListener{
 
     protected $applications;
     protected $shopManager;
@@ -35,7 +32,7 @@ class FilterControllerListener{
     public function onKernelController(FilterControllerEvent $event)
     {
         /**
-         * @var $controller FilteredControllerInterface
+         * @var $controller ApplicationControllerInterface
          */
         $controller = $event->getController();
         /*
@@ -47,7 +44,7 @@ class FilterControllerListener{
             return;
         }
 
-        if ($controller[0] instanceof FilteredControllerInterface) {
+        if ($controller[0] instanceof ApplicationControllerInterface) {
 
             $request = $event->getRequest();
 

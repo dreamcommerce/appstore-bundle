@@ -14,11 +14,10 @@ use DreamCommerce\ShopAppstoreBundle\EventListener\AppFormListener;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\Url;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-abstract class FilteredController extends Controller implements FilteredControllerInterface{
+abstract class ApplicationController extends Controller implements ApplicationControllerInterface{
 
     /**
      * @var Client
