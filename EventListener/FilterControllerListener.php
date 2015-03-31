@@ -14,6 +14,7 @@ use DreamCommerce\ShopAppstoreBundle\Controller\FilteredControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
+use DreamCommerce\ShopAppstoreBundle\Utils\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -72,43 +73,8 @@ class FilterControllerListener{
             $client = new Client($shop->getShopUrl(), $appData['app_id'], $appData['app_secret']);
             $client->setAccessToken($token->getAccessToken());
 
-            $parameters = array(
-                'validation_params'=>$params
-            );
-
-            $event->getRequest()->attributes->add($parameters);
-
             $controller[0]->injectClient($client, $shop);
         }
     }
 
-    public function onKernelResponse(FilterResponseEvent $event){
-        $response = $event->getResponse();
-        if($response instanceof RedirectResponse){
-            $this->adjustRedirectUrl($event, $response);
-        }
-    }
-
-    /**
-     * @param FilterResponseEvent $event
-     * @param $response
-     */
-    protected function adjustRedirectUrl(FilterResponseEvent $event, $response)
-    {
-        $attributes = $event->getRequest()->attributes;
-        if ($attributes->has('validation_params')) {
-            $url = $response->getTargetUrl();
-
-            $components = parse_url($url);
-            $query = array();
-
-            parse_str($components['query'], $query);
-            $query = $query + $attributes->get('validation_params');
-            $components['query'] = http_build_query($query);
-
-            $url = http_build_url($components);
-
-            $response->setTargetUrl($url);
-        }
-    }
 }

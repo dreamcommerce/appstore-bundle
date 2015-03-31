@@ -7,12 +7,19 @@ services:
         arguments: [@logger, %dream_commerce_shop_appstore.applications%, @request_stack]
         private: true
 
+    dream_commerce_shop_appstore.request_validator:
+        class: DreamCommerce\ShopAppstoreBundle\Utils\RequestValidatorService
+        arguments: [@request_stack]
+
     dream_commerce_shop_appstore.controller_filter:
         class: DreamCommerce\ShopAppstoreBundle\EventListener\FilterControllerListener
         arguments: [%dream_commerce_shop_appstore.applications%, @dream_commerce_shop_appstore.shop_manager]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    dream_commerce_shop_appstore.url:
+        class: DreamCommerce\ShopAppstoreBundle\Utils\Url
+        arguments: [@request_stack,@dream_commerce_shop_appstore.request_validator,@router]
 
     dream_commerce_shop_appstore.event.install:
         class: DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener
@@ -20,6 +27,14 @@ services:
         tags:
             # todo: event names constants (probably have to convert to xml)
             - { name: kernel.event_listener, event: dream_commerce_shop_appstore.install, method: onInstall }
+
+    dream_commerce_shop_appstore.twig_tags:
+        class: DreamCommerce\ShopAppstoreBundle\Twig\PathExtension
+        arguments: [@dream_commerce_shop_appstore.url]
+        public: false
+        tags:
+            - { name: twig.extension }
+
 
     #dream_commerce_shop_appstore.shop_manager:
 #        arguments: [@dream_commerce_shop_appstore.shop_manager]
