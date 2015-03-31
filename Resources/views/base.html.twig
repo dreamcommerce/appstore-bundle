@@ -33,6 +33,19 @@
 <main class="rwd-layout-width rwd-layout-container">
     <section class="rwd-layout-col-12">
 
+        <!-- todo: styling -->
+
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="flash-notice">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="flash-error">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
 
         <div class="edition-form">
 
