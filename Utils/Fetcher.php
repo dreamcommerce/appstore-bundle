@@ -41,7 +41,7 @@ class Fetcher {
             $page++;
         }while($objects->page < $objects->pages);
 
-        $object = new \ArrayObject($result);
+        $object = new \ArrayObject($result, \ArrayObject::ARRAY_AS_PROPS);
         return $object;
     }
 
