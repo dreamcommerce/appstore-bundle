@@ -59,6 +59,12 @@ class ApplicationControllerListener{
                 throw new BadRequestHttpException('Invalid request');
             }
 
+            if($request->query->has('id')){
+                $ids = $request->query->get('id');
+                $idsList = @json_decode($ids);
+                $request->query->set('id', $idsList);
+            }
+
             $shop = $this->shopManager->findShopByNameAndApplication($params['shop'], $appName);
 
             if(!$shop){
