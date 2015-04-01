@@ -9,7 +9,8 @@ services:
 
     dream_commerce_shop_appstore.request_validator:
         class: DreamCommerce\ShopAppstoreBundle\Utils\RequestValidatorService
-        arguments: [@request_stack]
+        calls:
+            - [setRequestStack, [@request_stack]]
 
     dream_commerce_shop_appstore.controller_filter:
         class: DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener
