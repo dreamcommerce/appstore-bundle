@@ -1,4 +1,5 @@
+# todo: prefixed routes
 dream_commerce_shop_appstore_responder:
-    path:     /
+    path:     "/responder"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Responder:index }
-    #methods: [POST]
+    methods: [POST]
