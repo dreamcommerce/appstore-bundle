@@ -9,6 +9,8 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 class CollectionWrapper {
 
     /**
@@ -27,6 +29,7 @@ class CollectionWrapper {
 
         foreach($this->collection as $item){
             if(!isset($item[$fieldName])){
+                //todo: exception
                 return false;
             }
 
@@ -35,6 +38,24 @@ class CollectionWrapper {
 
         return $result;
 
+    }
+
+    public function getArray($key = null){
+        $result = array();
+        foreach($this->collection as $i){
+            if($key) {
+                if(!isset($i[$key])){
+                    // todo: narrower exception
+                    throw new \Exception();
+                }
+
+                $result[$i[$key]] = $i;
+            }else{
+                $result[] = $i;
+            }
+        }
+
+        return $result;
     }
 
 }
