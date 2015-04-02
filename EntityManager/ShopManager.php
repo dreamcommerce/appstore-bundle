@@ -78,4 +78,9 @@ class ShopManager implements ShopManagerInterface
             return false;
         }
     }
+
+    public function delete(ShopInterface $shop){
+        $this->em->remove($shop);
+        $this->em->flush();
+    }
 }

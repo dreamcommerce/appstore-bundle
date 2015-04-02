@@ -4,6 +4,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
@@ -46,6 +47,11 @@ class ResponderController extends Controller
             case 'install':
                 $event = new InstallEvent($appName, $apps[$appName], $params);
                 $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_INSTALLED, $event);
+            break;
+
+            case 'uninstall':
+                $event = new UninstallEvent($appName, $params);
+                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_UNINSTALLED, $event);
             break;
         }
 

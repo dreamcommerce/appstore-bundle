@@ -14,6 +14,7 @@ use DreamCommerce\Exception\ClientException;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\TokenManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 
 class AppstoreListener implements ActionListenerInterface{
 
@@ -62,6 +63,24 @@ class AppstoreListener implements ActionListenerInterface{
         $tokenModel->setShop($shopModel);
         $this->tokenManager->save($tokenModel);
 
+    }
+
+    public function onUninstall(UninstallEvent $event){
+
+        //todo: refactor ctrl+c, ctrl+v code
+        $params = $event->getPayload();
+
+        $appName = $event->getApplicationName();
+        $shopName = $params['shop'];
+
+        $shop = $this->shopManager->findShopByNameAndApplication($shopName, $appName);
+
+        if($shop){
+            return false;
+        }
+
+        //todo: deleted relationships checking
+        $this->shopManager->delete($shop);
     }
 
 }

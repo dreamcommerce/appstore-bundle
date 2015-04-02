@@ -26,4 +26,6 @@ interface ShopManagerInterface
     public function create();
 
     public function save(ShopInterface $shop);
+
+    public function delete(ShopInterface $shop);
 }
