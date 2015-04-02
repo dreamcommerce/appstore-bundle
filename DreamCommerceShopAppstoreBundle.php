@@ -33,6 +33,8 @@ class DreamCommerceShopAppstoreBundle extends Bundle
     protected function enableLibraryDebugging()
     {
 
+        // todo: debug disabling from configuration independent from kernel.debug
+
         if(in_array('dreamcommercelogger', stream_get_wrappers())){
             return;
         }
