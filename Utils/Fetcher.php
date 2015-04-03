@@ -45,5 +45,24 @@ class Fetcher {
         return $object;
     }
 
+    /**
+     * @param callable $callback
+     * @throws \DreamCommerce\Exception\ResourceException
+     */
+    public function walk(Callable $callback){
+        $page = 1;
+        do{
+            /**
+             * @var $objects \ArrayObject
+             */
+            $objects = $this->resource->page($page)->get();
+            foreach($objects as $o){
+                $callback($o);
+            }
+
+            $page++;
+        }while($objects->page < $objects->pages);
+    }
+
 
 }
