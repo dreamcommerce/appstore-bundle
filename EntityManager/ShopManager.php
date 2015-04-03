@@ -32,6 +32,12 @@ class ShopManager implements ShopManagerInterface
         return $this->repository->findBy($criteria);
     }
 
+    public function findByApplication($application){
+        return $this->findByCriteria(array(
+            'app'=>$application
+        ));
+    }
+
     public function findShopByName($name)
     {
         $result = $this->findByCriteria(array(

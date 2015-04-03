@@ -28,4 +28,6 @@ interface ShopManagerInterface
     public function save(ShopInterface $shop);
 
     public function delete(ShopInterface $shop);
+
+    public function findByApplication($application);
 }
