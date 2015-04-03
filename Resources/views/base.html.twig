@@ -5,7 +5,9 @@
     <title>{% block title %}{% endblock %}</title>
     <script src="https://cdn.dcsaas.net/js/appstore-sdk.js"></script>
 
-    <script>var app = new ShopApp(function (app) {
+    <script>
+        var events = [];
+        var app = new ShopApp(function (app) {
             app.init(null, function (params, app) {
                 for (var x = 0; x < params.styles.length; ++x) {
                     var el = document.createElement('link');
@@ -17,6 +19,9 @@
 
                 app.show(null ,function () {
                     app.adjustIframeSize();
+                    for(var i in events){
+                        events[i](app);
+                    }
                 });
 
 
@@ -33,20 +38,6 @@
 <main class="rwd-layout-width rwd-layout-container">
     <section class="rwd-layout-col-12">
 
-        <!-- todo: styling -->
-
-        {% for flashMessage in app.session.flashbag.get('notice') %}
-            <div class="flash-notice">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-
-        {% for flashMessage in app.session.flashbag.get('error') %}
-            <div class="flash-error">
-                {{ flashMessage }}
-            </div>
-        {% endfor %}
-
         <div class="edition-form">
 
             {% block body %}{% endblock %}
@@ -57,6 +48,23 @@
 </main>
 
 {% block javascripts %}{% endblock %}
+
+<script>
+    events.push(function(app){
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+        app.flashMessage({
+            msg : '{{ flashMessage }}',
+            type : 'success'
+        });
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+        app.flashMessage({
+            msg : '{{ flashMessage }}',
+            type : 'error'
+        });
+        {% endfor %}
+    })
+</script>
 
 </body>
 </html>
