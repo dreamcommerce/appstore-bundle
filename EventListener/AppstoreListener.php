@@ -75,7 +75,7 @@ class AppstoreListener implements ActionListenerInterface{
 
         $shop = $this->shopManager->findShopByNameAndApplication($shopName, $appName);
 
-        if($shop){
+        if(!$shop){
             return false;
         }
 

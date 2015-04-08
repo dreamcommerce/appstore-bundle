@@ -28,6 +28,7 @@ services:
         tags:
             # todo: event names constants (probably have to convert to xml)
             - { name: kernel.event_listener, event: dream_commerce_shop_appstore.install, method: onInstall }
+            - { name: kernel.event_listener, event: dream_commerce_shop_appstore.uninstall, method: onUninstall }
 
     dream_commerce_shop_appstore.twig_tags:
         class: DreamCommerce\ShopAppstoreBundle\Twig\PathExtension
