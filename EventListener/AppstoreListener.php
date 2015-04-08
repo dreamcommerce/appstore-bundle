@@ -79,7 +79,6 @@ class AppstoreListener implements ActionListenerInterface{
             return false;
         }
 
-        //todo: deleted relationships checking
         $this->shopManager->delete($shop);
     }
 
