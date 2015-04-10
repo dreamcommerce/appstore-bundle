@@ -73,7 +73,6 @@ class RequestValidator{
             $handler = $this->getHandler();
 
             $payload = $this->request->request->all();
-            return $payload;
 
             $handler->verifyPayload($payload);
 
