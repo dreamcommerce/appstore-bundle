@@ -10,6 +10,8 @@ namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
 
 use DreamCommerce\ShopAppstoreBundle\Event\AppstoreEvent;
 
+//todo: change key for random order events tracking
+
 class BillingInstallEvent extends AppstoreEvent{
 
     protected $application;
