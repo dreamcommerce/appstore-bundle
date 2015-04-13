@@ -18,8 +18,10 @@ abstract class Shop implements ShopInterface
 
     protected $token;
 
+    protected $subscriptions;
+
     public function __construct(){
-        $this->billing = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
 
@@ -77,5 +79,13 @@ abstract class Shop implements ShopInterface
 
     public function setBilling(BillingInterface $billingInterface){
         $this->billing = $billingInterface;
+    }
+
+    public function getSubscriptions(){
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(SubscriptionInterface $subscription){
+        $this->subscriptions[] = $subscription;
     }
 }

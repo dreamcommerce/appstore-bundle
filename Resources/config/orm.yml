@@ -18,6 +18,11 @@ services:
           #todo: class reading from options
           arguments: ["@doctrine.orm.entity_manager",BillingBundle\Entity\Billing]
 
+    dream_commerce_shop_appstore.subscription_manager:
+          class: DreamCommerce\ShopAppstoreBundle\EntityManager\SubscriptionManager
+          #todo: class reading from options
+          arguments: ["@doctrine.orm.entity_manager",BillingBundle\Entity\Subscription]
+
     #dream_commerce_shop_appstore.entity_manager:
 #          factory_service:  doctrine
 #          factory_method:   getManager

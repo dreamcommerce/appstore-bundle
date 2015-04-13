@@ -5,6 +5,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Controller;
 use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
@@ -53,6 +54,11 @@ class ResponderController extends Controller
             case 'billing_install':
                 $event = new BillingInstallEvent($appName, $apps[$appName], $params);
                 $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_PAID, $event);
+                break;
+
+            case 'billing_subscription':
+                $event = new SubscriptionEvent($appName, $apps[$appName], $params);
+                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_SUBSCRIPTION, $event);
                 break;
 
             case 'uninstall':

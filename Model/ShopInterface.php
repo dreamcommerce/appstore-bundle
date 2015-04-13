@@ -26,6 +26,10 @@ interface ShopInterface
 
     public function setToken(TokenInterface $token);
 
+    public function getSubscriptions();
+
+    public function addSubscription(SubscriptionInterface $subscription);
+
     /**
      * @return mixed
      */

@@ -12,6 +12,7 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 use DreamCommerce\Client;
 use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\PaidControllerInterface;
+use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
@@ -78,6 +79,22 @@ class ApplicationControllerListener{
                 if(empty($billing)){
                     // todo payment missing route
                     throw new HttpException(402, 'Payment Required');
+                }
+            }
+
+            if($controller[0] instanceof SubscribedControllerInterface){
+                $subscriptions = $shop->getSubscriptions();
+                if(empty($subscriptions)){
+                    //todo subscription expired route
+                    throw new HttpException(402, 'Payment Required');
+                }
+
+                $newest = $subscriptions[0];
+                $expires = $newest->getExpiresAt();
+
+                if($expires<new \DateTime()){
+                    //todo subscription expired route
+                    throw new \HttpException(402, 'Payment Required');
                 }
             }
 

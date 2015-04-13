@@ -10,14 +10,17 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
 use BillingBundle\Entity\Billing;
+use BillingBundle\Entity\Subscription;
 use DreamCommerce\Client;
 use DreamCommerce\Exception\ClientException;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\TokenManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\BillingManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\EntityManager\SubscriptionManagerInterface;
 
 class AppstoreListener implements ActionListenerInterface{
 
@@ -27,11 +30,16 @@ class AppstoreListener implements ActionListenerInterface{
      * @var BillingManagerInterface
      */
     protected $billingManager;
+    /**
+     * @var SubscriptionManagerInterface
+     */
+    protected $subscriptionManager;
 
-    public function __construct(ShopManagerInterface $shopManager, TokenManagerInterface $tokenManager, BillingManagerInterface $billingManager){
+    public function __construct(ShopManagerInterface $shopManager, TokenManagerInterface $tokenManager, BillingManagerInterface $billingManager, SubscriptionManagerInterface $subscriptionManager){
         $this->shopManager = $shopManager;
         $this->tokenManager = $tokenManager;
         $this->billingManager = $billingManager;
+        $this->subscriptionManager = $subscriptionManager;
     }
 
     public function onInstall(InstallEvent $event){
@@ -103,10 +111,38 @@ class AppstoreListener implements ActionListenerInterface{
             return false;
         }
 
+        // todo: class creation from manager
         $billing = new Billing();
         $billing->setShop($shop);
 
         $this->billingManager->save($billing);
+    }
+
+    public function onSubscribed(SubscriptionEvent $event){
+
+        //todo: refactor ctrl+c, ctrl+v code
+        $params = $event->getPayload();
+        $appName = $event->getApplicationName();
+        $shopName = $params['shop'];
+
+        $shop = $this->shopManager->findShopByNameAndApplication($shopName, $appName);
+
+        //todo: event getExpiresAt value as method
+
+        if(!$shop){
+            return false;
+        }
+
+        // todo: class creation from manager
+        $subscription = new Subscription();
+
+        $expiresAt = new \DateTime($params['subscription_end_time']);
+
+        $subscription->setExpiresAt($expiresAt);
+        $subscription->setShop($shop);
+
+        $this->subscriptionManager->save($subscription);
+
     }
 
 }
