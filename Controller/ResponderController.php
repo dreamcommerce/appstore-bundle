@@ -3,6 +3,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
@@ -48,6 +49,11 @@ class ResponderController extends Controller
                 $event = new InstallEvent($appName, $apps[$appName], $params);
                 $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_INSTALLED, $event);
             break;
+
+            case 'billing_install':
+                $event = new BillingInstallEvent($appName, $apps[$appName], $params);
+                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_PAID, $event);
+                break;
 
             case 'uninstall':
                 $event = new UninstallEvent($appName, $params);

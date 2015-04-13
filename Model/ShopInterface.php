@@ -9,6 +9,8 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 interface ShopInterface
 {
+    public function getBilling();
+
     public function setName($name);
 
     public function getName();

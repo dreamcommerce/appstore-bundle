@@ -6,6 +6,12 @@ abstract class Billing implements BillingInterface
 {
     protected $shop;
 
+    protected $createdAt;
+
+    public function __construct(){
+        $this->createdAt = new \DateTime();
+    }
+
     public function setShop(ShopInterface $shop = null)
     {
         $this->shop = $shop;
@@ -16,6 +22,10 @@ abstract class Billing implements BillingInterface
     public function getShop()
     {
         return $this->shop;
+    }
+
+    public function getCreatedAt(){
+        return $this->createdAt;
     }
 
 }

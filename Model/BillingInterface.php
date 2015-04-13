@@ -14,4 +14,6 @@ interface BillingInterface
 
     public function getShop();
 
+    public function getCreatedAt();
+
 }

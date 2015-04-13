@@ -14,7 +14,7 @@ abstract class Shop implements ShopInterface
 
     protected $app;
 
-    //protected $billing;
+    protected $billing;
 
     protected $token;
 
@@ -69,5 +69,13 @@ abstract class Shop implements ShopInterface
     public function setApp($app)
     {
         $this->app = $app;
+    }
+
+    public function getBilling(){
+        return $this->billing;
+    }
+
+    public function setBilling(BillingInterface $billingInterface){
+        $this->billing = $billingInterface;
     }
 }

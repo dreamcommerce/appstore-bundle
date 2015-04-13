@@ -9,21 +9,29 @@
 namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
+use BillingBundle\Entity\Billing;
 use DreamCommerce\Client;
 use DreamCommerce\Exception\ClientException;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\TokenManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
+use DreamCommerce\ShopAppstoreBundle\EntityManager\BillingManagerInterface;
 
 class AppstoreListener implements ActionListenerInterface{
 
     protected $shopManager;
     protected $tokenManager;
+    /**
+     * @var BillingManagerInterface
+     */
+    protected $billingManager;
 
-    public function __construct(ShopManagerInterface $shopManager, TokenManagerInterface $tokenManager){
+    public function __construct(ShopManagerInterface $shopManager, TokenManagerInterface $tokenManager, BillingManagerInterface $billingManager){
         $this->shopManager = $shopManager;
         $this->tokenManager = $tokenManager;
+        $this->billingManager = $billingManager;
     }
 
     public function onInstall(InstallEvent $event){
@@ -80,6 +88,25 @@ class AppstoreListener implements ActionListenerInterface{
         }
 
         $this->shopManager->delete($shop);
+    }
+
+    public function onPaid(BillingInstallEvent $event){
+
+        //todo: refactor ctrl+c, ctrl+v code
+        $params = $event->getPayload();
+        $appName = $event->getApplicationName();
+        $shopName = $params['shop'];
+
+        $shop = $this->shopManager->findShopByNameAndApplication($shopName, $appName);
+
+        if(!$shop){
+            return false;
+        }
+
+        $billing = new Billing();
+        $billing->setShop($shop);
+
+        $this->billingManager->save($billing);
     }
 
 }
