@@ -67,6 +67,7 @@ class AppstoreListener implements ActionListenerInterface{
         $shopModel->setApp($appName);
         $shopModel->setName($shopName);
         $shopModel->setShopUrl($params['shop_url']);
+        $shopModel->setVersion($params['application_version']);
         $this->shopManager->save($shopModel);
 
         $tokenModel = $this->tokenManager->create();

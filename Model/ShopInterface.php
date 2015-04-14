@@ -39,4 +39,14 @@ interface ShopInterface
      * @param mixed $app
      */
     public function setApp($app);
+
+    /**
+     * @return mixed
+     */
+    public function getVersion();
+
+    /**
+     * @param mixed $version
+     */
+    public function setVersion($version);
 }

@@ -20,6 +20,8 @@ abstract class Shop implements ShopInterface
 
     protected $subscriptions;
 
+    protected $version;
+
     public function __construct(){
         $this->subscriptions = new ArrayCollection();
     }
@@ -87,5 +89,21 @@ abstract class Shop implements ShopInterface
 
     public function addSubscription(SubscriptionInterface $subscription){
         $this->subscriptions[] = $subscription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param mixed $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
     }
 }
