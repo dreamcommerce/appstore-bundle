@@ -71,6 +71,9 @@ class ResponderController extends Controller
                 $event = new UpgradeEvent($appName, $apps[$appName], $params);
                 $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_UPGRADED, $event);
             break;
+
+            default:
+                throw new \HttpInvalidParamException('Unsupported action');
         }
 
         return new Response();
