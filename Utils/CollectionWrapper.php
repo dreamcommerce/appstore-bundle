@@ -29,8 +29,7 @@ class CollectionWrapper {
 
         foreach($this->collection as $item){
             if(!isset($item[$fieldName])){
-                //todo: exception
-                return false;
+                throw new \InvalidArgumentException(sprintf('Non-existing key: %s', $fieldName));
             }
 
             $result[] = $item[$fieldName];
@@ -45,8 +44,7 @@ class CollectionWrapper {
         foreach($this->collection as $i){
             if($key) {
                 if(!isset($i[$key])){
-                    // todo: narrower exception
-                    throw new \Exception();
+                    throw new \InvalidArgumentException(sprintf('Collection filtering non-existing key: %s', $key));
                 }
 
                 $result[$i[$key]] = $i;
