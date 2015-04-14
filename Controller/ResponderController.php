@@ -7,6 +7,7 @@ use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
@@ -64,6 +65,11 @@ class ResponderController extends Controller
             case 'uninstall':
                 $event = new UninstallEvent($appName, $params);
                 $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_UNINSTALLED, $event);
+            break;
+
+            case 'upgrade':
+                $event = new UpgradeEvent($appName, $apps[$appName], $params);
+                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_UPGRADED, $event);
             break;
         }
 

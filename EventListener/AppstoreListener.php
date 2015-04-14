@@ -21,6 +21,7 @@ use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\BillingManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\SubscriptionManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
 
 class AppstoreListener implements ActionListenerInterface{
 
@@ -144,6 +145,21 @@ class AppstoreListener implements ActionListenerInterface{
 
         $this->subscriptionManager->save($subscription);
 
+    }
+
+    public function onUpgrade(UpgradeEvent $event){
+        //todo: refactor ctrl+c, ctrl+v code
+        $params = $event->getPayload();
+        $appName = $event->getApplicationName();
+        $shopName = $params['shop'];
+
+        $shop = $this->shopManager->findShopByNameAndApplication($shopName, $appName);
+
+        if(!$shop){
+            return false;
+        }
+
+        $shop->setVersion($params['application_version']);
     }
 
 }
