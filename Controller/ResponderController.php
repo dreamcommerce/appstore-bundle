@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ResponderController extends Controller
 {
-    // todo: install, uninstall, upgrade, subscription actions/events
+
     public function indexAction(Request $request)
     {
 
