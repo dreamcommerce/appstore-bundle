@@ -20,8 +20,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('dream_commerce_shop_appstore');
 
-
-        //todo: entities and their validation
         $rootNode
             ->children()
                 ->arrayNode('applications')
@@ -30,36 +28,15 @@ class Configuration implements ConfigurationInterface
                         ->children()
                             ->scalarNode('app_id')->isRequired(true)->end()
                             ->scalarNode('app_secret')->isRequired(true)->end()
-                            ->scalarNode('appstore_secret')->isRequired(true)
+                            ->scalarNode('appstore_secret')->isRequired(true)->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end();
-
-        $rootNode
-            ->children()
-                ->arrayNode('classes')
+                ->arrayNode('routes')
                     ->children()
-                        ->scalarNode('billing')
-                            ->isRequired(true)
-                            ->validate()
-                                ->ifTrue(function($v){
-                                    //return !class_exists($v) || !((new $v) instanceof \DreamCommerce\ShopAppstoreBundle\Model\BillingInterface);
-                                })
-                                ->thenInvalid('Billing class not existing or not implements BillingInterface')
-                            ->end()
-                        ->end()
-                        ->scalarNode('shop')
-                            ->isRequired(true)
-                            ->validate()
-                                ->ifTrue(function($v){
-                                    //return !class_exists($v) || !((new $v) instanceof \DreamCommerce\ShopAppstoreBundle\Model\ShopInterface);
-                                })
-                                ->thenInvalid('Billing class not existing or not implements BillingInterface')
-                            ->end()
-                        ->end()
-                        ->scalarNode('subscription')->isRequired(true)->end()
-                        ->scalarNode('token')->isRequired(true)->end()
+                        ->scalarNode('unpaid')->defaultValue('dream_commerce_shop_appstore.unpaid')->end()
+                        ->scalarNode('unsubscribed')->defaultValue('dream_commerce_shop_appstore.unsubscribed')->end()
+                        ->scalarNode('not_installed')->defaultValue('dream_commerce_shop_appstore.not_installed')->end()
                     ->end()
                 ->end()
             ->end();

@@ -3,3 +3,15 @@ dream_commerce_shop_appstore_responder:
     path:     "/responder"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Responder:index }
     methods: [POST]
+
+dream_commerce_shop_appstore.unpaid:
+    path:     "/exception/unpaid"
+    defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:unpaid }
+
+dream_commerce_shop_appstore.unpaid:
+    path:     "/exception/unsubscribed"
+    defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:unsubscribed }
+
+dream_commerce_shop_appstore.unpaid:
+    path:     "/exception/not_installed"
+    defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:notInstalled }

@@ -16,6 +16,7 @@ use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -26,12 +27,18 @@ class ApplicationControllerListener{
 
     protected $applications;
     protected $shopManager;
+    protected $routes;
 
-    public function __construct($applications, ShopManagerInterface $shopManager){
-        $this->applications = $applications;
+    public function __construct($configuration, ShopManagerInterface $shopManager){
+        $this->applications = $configuration['applications'];
+        $this->routes = $configuration['routes'];
         $this->shopManager = $shopManager;
     }
 
+    /**
+     * @param FilterControllerEvent $event
+     * @throws HttpException
+     */
     public function onKernelController(FilterControllerEvent $event)
     {
         /**
@@ -77,24 +84,21 @@ class ApplicationControllerListener{
             if($controller[0] instanceof PaidControllerInterface){
                 $billing = $shop->getBilling();
                 if(empty($billing)){
-                    // todo payment missing route
-                    throw new HttpException(402, 'Payment Required');
+                    $this->redirect($event, 'unpaid');
                 }
             }
 
             if($controller[0] instanceof SubscribedControllerInterface){
                 $subscriptions = $shop->getSubscriptions();
                 if(empty($subscriptions)){
-                    //todo subscription expired route
-                    throw new HttpException(402, 'Payment Required');
+                    $this->redirect($event, 'unsubscribed');
                 }
 
                 $newest = $subscriptions[0];
                 $expires = $newest->getExpiresAt();
 
                 if($expires<new \DateTime()){
-                    //todo subscription expired route
-                    throw new \HttpException(402, 'Payment Required');
+                    $this->redirect($event, 'not_installed');
                 }
             }
 
@@ -105,6 +109,20 @@ class ApplicationControllerListener{
 
             $controller[0]->injectClient($client, $shop);
         }
+    }
+
+    protected function redirect(FilterControllerEvent $event, $routeName){
+        $controller = $event->getController();
+
+        $route = $this->routes[$routeName];
+
+        $url = $controller->generateUrl($route);
+
+        $event->setController(function() use ($url){
+            return new RedirectResponse($url, 402);
+        });
+
+        throw new HttpException(402, 'Payment Required');
     }
 
 }

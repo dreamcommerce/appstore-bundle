@@ -14,7 +14,7 @@ services:
 
     dream_commerce_shop_appstore.controller_filter:
         class: DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener
-        arguments: [%dream_commerce_shop_appstore.applications%, @dream_commerce_shop_appstore.shop_manager]
+        arguments: [%dream_commerce_shop_appstore%, @dream_commerce_shop_appstore.shop_manager]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 

@@ -8,8 +8,6 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
-//todo: unpaid route
-
 interface PaidControllerInterface {
 
 }
