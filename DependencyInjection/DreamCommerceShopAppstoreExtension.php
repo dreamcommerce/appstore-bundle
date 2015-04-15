@@ -29,7 +29,7 @@ class DreamCommerceShopAppstoreExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter($this->getAlias().'.applications', $config['applications']);
-        $container->setParameter($this->getAlias().'.routes', $config['routes']);
+        $container->setParameter($this->getAlias(), $config);
 
         // todo: checking if not already defined
 
