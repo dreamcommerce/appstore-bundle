@@ -25,11 +25,16 @@ class CollectionChoiceList extends LazyChoiceList{
      * @var callable
      */
     protected $valueResolver;
+    /**
+     * @var callable
+     */
+    protected $keyResolver;
 
-    public function __construct(\ArrayObject $resource, callable $valueResolver){
+    public function __construct(\ArrayObject $resource, callable $keyResolver, callable $valueResolver){
 
         $this->resource = $resource;
         $this->valueResolver = $valueResolver;
+        $this->keyResolver = $keyResolver;
     }
 
 
@@ -44,7 +49,7 @@ class CollectionChoiceList extends LazyChoiceList{
     {
         $v = array();
         foreach($this->resource as $r){
-            $v[$r->product_id] = call_user_func($this->valueResolver, $r);
+            $v[call_user_func($this->keyResolver, $r)] = call_user_func($this->valueResolver, $r);
         }
 
         return new SimpleChoiceList($v);
