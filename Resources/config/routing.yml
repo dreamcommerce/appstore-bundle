@@ -8,10 +8,10 @@ dream_commerce_shop_appstore.unpaid:
     path:     "/exception/unpaid"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:unpaid }
 
-dream_commerce_shop_appstore.unpaid:
+dream_commerce_shop_appstore.unsubscribed:
     path:     "/exception/unsubscribed"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:unsubscribed }
 
-dream_commerce_shop_appstore.unpaid:
+dream_commerce_shop_appstore.notInstalled:
     path:     "/exception/not_installed"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:notInstalled }
