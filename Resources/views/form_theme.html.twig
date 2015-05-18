@@ -1,0 +1,81 @@
+{% extends "form_div_layout.html.twig" %}
+
+{% block button_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' button button-bg button-larger save-button')|trim}) %}
+    {{- parent() -}}
+{%- endblock %}
+
+{% block form_row -%}
+    <div class="edition-form-line{% if (not compound or force_error|default(false)) and not valid %} input-warning{% endif %}">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+    </div>
+{%- endblock form_row %}
+
+{%- block form_label -%}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+            {% set span_attr = [] %}
+        {%- endif %}
+        {% if required -%}
+            {% set span_attr = span_attr|merge({'class': (span_attr.class|default('') ~ ' aicon-required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+        <div class="edition-form-line-label">
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                <span{% for attrname, attrvalue in span_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}:</span>
+            </label>
+        </div>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{% block form_widget %}
+    <div class="edition-form-line-field">
+        {{- parent() -}}
+        {{ form_errors(form) }}
+    </div>
+{%- endblock form_widget %}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        <ul class="error-list">
+            {%- for error in errors -%}
+                <li>
+                    <label class="aicon-exclamation error" for="">{{ error.message }}</label>
+                </li>
+            {%- endfor -%}
+        </ul>
+    {%- endif %}
+{%- endblock form_errors %}
+
+{%- block radio_widget -%}
+    <div class="edition-form-line-field">
+        <span class="radio-wrap">
+            {{- parent() -}}
+            <label for="{{ id }}"></label>
+        </span>
+        {{ form_errors(form) }}
+    </div>
+{%- endblock radio_widget -%}
+
+{%- block checkbox_widget -%}
+    <div class="edition-form-line-field">
+        <span class="checkbox-wrap">
+            {{- parent() -}}
+            <label for="{{ id }}"></label>
+        </span>
+        {{ form_errors(form) }}
+    </div>
+{%- endblock checkbox_widget -%}
+
+{%- block choice_widget_collapsed -%}
+    <div class="edition-form-line-field">
+        <div class="select-wrapper">
+            {{- parent() -}}
+        </div>
+        {{ form_errors(form) }}
+    </div>
+{%- endblock choice_widget_collapsed -%}
