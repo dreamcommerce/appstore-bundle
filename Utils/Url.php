@@ -56,7 +56,7 @@ class Url {
         return self::addUrlParameters($url, $params);
     }
 
-    protected function getApplicationParameters(){
+    public function getApplicationParameters(){
         $params = $this->requestValidator->getAppValidationParams();
         $params = $params + array('application'=>$this->request->query->get('application'));
         return $params;
