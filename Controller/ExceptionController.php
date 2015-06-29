@@ -18,4 +18,8 @@ class ExceptionController extends Controller{
         return $this->render('DreamCommerceShopAppstoreBundle::exception/not_installed.html.twig');
     }
 
+    public function reinstallAction(){
+        return $this->render('DreamCommerceShopAppstoreBundle::exception/reinstall.html.twig');
+    }
+
 }

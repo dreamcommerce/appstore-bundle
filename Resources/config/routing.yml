@@ -15,3 +15,7 @@ dream_commerce_shop_appstore.unsubscribed:
 dream_commerce_shop_appstore.notInstalled:
     path:     "/exception/not_installed"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:notInstalled }
+
+dream_commerce_shop_appstore.reinstall:
+    path:     "/exception/reinstall"
+    defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:reinstall }

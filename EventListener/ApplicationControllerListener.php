@@ -10,12 +10,14 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
 use DreamCommerce\Client;
+use DreamCommerce\Exception\ClientException;
 use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\PaidControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
+use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -28,11 +30,18 @@ class ApplicationControllerListener{
     protected $applications;
     protected $shopManager;
     protected $routes;
+    /**
+     * @var TokenRefresher
+     */
+    protected $refresher;
 
-    public function __construct($configuration, ShopManagerInterface $shopManager){
+    protected $lastEvent;
+
+    public function __construct($configuration, ShopManagerInterface $shopManager, TokenRefresher $refresher){
         $this->applications = $configuration['applications'];
         $this->routes = $configuration['routes'];
         $this->shopManager = $shopManager;
+        $this->refresher = $refresher;
     }
 
     /**
@@ -41,6 +50,9 @@ class ApplicationControllerListener{
      */
     public function onKernelController(FilterControllerEvent $event)
     {
+
+        $this->lastEvent = $event;
+
         /**
          * @var $controller ApplicationControllerInterface
          */
@@ -105,7 +117,14 @@ class ApplicationControllerListener{
             $token = $shop->getToken();
 
             $client = new Client($shop->getShopUrl(), $appData['app_id'], $appData['app_secret']);
+
+            if($token->getExpiresAt()->getTimestamp() - (new \DateTime())->getTimestamp() < 86400){
+                $this->refresher->setClient($client);
+                $this->refresher->refresh($shop);
+            }
+
             $client->setAccessToken($token->getAccessToken());
+            $client->setOnTokenInvalidHandler(array($this, 'invalidTokenRedirect'));
 
             $controller[0]->injectClient($client, $shop);
         }
@@ -113,16 +132,18 @@ class ApplicationControllerListener{
 
     protected function redirect(FilterControllerEvent $event, $routeName){
         $controller = $event->getController();
+        $controller = is_array($controller) ? $controller[0] : $controller;
 
         $route = $this->routes[$routeName];
 
         $url = $controller->generateUrl($route);
 
-        $event->setController(function() use ($url){
-            return new RedirectResponse($url, 402);
-        });
+        throw new HttpException(307, null, null, array('Location' => $url));
+    }
 
-        throw new HttpException(402, 'Payment Required');
+    public function invalidTokenRedirect(Client $client, \Exception $ex){
+        $this->redirect($this->lastEvent, 'reinstall', null);
+        return true;
     }
 
 }

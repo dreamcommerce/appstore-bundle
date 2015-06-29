@@ -2,10 +2,14 @@ parameters:
     dream_commerce_shop_appstore.logger: logger
 
 services:
-    dream_commerce_shop_appstore.client:
-        class: DreamCommerce\ShopAppstoreBundle\Client
-        arguments: [@logger, %dream_commerce_shop_appstore.applications%, @request_stack]
-        private: true
+#    dream_commerce_shop_appstore.client:
+#        class: DreamCommerce\ShopAppstoreBundle\Client
+#        arguments: [@logger, %dream_commerce_shop_appstore.applications%, @request_stack]
+#        private: true
+
+    dream_commerce_shop_appstore.token_refresher:
+        class: DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher
+        arguments: [@dream_commerce_shop_appstore.token_manager]
 
     dream_commerce_shop_appstore.request_validator:
         class: DreamCommerce\ShopAppstoreBundle\Utils\RequestValidatorService
@@ -14,7 +18,7 @@ services:
 
     dream_commerce_shop_appstore.controller_filter:
         class: DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener
-        arguments: [%dream_commerce_shop_appstore%, @dream_commerce_shop_appstore.shop_manager]
+        arguments: [%dream_commerce_shop_appstore%, @dream_commerce_shop_appstore.shop_manager, @dream_commerce_shop_appstore.token_refresher]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 

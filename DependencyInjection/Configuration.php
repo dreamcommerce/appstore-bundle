@@ -37,6 +37,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('unpaid')->defaultValue('dream_commerce_shop_appstore.unpaid')->end()
                         ->scalarNode('unsubscribed')->defaultValue('dream_commerce_shop_appstore.unsubscribed')->end()
                         ->scalarNode('not_installed')->defaultValue('dream_commerce_shop_appstore.not_installed')->end()
+                        ->scalarNode('reinstall')->defaultValue('dream_commerce_shop_appstore.reinstall')->end()
                     ->end()
                 ->end()
             ->end();
