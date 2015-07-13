@@ -34,6 +34,12 @@ abstract class ApplicationController extends Controller implements ApplicationCo
         $this->shop = $shop;
     }
 
+    /**
+     * @param string $route #Route
+     * @param array $parameters
+     * @param bool $referenceType
+     * @return string
+     */
     public function generateAppUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         /**
