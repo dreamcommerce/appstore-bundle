@@ -2,9 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-class DefaultController extends Controller
+class DefaultController extends ApplicationController
 {
     public function indexAction($name)
     {
