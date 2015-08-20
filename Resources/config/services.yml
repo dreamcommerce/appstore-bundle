@@ -26,6 +26,12 @@ services:
         class: DreamCommerce\ShopAppstoreBundle\Utils\Url
         arguments: [@request_stack,@dream_commerce_shop_appstore.request_validator,@router]
 
+    dream_commerce_shop_appstore.locale_listener:
+        class: DreamCommerce\ShopAppstoreBundle\EventListener\LocaleListener
+        arguments: [ %locale% ]
+        tags:
+            - { name: kernel.event_subscriber }
+
     dream_commerce_shop_appstore.event.install:
         class: DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener
         arguments: [@dream_commerce_shop_appstore.shop_manager, @dream_commerce_shop_appstore.token_manager, @dream_commerce_shop_appstore.billing_manager, @dream_commerce_shop_appstore.subscription_manager]
