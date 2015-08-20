@@ -60,7 +60,8 @@ class Url {
         $params = $this->requestValidator->getAppValidationParams();
         $params = $params + array(
             'application'=>$this->request->query->get('application'),
-            'translations'=>$this->request->query->get('translations')
+            'translations'=>$this->request->query->get('translations'),
+            'locale'=>$this->request->query->get('locale')
         );
         return $params;
     }
