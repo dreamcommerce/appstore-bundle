@@ -58,10 +58,23 @@ class Url {
 
     public function getApplicationParameters(){
         $params = $this->requestValidator->getAppValidationParams();
-        $params = $params + array(
-            'application'=>$this->request->query->get('application'),
-            'translations'=>$this->request->query->get('translations')
-        );
+
+        $additionalParams = [];
+        foreach([
+            'application',
+            'application-version',
+            'translations',
+            'locale',
+            'version',
+            'place'
+        ] as $param){
+            $value = $this->request->query->get($param);
+            if($value){
+                $additionalParams[$param] = $value;
+            }
+        }
+
+        $params = $params + $additionalParams;
         return $params;
     }
 
