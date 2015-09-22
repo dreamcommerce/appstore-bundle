@@ -147,7 +147,7 @@ class AppstoreListener implements ActionListenerInterface{
 
     }
 
-    public function onUpgrade(UpgradeEvent $event){
+    public function onUpgraded(UpgradeEvent $event){
         //todo: refactor ctrl+c, ctrl+v code
         $params = $event->getPayload();
         $appName = $event->getApplicationName();
