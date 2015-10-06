@@ -10,6 +10,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
 use DreamCommerce\Resource;
+use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceListIterator;
 
 class Fetcher {
 
@@ -19,30 +20,15 @@ class Fetcher {
     protected $resource;
 
     public function __construct(Resource $resource){
-
         $this->resource = $resource;
     }
 
     /**
-     * @return \ArrayObject
+     * @return ResourceListIterator
      * @throws \DreamCommerce\Exception\ResourceException
      */
     public function fetchAll(){
-        $result = array();
-
-        $page = 1;
-        do{
-            /**
-             * @var $objects \ArrayObject
-             */
-            $objects = $this->resource->page($page)->get();
-            $result = array_merge($result, $objects->getArrayCopy());
-
-            $page++;
-        }while($objects->page < $objects->pages);
-
-        $object = new \ArrayObject($result, \ArrayObject::ARRAY_AS_PROPS);
-        return $object;
+        return new ResourceListIterator($this->resource);
     }
 
     /**
