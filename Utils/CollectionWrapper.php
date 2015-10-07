@@ -18,7 +18,7 @@ class CollectionWrapper {
      */
     protected $collection;
 
-    public function __construct(\ArrayObject $collection){
+    public function __construct(\Traversable $collection){
 
         $this->collection = $collection;
     }
