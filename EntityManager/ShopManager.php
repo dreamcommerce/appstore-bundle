@@ -89,4 +89,9 @@ class ShopManager implements ShopManagerInterface
         $this->em->remove($shop);
         $this->em->flush();
     }
+
+    public function findById($id)
+    {
+        return $this->repository->find($id);
+    }
 }

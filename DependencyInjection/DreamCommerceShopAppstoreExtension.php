@@ -36,11 +36,10 @@ class DreamCommerceShopAppstoreExtension extends Extension
         foreach($config['applications'] as $app=>$data){
 
             $definition = new Definition('DreamCommerce\\ShopAppstoreBundle\\Handler\\Application');
-            $definition->addArgument(new Reference('logger'));
+            $definition->addArgument($app);
             $definition->addArgument($data['app_id']);
             $definition->addArgument($data['app_secret']);
             $definition->addArgument($data['appstore_secret']);
-            $definition->addArgument(new Reference('request_stack'));
 
             $container->setDefinition($this->getAlias().'.'.$app, $definition);
         }
