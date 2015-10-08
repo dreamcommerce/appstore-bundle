@@ -90,6 +90,10 @@ class ShopManager implements ShopManagerInterface
         $this->em->flush();
     }
 
+    /**
+     * @param $id
+     * @return ShopInterface
+     */
     public function findById($id)
     {
         return $this->repository->find($id);
