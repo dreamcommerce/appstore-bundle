@@ -95,9 +95,18 @@ class ResourceListIterator implements \Iterator, \Countable
             }
         }
 
-        $this->row = $this->iterator->current();
+        $this->row = $this->transformRow($this->iterator->current());
 
         $this->cursor++;
+    }
+
+    /**
+     * transform data row
+     * @param \ArrayObject $row
+     * @return \ArrayObject
+     */
+    protected function transformRow(\ArrayObject $row){
+        return $row;
     }
 
     /**
