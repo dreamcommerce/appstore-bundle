@@ -102,10 +102,10 @@ class ResourceListIterator implements \Iterator, \Countable
 
     /**
      * transform data row
-     * @param \ArrayObject $row
-     * @return \ArrayObject
+     * @param mixed $row
+     * @return mixed
      */
-    protected function transformRow(\ArrayObject $row){
+    protected function transformRow($row){
         return $row;
     }
 

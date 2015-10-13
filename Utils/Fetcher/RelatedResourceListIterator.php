@@ -108,15 +108,22 @@ class RelatedResourceListIterator extends ResourceListIterator
 
     /**
      * decorates current row with related data
-     * @param \ArrayObject $row
-     * @return \ArrayObject
+     * @param mixed $row
+     * @return mixed
      */
-    protected function transformRow(\ArrayObject $row){
+    protected function transformRow($row){
+
+        if(is_scalar($row)){
+            return $row;
+        }
+
         foreach($this->connections as $data){
             $self = $row->{$data->getSelfKey()};
             $class = $data->getClass();
             if(isset($this->resData[$class][$self])){
                 $row->{$class} = $this->resData[$class][$self];
+            }else{
+                $row->{$class} = [];
             }
         }
 
