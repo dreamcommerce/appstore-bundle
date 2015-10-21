@@ -30,7 +30,7 @@ class CollectionChoiceList extends LazyChoiceList{
      */
     protected $keyResolver;
 
-    public function __construct(\ArrayObject $resource, callable $keyResolver, callable $valueResolver){
+    public function __construct(\Traversable $resource, callable $keyResolver, callable $valueResolver){
 
         $this->resource = $resource;
         $this->valueResolver = $valueResolver;
