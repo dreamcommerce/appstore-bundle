@@ -53,6 +53,12 @@ class ResourceListIterator implements \Iterator, \Countable
     protected $iterator = null;
 
     /**
+     * was the first result preloaded by count?
+     * @var bool
+     */
+    protected $cached = false;
+
+    /**
      * @param Resource $resource
      */
     public function __construct(Resource $resource)
@@ -132,6 +138,12 @@ class ResourceListIterator implements \Iterator, \Countable
      */
     public function rewind()
     {
+        // prevent second fetching if count method has been called
+        if($this->cached){
+            $this->cached = false;
+            return;
+        }
+
         $this->cursor = 0;
         $this->currentPage = 1;
         $this->fetch(0);
@@ -163,6 +175,11 @@ class ResourceListIterator implements \Iterator, \Countable
      */
     public function count()
     {
+        if(!$this->collection){
+            $this->rewind();
+            $this->cached = true;
+        }
+
         return $this->collection->count;
     }
 }
