@@ -90,7 +90,7 @@ class ApplicationControllerListener{
             $shop = $this->shopManager->findShopByNameAndApplication($params['shop'], $appName);
 
             if(!$shop){
-                throw new AccessDeniedHttpException('Application not found');
+                $this->redirect($event, 'not_installed');
             }
 
             if($controller[0] instanceof PaidControllerInterface){

@@ -1,5 +1,5 @@
-{% extends 'DreamCommerce::base.html.twig' %}
+{% extends 'DreamCommerceShopAppstoreBundle::base.html.twig' %}
 
 {% block body %}
-Instalacja aplikacji nie została opłacona.
+    {{'exception.unpaid'|trans({}, 'DreamCommerceShopAppstoreBundle')}}
 {% endblock %}

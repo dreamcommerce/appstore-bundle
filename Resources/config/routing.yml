@@ -1,4 +1,3 @@
-# todo: prefixed routes
 dream_commerce_shop_appstore_responder:
     path:     "/responder"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Responder:index }
@@ -12,7 +11,7 @@ dream_commerce_shop_appstore.unsubscribed:
     path:     "/exception/unsubscribed"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:unsubscribed }
 
-dream_commerce_shop_appstore.notInstalled:
+dream_commerce_shop_appstore.not_installed:
     path:     "/exception/not_installed"
     defaults: { _controller: DreamCommerceShopAppstoreBundle:Exception:notInstalled }
 

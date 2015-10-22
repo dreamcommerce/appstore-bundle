@@ -1,5 +1,5 @@
-{% extends 'DreamCommerce::base.html.twig' %}
+{% extends 'DreamCommerceShopAppstoreBundle::base.html.twig' %}
 
 {% block body %}
-Aplikacja nie została zainstalowana w tym sklepie.
+    {{'exception.not_installed'|trans({}, 'DreamCommerceShopAppstoreBundle')}}
 {% endblock %}
