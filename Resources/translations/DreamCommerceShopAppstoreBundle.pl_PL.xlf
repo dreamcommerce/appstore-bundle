@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file datatype="plaintext" original="file.ext" source-language="en" target-language="pl">
+        <body>
+            <trans-unit id="1">
+                <source>exception.not_installed</source>
+                <target state="translated">Aplikacja nie jest zainstalowana lub jest w trakcie instalacji.</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>exception.reinstall</source>
+                <target>Wystąpił błąd sklepu (prawdopodobnie ręcznie zresetowany sklep). Odinstaluj aplikację i zainstaluj ją ponownie.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>exception.unpaid</source>
+                <target>Instalacja aplikacji nie została opłacona.</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>exception.unsubscribed</source>
+                <target>Subskrypcja nie została opłacona.</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>
