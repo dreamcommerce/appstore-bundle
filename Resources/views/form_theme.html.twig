@@ -1,46 +1,20 @@
-{% extends "form_div_layout.html.twig" %}
+{% extends 'form_div_layout.html.twig' %}
 
-{% block button_widget -%}
+{%- block button_widget -%}
+    {% import 'DreamCommerceShopAppstoreBundle::ui.html.twig' as ui %}
+
+    {% if custom is not defined %}
+        {{ ui.buttons_start() }}
+    {% endif %}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' button button-bg button-larger save-button')|trim}) %}
     {{- parent() -}}
+    {% if custom is defined %}
+        {{ ui.buttons_end() }}
+    {% endif %}
 {%- endblock %}
 
-{% block form_row -%}
-    <div class="edition-form-line{% if (not compound or force_error|default(false)) and not valid %} input-warning{% endif %}">
-        {{ form_label(form) }}
-        {{ form_widget(form) }}
-    </div>
-{%- endblock form_row %}
-
-{%- block form_label -%}
-    {% if label is not sameas(false) -%}
-        {% if not compound -%}
-            {% set label_attr = label_attr|merge({'for': id}) %}
-            {% set span_attr = [] %}
-        {%- endif %}
-        {% if required -%}
-            {% set span_attr = span_attr|merge({'class': (span_attr.class|default('') ~ ' aicon-required')|trim}) %}
-        {%- endif %}
-        {% if label is empty -%}
-            {% set label = name|humanize %}
-        {%- endif -%}
-        <div class="edition-form-line-label">
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                <span{% for attrname, attrvalue in span_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}:</span>
-            </label>
-        </div>
-    {%- endif -%}
-{%- endblock form_label -%}
-
-{% block form_widget %}
-    <div class="edition-form-line-field">
-        {{- parent() -}}
-        {{ form_errors(form) }}
-    </div>
-{%- endblock form_widget %}
-
-{% block form_errors -%}
-    {% if errors|length > 0 -%}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
         <ul class="error-list">
             {%- for error in errors -%}
                 <li>
@@ -51,31 +25,82 @@
     {%- endif %}
 {%- endblock form_errors %}
 
-{%- block radio_widget -%}
+{%- block form_row -%}
+<div class="edition-form-line{% if (not compound or force_error|default(false)) and not valid %} input-warning{% endif %}">
+    <div class="edition-form-line-label">
+        {{ form_label(form) }}
+    </div>
     <div class="edition-form-line-field">
+        {{ form_widget(form) }}
+        {% if attr.tooltip is defined %}
+            <div class="edition-form-comment">
+                <div class="edition-form-comment-content">{{ attr.tooltip|trans({}, translation_domain) }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{%- endblock form_row %}
+
+{%- block form_label -%}
+
+    {% if _internal is defined %}
+        {{ parent() }}
+    {% else %}
+        {% if label is not same as(false) -%}
+            {% if not compound -%}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+                {% set span_attr = [] %}
+            {%- else -%}
+                {% set span_attr = [] %}
+            {%- endif %}
+            {% if required -%}
+                {% set span_attr = span_attr|merge({'class': (span_attr.class|default('') ~ ' aicon-required')|trim}) %}
+            {%- endif %}
+            {% if label is empty -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+                <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                <span{% for attrname, attrvalue in span_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}:</span>
+                </label>
+        {%- endif -%}
+    {% endif %}
+{%- endblock form_label -%}
+
+{%- block radio_widget -%}
+    {% if _internal is defined %}
+        {{ parent() }}
+    {% else %}
         <span class="radio-wrap">
             {{- parent() -}}
             <label for="{{ id }}"></label>
         </span>
         {{ form_errors(form) }}
-    </div>
+        {% endif %}
 {%- endblock radio_widget -%}
 
 {%- block checkbox_widget -%}
-    <div class="edition-form-line-field">
+    {% if _internal is defined %}
+        {{ parent() }}
+    {% else %}
         <span class="checkbox-wrap">
             {{- parent() -}}
             <label for="{{ id }}"></label>
         </span>
         {{ form_errors(form) }}
-    </div>
+    {% endif %}
 {%- endblock checkbox_widget -%}
 
-{%- block choice_widget_collapsed -%}
-    <div class="edition-form-line-field">
-        <div class="select-wrapper">
-            {{- parent() -}}
-        </div>
-        {{ form_errors(form) }}
-    </div>
-{%- endblock choice_widget_collapsed -%}
+{%- block choice_widget_expanded -%}
+    <ul class="control-more-options additional-inline multiple list"{{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <li>
+                <span class="{% if multiple %}checkbox{% else %}radio{% endif %}-wrap">
+                    {{- form_widget(child, {_internal: true}) -}}
+                    {{- form_label(child, ' ', {translation_domain: choice_translation_domain, _internal: true}) -}}
+                </span>
+                {{- form_label(child, null, {translation_domain: choice_translation_domain, _internal: true}) -}}
+            </li>
+        {% endfor -%}
+    </ul>
+    {{ form_errors(form) }}
+{%- endblock choice_widget_expanded -%}
