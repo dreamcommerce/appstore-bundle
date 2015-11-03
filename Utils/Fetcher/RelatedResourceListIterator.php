@@ -82,6 +82,10 @@ class RelatedResourceListIterator extends ResourceListIterator
         // get related collections
         $resData = [];
 
+        if(empty($primaryKeys)){
+            return $resData;
+        }
+
         foreach($connections as $connection){
             $resource = $connection->getResource();
 
@@ -113,7 +117,7 @@ class RelatedResourceListIterator extends ResourceListIterator
      */
     protected function transformRow($row){
 
-        if(is_scalar($row)){
+        if($row===null || is_scalar($row)){
             return $row;
         }
 
