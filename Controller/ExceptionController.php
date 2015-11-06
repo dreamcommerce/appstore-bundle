@@ -14,6 +14,11 @@ class ExceptionController extends Controller{
         return $this->render('DreamCommerceShopAppstoreBundle::exception/unsubscribed.html.twig');
     }
 
+    public function upgradeAction()
+    {
+        return $this->render('DreamCommerceShopAppstoreBundle::exception/upgrade.html.twig');
+    }
+
     public function notInstalledAction(){
         return $this->render('DreamCommerceShopAppstoreBundle::exception/not_installed.html.twig');
     }

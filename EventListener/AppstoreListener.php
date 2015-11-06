@@ -160,6 +160,7 @@ class AppstoreListener implements ActionListenerInterface{
         }
 
         $shop->setVersion($params['application_version']);
+        $this->shopManager->save($shop);
     }
 
 }

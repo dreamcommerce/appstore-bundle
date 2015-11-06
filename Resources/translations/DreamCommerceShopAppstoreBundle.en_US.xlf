@@ -17,6 +17,10 @@
                 <source>exception.unsubscribed</source>
                 <target>Application subscription has not been paid.</target>
             </trans-unit>
+            <trans-unit id="5">
+                <source>exception.upgrade</source>
+                <target>Application needs to be upgraded in administration panel.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
