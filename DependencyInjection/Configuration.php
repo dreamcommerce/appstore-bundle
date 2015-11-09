@@ -20,8 +20,31 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('dream_commerce_shop_appstore');
 
+        $supportedDrivers = array('orm', 'custom');
+
         $rootNode
             ->children()
+                ->scalarNode('db_driver')
+                    ->defaultValue('orm')
+                    ->validate()
+                        ->ifNotInArray($supportedDrivers)
+                        ->thenInvalid('The driver %s is not supported. Please choose one of '.json_encode($supportedDrivers))
+                    ->end()
+                ->end()
+                ->arrayNode('orm')->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('entity_manager')->defaultValue('default')->end()
+                    ->end()
+                ->end()
+                ->scalarNode('object_manager')->defaultNull()->end()
+                ->arrayNode('objects')
+                    ->children()
+                        ->scalarNode('shop')->cannotBeEmpty()->end()
+                        ->scalarNode('token')->cannotBeEmpty()->end()
+                        ->scalarNode('billing')->cannotBeEmpty()->end()
+                        ->scalarNode('subscription')->cannotBeEmpty()->end()
+                    ->end()
+                ->end()
                 ->arrayNode('applications')
                     ->requiresAtLeastOneElement()
                     ->prototype('array')
@@ -32,7 +55,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('routes')
+                ->arrayNode('routes')->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('unpaid')->defaultValue('dream_commerce_shop_appstore.unpaid')->end()
                         ->scalarNode('unsubscribed')->defaultValue('dream_commerce_shop_appstore.unsubscribed')->end()

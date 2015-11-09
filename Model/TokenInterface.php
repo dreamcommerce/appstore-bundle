@@ -11,6 +11,9 @@ interface TokenInterface
 {
     public function setExpiresAt(\DateTime $expiresAt);
 
+    /**
+     * @return \DateTime
+     */
     public function getExpiresAt();
 
     public function setAccessToken($accessToken);

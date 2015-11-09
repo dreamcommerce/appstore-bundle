@@ -9,7 +9,17 @@ namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 
 use DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface;
 
-interface SubscriptionManagerInterface
+interface SubscriptionManagerInterface extends AbstractManagerInterface
 {
-    public function save(SubscriptionInterface $subscription);
+    /**
+     * @return SubscriptionInterface
+     */
+    public function create();
+
+    /**
+     * @param SubscriptionInterface $entity
+     * @param bool|true $commit
+     * @return mixed
+     */
+    public function save($entity, $commit = true);
 }

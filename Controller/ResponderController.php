@@ -8,26 +8,24 @@ use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
-use Symfony\Bridge\Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
+/**
+ * Class ResponderController
+ * responder for appstore events
+ * @package DreamCommerce\ShopAppstoreBundle\Controller
+ */
 class ResponderController extends Controller
 {
 
     public function indexAction(Request $request)
     {
-
-        /**
-         * @var $logger Logger
-         */
-        $logger = $this->get('logger');
 
         $apps = $this->container->getParameter('dream_commerce_shop_appstore.applications');
 

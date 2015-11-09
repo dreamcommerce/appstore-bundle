@@ -10,20 +10,11 @@ namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 use Doctrine\ORM\EntityManager;
 use DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface;
 
-class SubscriptionManager implements SubscriptionManagerInterface{
+class SubscriptionManager extends ObjectManager implements SubscriptionManagerInterface{
 
-    protected $em;
-    protected $class;
-    protected $repository;
-
-    public function __construct(EntityManager $em, $class){
-        $this->em = $em;
-        $this->repository = $em->getRepository($class);
-    }
-
-    public function save(SubscriptionInterface $subscription)
+    public function __construct(EntityManager $em)
     {
-        $this->em->persist($subscription);
-        $this->em->flush();
+        parent::__construct($em, 'DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface');
     }
+
 }

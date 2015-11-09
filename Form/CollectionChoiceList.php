@@ -1,21 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-04-01
- * Time: 17:36
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\Form;
 
 
-use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceListInterface;
-use Symfony\Component\Form\Extension\Core\ChoiceList\LazyChoiceList;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
-use Symfony\Component\Form\Extension\Core\ChoiceList\SimpleChoiceList;
+use Symfony\Component\Form\ChoiceList\LazyChoiceList;
+use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
-class CollectionChoiceList extends LazyChoiceList{
+class CollectionChoiceList extends LazyChoiceList implements ChoiceLoaderInterface{
 
     /**
      * @var Resource
@@ -32,6 +23,8 @@ class CollectionChoiceList extends LazyChoiceList{
 
     public function __construct(\Traversable $resource, callable $keyResolver, callable $valueResolver){
 
+        parent::__construct($this);
+
         $this->resource = $resource;
         $this->valueResolver = $valueResolver;
         $this->keyResolver = $keyResolver;
@@ -43,15 +36,35 @@ class CollectionChoiceList extends LazyChoiceList{
      *
      * Should be implemented by child classes.
      *
-     * @return ChoiceListInterface The loaded choice list
+     * @param null $value
+     * @return ChoiceList The loaded choice list
      */
-    public function loadChoiceList()
+    public function loadChoiceList($value = null)
     {
-        $v = array();
+        $values = [];
+        $keys = [];
+
         foreach($this->resource as $r){
-            $v[call_user_func($this->keyResolver, $r)] = call_user_func($this->valueResolver, $r);
+            $keys[] = call_user_func($this->keyResolver, $r);
+            $values[] = call_user_func($this->valueResolver, $r);
         }
 
-        return new SimpleChoiceList($v);
+        return new ChoiceList($values, $keys);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function loadChoicesForValues(array $values, $value = null)
+    {
+        // TODO: Implement loadChoicesForValues() method.
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function loadValuesForChoices(array $choices, $value = null)
+    {
+        // TODO: Implement loadValuesForChoices() method.
     }
 }

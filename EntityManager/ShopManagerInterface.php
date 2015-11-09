@@ -8,26 +8,25 @@
 namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 
-interface ShopManagerInterface
+interface ShopManagerInterface extends AbstractManagerInterface
 {
-    public function findShopByName($name);
 
     /**
-     * @param $name
-     * @param $application
-     * @return ShopInterface
+     * @return ShopRepositoryInterface
      */
-    public function findShopByNameAndApplication($name, $application);
-
+    public function getRepository();
     /**
      * @return ShopInterface
      */
     public function create();
 
-    public function save(ShopInterface $shop);
+    /**
+     * @param $entity
+     * @param bool|true $commit
+     * @return mixed
+     */
+    public function save($entity, $commit = true);
 
-    public function delete(ShopInterface $shop);
-
-    public function findByApplication($application);
 }

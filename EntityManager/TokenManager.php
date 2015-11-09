@@ -12,33 +12,11 @@ namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 use Doctrine\ORM\EntityManager;
 use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
 
-class TokenManager implements TokenManagerInterface{
+class TokenManager extends ObjectManager implements TokenManagerInterface{
 
-    protected $em;
-    protected $class;
-    protected $repository;
-
-    public function __construct(EntityManager $em, $class){
-        $this->em = $em;
-        $this->repository = $em->getRepository($class);
-    }
-
-    /**
-     * @return TokenInterface
-     */
-    public function create(){
-
-        /**
-         * @var $class TokenInterface
-         */
-        $className = $this->repository->getClassName();
-        $class = new $className;
-        return $class;
-    }
-
-    public function save(TokenInterface $token){
-        $this->em->persist($token);
-        $this->em->flush();
+    public function __construct(EntityManager $em)
+    {
+        parent::__construct($em, 'DreamCommerce\ShopAppstoreBundle\Model\TokenInterface');
     }
 
 }

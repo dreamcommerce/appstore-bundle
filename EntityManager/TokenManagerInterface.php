@@ -10,12 +10,17 @@ namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 
 use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
 
-interface TokenManagerInterface
+interface TokenManagerInterface extends AbstractManagerInterface
 {
     /**
      * @return TokenInterface
      */
     public function create();
 
-    public function save(TokenInterface $token);
+    /**
+     * @param TokenInterface $entity
+     * @param bool|true $commit
+     * @return mixed
+     */
+    public function save($entity, $commit = true);
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-23
- * Time: 17:27
- */
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 interface ShopInterface
@@ -26,6 +20,9 @@ interface ShopInterface
 
     public function setToken(TokenInterface $token);
 
+    /**
+     * @return SubscriptionInterface[]
+     */
     public function getSubscriptions();
 
     public function addSubscription(SubscriptionInterface $subscription);

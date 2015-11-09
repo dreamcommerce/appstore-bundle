@@ -1,16 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-18
- * Time: 17:00
- */
 namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 
 
 use DreamCommerce\ShopAppstoreBundle\Model\BillingInterface;
 
-interface BillingManagerInterface
+/**
+ * Interface BillingManagerInterface
+ * @package DreamCommerce\ShopAppstoreBundle\EntityManager
+ */
+interface BillingManagerInterface extends AbstractManagerInterface
 {
-    public function save(BillingInterface $billingInterface);
+    /**
+     * @return BillingInterface
+     */
+    public function create();
+
+    /**
+     * @param BillingInterface $entity
+     * @param bool|true $commit
+     */
+    public function save($entity, $commit = true);
 }

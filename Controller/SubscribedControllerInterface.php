@@ -1,14 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-04-13
- * Time: 13:19
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
-
+/**
+ * Interface SubscribedControllerInterface
+ * tells the controlled action is considered as a subscription-aware
+ * @package DreamCommerce\ShopAppstoreBundle\Controller
+ */
 interface SubscribedControllerInterface {
 
 }

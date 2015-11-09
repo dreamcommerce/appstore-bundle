@@ -1,16 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-24
- * Time: 16:37
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
 use DreamCommerce\Client;
-use DreamCommerce\Exception\ClientException;
 use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\PaidControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
@@ -18,32 +10,50 @@ use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-// todo: invalid token handling/refreshing
+/**
+ * Class ApplicationControllerListener
+ * takes care of restricting controller access
+ * @package DreamCommerce\ShopAppstoreBundle\EventListener
+ */
 class ApplicationControllerListener{
 
+    /**
+     * applications data
+     * @var array
+     */
     protected $applications;
+    /**
+     * @var ShopManagerInterface
+     */
     protected $shopManager;
+    /**
+     * exception routes name
+     * @var array
+     */
     protected $routes;
     /**
      * @var TokenRefresher
      */
     protected $refresher;
 
+    /**
+     * used when token is invalid
+     * @var FilterControllerEvent
+     */
     protected $lastEvent;
     /**
      * @var null
      */
     protected $version;
 
-    public function __construct($configuration, ShopManagerInterface $shopManager, TokenRefresher $refresher, $version = null){
-        $this->applications = $configuration['applications'];
-        $this->routes = $configuration['routes'];
+    public function __construct($applications, $routes, ShopManagerInterface $shopManager, TokenRefresher $refresher, $version = null){
+        $this->applications = $applications;
+        $this->routes = $routes;
         $this->shopManager = $shopManager;
         $this->refresher = $refresher;
         $this->version = $version;
@@ -56,6 +66,7 @@ class ApplicationControllerListener{
     public function onKernelController(FilterControllerEvent $event)
     {
 
+        // last event used before token invalid exception is thrown
         $this->lastEvent = $event;
 
         /**
@@ -71,29 +82,36 @@ class ApplicationControllerListener{
             return;
         }
 
+        // if latest controller on stack is a filtered instance
         if ($controller[0] instanceof ApplicationControllerInterface) {
 
+            // get current request data
             $request = $event->getRequest();
 
             $requestValidator = new RequestValidator($request);
 
             try{
+                // get parameters
                 $appName = $requestValidator->getApplicationName($this->applications);
                 $appData = $this->applications[$appName];
                 $requestValidator->setApplication($appData);
                 $params = $requestValidator->validateAppRequest();
             }catch(InvalidRequestException $ex){
+                // if request is malformed
                 throw new BadRequestHttpException('Invalid request');
             }
 
+            // handle shop arguments on iframe (eg. product list checkboxes)
             if($request->query->has('id')){
                 $ids = $request->query->get('id');
                 $idsList = @json_decode($ids);
                 $request->query->set('id', $idsList);
             }
 
-            $shop = $this->shopManager->findShopByNameAndApplication($params['shop'], $appName);
+            // search for installed shop instance by app
+            $shop = $this->shopManager->getRepository()->findOneByNameAndApplication($params['shop'], $appName);
 
+            // not installed - throw an error
             if(!$shop){
                 $this->redirect($event, 'not_installed');
             }
@@ -104,6 +122,7 @@ class ApplicationControllerListener{
                 }
             }
 
+            // if an application controller needs to be paid
             if($controller[0] instanceof PaidControllerInterface){
                 $billing = $shop->getBilling();
                 if(empty($billing)){
@@ -111,6 +130,7 @@ class ApplicationControllerListener{
                 }
             }
 
+            // need a subscription?
             if($controller[0] instanceof SubscribedControllerInterface){
                 $subscriptions = $shop->getSubscriptions();
                 if(empty($subscriptions)){
@@ -125,23 +145,38 @@ class ApplicationControllerListener{
                 }
             }
 
+            // get shop token
             $token = $shop->getToken();
 
+            // instantiate a client
+            // todo: get a client from already instanced applications - from DI (extension compile stage)
             $client = new Client($shop->getShopUrl(), $appData['app_id'], $appData['app_secret']);
 
+            // token expired - attempt to refresh
             if($token->getExpiresAt()->getTimestamp() - (new \DateTime())->getTimestamp() < 86400){
                 $this->refresher->setClient($client);
                 $this->refresher->refresh($shop);
             }
 
+            // set token on client
             $client->setAccessToken($token->getAccessToken());
+            // action performed on token is invalid
             $client->setOnTokenInvalidHandler(array($this, 'invalidTokenRedirect'));
 
+            // pass shop and client
             $controller[0]->injectClient($client, $shop);
         }
     }
 
+    /**
+     * redirect to error page info
+     * @param FilterControllerEvent $event
+     * @param $routeName
+     */
     protected function redirect(FilterControllerEvent $event, $routeName){
+        /**
+         * @var $controller Controller
+         */
         $controller = $event->getController();
         $controller = is_array($controller) ? $controller[0] : $controller;
 
@@ -152,9 +187,13 @@ class ApplicationControllerListener{
         throw new HttpException(307, null, null, array('Location' => $url));
     }
 
+    /**
+     * called when current token is invalid
+     * @param Client $client
+     * @param \Exception $ex
+     */
     public function invalidTokenRedirect(Client $client, \Exception $ex){
-        $this->redirect($this->lastEvent, 'reinstall', null);
-        return true;
+        $this->redirect($this->lastEvent, 'reinstall');
     }
 
 }

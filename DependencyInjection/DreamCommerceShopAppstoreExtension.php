@@ -3,6 +3,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
@@ -17,6 +18,9 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class DreamCommerceShopAppstoreExtension extends Extension
 {
+
+    const ALIAS = 'dream_commerce_shop_appstore';
+
     /**
      * {@inheritdoc}
      */
@@ -29,9 +33,16 @@ class DreamCommerceShopAppstoreExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter($this->getAlias().'.applications', $config['applications']);
-        $container->setParameter($this->getAlias(), $config);
+        $container->setParameter($this->getAlias().'.routes', $config['routes']);
 
-        // todo: checking if not already defined
+        $container->setParameter($this->getAlias().'.objects', $config['objects']);
+        $container->setParameter($this->getAlias().'.object_manager', $config['object_manager']);
+
+        $loader->load(sprintf('%s.yml', $config['db_driver']));
+
+        if($config['db_driver']=='orm'){
+            $container->setParameter($this->getAlias().'.orm', $config['orm']);
+        }
 
         foreach($config['applications'] as $app=>$data){
 
@@ -41,20 +52,12 @@ class DreamCommerceShopAppstoreExtension extends Extension
             $definition->addArgument($data['app_secret']);
             $definition->addArgument($data['appstore_secret']);
 
-            $container->setDefinition($this->getAlias().'.'.$app, $definition);
-        }
-
-        // todo setting from options
-        $config['db_driver'] = 'orm';
-
-        if ('custom' !== $config['db_driver']) {
-            $loader->load(sprintf('%s.yml', $config['db_driver']));
-            $container->setParameter($this->getAlias() . '.backend_type_' . $config['db_driver'], true);
+            $container->setDefinition($this->getAlias().'.app.'.$app, $definition);
         }
 
     }
 
     public function getAlias(){
-        return 'dream_commerce_shop_appstore';
+        return self::ALIAS;
     }
 }

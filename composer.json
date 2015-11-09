@@ -1,6 +1,6 @@
 {
     "name": "dreamcommerce/shop-appstore-bundle",
-    "description": "Symfony bundle for DreamCommerce-based shops",
+    "description": "Symfony bundle for DreamCommerce-based shops application",
     "license": "MIT",
     "require": {
         "php": ">=5.4.0",
@@ -17,7 +17,6 @@
             "email": "przemyslaw.pawliczuk@shoper.pl"
         }
     ],
-    "version": "0.1-dev",    
-    "target-dir" : "DreamCommerce/ShopAppstoreBundle",
+    "version": "0.2-dev",
     "minimum-stability": "dev"
 }

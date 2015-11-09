@@ -1,29 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-04-10
- * Time: 21:58
- */
 namespace DreamCommerce\ShopAppstoreBundle\EntityManager;
 
 use Doctrine\ORM\EntityManager;
 use DreamCommerce\ShopAppstoreBundle\Model\BillingInterface;
 
-class BillingManager implements BillingManagerInterface{
+/**
+ * Class BillingManager
+ * @package DreamCommerce\ShopAppstoreBundle\EntityManager
+ */
+class BillingManager extends ObjectManager implements BillingManagerInterface{
 
-    protected $em;
-    protected $class;
-    protected $repository;
-
-    public function __construct(EntityManager $em, $class){
-        $this->em = $em;
-        $this->repository = $em->getRepository($class);
-    }
-
-    public function save(BillingInterface $billingInterface)
+    public function __construct(EntityManager $em)
     {
-        $this->em->persist($billingInterface);
-        $this->em->flush();
+        parent::__construct($em, 'DreamCommerce\ShopAppstoreBundle\Model\BillingInterface');
     }
+
 }

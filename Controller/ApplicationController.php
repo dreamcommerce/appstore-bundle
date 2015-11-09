@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-28
- * Time: 15:10
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 
@@ -17,6 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Class ApplicationController
+ *
+ * provides shop-protected, generic controller class
+ * @package DreamCommerce\ShopAppstoreBundle\Controller
+ */
 abstract class ApplicationController extends Controller implements ApplicationControllerInterface{
 
     /**
@@ -29,12 +28,18 @@ abstract class ApplicationController extends Controller implements ApplicationCo
      */
     protected $shop;
 
+    /**
+     * method used by request filter - injects current client and shop instance
+     * @param Client $client
+     * @param ShopInterface $shop
+     */
     public function injectClient(Client $client, ShopInterface $shop){
         $this->client = $client;
         $this->shop = $shop;
     }
 
     /**
+     * generates URL injecting iframe params to the query
      * @param string $route #Route
      * @param array $parameters
      * @param bool $referenceType
@@ -49,6 +54,13 @@ abstract class ApplicationController extends Controller implements ApplicationCo
         return $rv->generateUrl($route, $parameters, $referenceType);
     }
 
+    /**
+     * creates form builder with iframe params
+     * @see generateAppUrl
+     * @param null $data
+     * @param array $options
+     * @return \Symfony\Component\Form\FormBuilder
+     */
     public function createFormBuilder($data = null, array $options = array())
     {
         $builder = parent::createFormBuilder($data, $options);
