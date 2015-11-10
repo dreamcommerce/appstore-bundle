@@ -37,6 +37,8 @@ class DreamCommerceShopAppstoreBundle extends Bundle
             );
             $container->addCompilerPass(new DoctrinePass());
         }
+
+        //todo: bound classes validation
     }
 
     protected function enableLibraryDebugging()
