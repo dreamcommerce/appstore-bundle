@@ -19,6 +19,7 @@ class DreamCommerceShopAppstoreBundle extends Bundle
             $this->enableLibraryDebugging();
         }
 
+
     }
 
     public function build(ContainerBuilder $container)

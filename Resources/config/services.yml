@@ -18,7 +18,7 @@ services:
 
     dream_commerce_shop_appstore.controller_filter:
         class: DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener
-        arguments: [%dream_commerce_shop_appstore%, @dream_commerce_shop_appstore.shop_manager, @dream_commerce_shop_appstore.token_refresher]
+        arguments: [%dream_commerce_shop_appstore%, @dream_commerce_shop_appstore.shop_manager, @dream_commerce_shop_appstore.token_refresher, %minimal_version%]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 

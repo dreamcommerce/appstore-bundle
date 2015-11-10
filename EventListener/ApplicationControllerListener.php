@@ -36,12 +36,17 @@ class ApplicationControllerListener{
     protected $refresher;
 
     protected $lastEvent;
+    /**
+     * @var null
+     */
+    protected $version;
 
-    public function __construct($configuration, ShopManagerInterface $shopManager, TokenRefresher $refresher){
+    public function __construct($configuration, ShopManagerInterface $shopManager, TokenRefresher $refresher, $version = null){
         $this->applications = $configuration['applications'];
         $this->routes = $configuration['routes'];
         $this->shopManager = $shopManager;
         $this->refresher = $refresher;
+        $this->version = $version;
     }
 
     /**
@@ -91,6 +96,12 @@ class ApplicationControllerListener{
 
             if(!$shop){
                 $this->redirect($event, 'not_installed');
+            }
+
+            if($this->version){
+                if($shop->getVersion()<$this->version){
+                    $this->redirect($event, 'upgrade');
+                }
             }
 
             if($controller[0] instanceof PaidControllerInterface){
