@@ -20,7 +20,6 @@ class DoctrinePass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $this->addXmlMappings($container);
         $this->mapInterfaces($container);
         $this->injectEntityManager($container);
     }
@@ -28,20 +27,9 @@ class DoctrinePass implements CompilerPassInterface
     /**
      * @param ContainerBuilder $container
      */
-    protected function addXmlMappings(ContainerBuilder $container)
-    {
-        $mappings = array(
-            realpath(__DIR__ . '/../../Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model'
-        );
-
-        $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver($mappings));
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     */
     protected function mapInterfaces(ContainerBuilder $container)
     {
+        // map targeting entities to interfaces
         $def = $container->findDefinition('doctrine.orm.listeners.resolve_target_entity');
 
         $objects = [];
@@ -58,6 +46,8 @@ class DoctrinePass implements CompilerPassInterface
             );
         }
 
+        $def->addTag('doctrine.event_listener', array('event' => 'loadClassMetadata'));
+
         $container->setParameter(DreamCommerceShopAppstoreExtension::ALIAS . '.objects', $objects);
     }
 
@@ -66,6 +56,7 @@ class DoctrinePass implements CompilerPassInterface
      */
     protected function injectEntityManager($container)
     {
+        // adds entity manager name as argument for internal entity manager
         $def = $container->findDefinition('dream_commerce_shop_appstore.entity_manager');
 
         $ormOptions = $container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS.'.orm');

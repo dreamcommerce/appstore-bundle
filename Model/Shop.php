@@ -2,10 +2,6 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-
-//todo: multiple applications database structure
 abstract class Shop implements ShopInterface
 {
     protected $name;
@@ -21,11 +17,6 @@ abstract class Shop implements ShopInterface
     protected $subscriptions;
 
     protected $version;
-
-    public function __construct(){
-        $this->subscriptions = new ArrayCollection();
-    }
-
 
     public function setName($name)
     {

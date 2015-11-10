@@ -2,9 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle;
 
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\ManagersCompiler;
 use DreamCommerce\ShopAppstoreBundle\Utils\DebugProxy;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
@@ -28,7 +26,17 @@ class DreamCommerceShopAppstoreBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new DoctrinePass());
+        if(class_exists('\Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
+
+            $mappings = array(
+                realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model'
+            );
+
+            $container->addCompilerPass(
+                \Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass::createXmlMappingDriver($mappings)
+            );
+            $container->addCompilerPass(new DoctrinePass());
+        }
     }
 
     protected function enableLibraryDebugging()

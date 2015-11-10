@@ -7,8 +7,7 @@ services:
             - %dream_commerce_shop_appstore.objects%
 
     dream_commerce_shop_appstore.entity_manager:
-        factory_service:  doctrine
-        factory_method:   getManager
+        factory: ["@doctrine", getManager]
         class: Doctrine\ORM\EntityManager
-        #arguments: ["default"]
+        #arguments: ["default"] # injected by compiler pass
         public: false

@@ -44,11 +44,20 @@ class ObjectManager implements ObjectManagerInterface
         $this->em->flush();
     }
 
-    protected function getClassForInterface($class){
-        if(!isset($this->classMappings[$class])){
-            throw new \Exception(sprintf('Class %s not exists', $class));
+    protected function getClassForInterface($arg){
+
+        $class = null;
+
+        if(!isset($this->classMappings[$arg])){
+            if(!in_array($arg, array_values($this->classMappings))) {
+                throw new \Exception(sprintf('Class %s not exists', $arg));
+            }else{
+                $class = $arg;
+            }
+        }else{
+            $class = $this->classMappings[$arg];
         }
 
-        return $this->classMappings[$class];
+        return $class;
     }
 }
