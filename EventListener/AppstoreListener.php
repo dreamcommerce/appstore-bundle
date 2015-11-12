@@ -18,11 +18,11 @@ use DreamCommerce\ShopAppstoreBundle\EntityManager\TokenManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\BillingManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\SubscriptionManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\AppstoreEvent;
+use DreamCommerce\ShopAppstoreBundle\Event\Appstore\EventAbstract;
 
 class AppstoreListener implements ActionListenerInterface{
 
@@ -58,10 +58,10 @@ class AppstoreListener implements ActionListenerInterface{
 
     /**
      * get shop by particular event
-     * @param AppstoreEvent $event
+     * @param EventAbstract $event
      * @return \DreamCommerce\ShopAppstoreBundle\Model\ShopInterface
      */
-    protected function getShopByEvent(AppstoreEvent $event){
+    protected function getShopByEvent(EventAbstract $event){
         $params = $event->getPayload();
 
         $appName = $event->getApplicationName();

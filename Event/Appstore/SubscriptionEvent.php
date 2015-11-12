@@ -5,5 +5,5 @@ namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
  * Class SubscriptionEvent
  * @package DreamCommerce\ShopAppstoreBundle\Event\Appstore
  */
-class SubscriptionEvent extends InstallEvent{
+class SubscriptionEvent extends PackageEventAbstract{
 }

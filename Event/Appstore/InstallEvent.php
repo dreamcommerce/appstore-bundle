@@ -1,37 +1,9 @@
 <?php
 namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
 
-use DreamCommerce\ShopAppstoreBundle\Event\AppstoreEvent;
-
 /**
  * Class InstallEvent
  * @package DreamCommerce\ShopAppstoreBundle\Event\Appstore
  */
-class InstallEvent extends AppstoreEvent{
-
-    /**
-     * application data
-     * @var array
-     */
-    protected $application;
-
-    /**
-     * @param string $applicationName application name
-     * @param array $application application config data
-     * @param array $payload appstore payload
-     */
-    public function __construct($applicationName, $application, $payload){
-        $this->application = $application;
-        parent::__construct($applicationName, $payload);
-    }
-
-    /**
-     * get application config data
-     * @return array
-     */
-    public function getApplication()
-    {
-        return $this->application;
-    }
-
+class InstallEvent extends PackageEventAbstract{
 }

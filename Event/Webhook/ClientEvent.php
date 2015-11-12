@@ -2,9 +2,9 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Event\Webhook;
 
-use DreamCommerce\ShopAppstoreBundle\Event\WebhookEvent;
+use DreamCommerce\ShopAppstoreBundle\Event\EventAbstract;
 
-class ClientEvent extends WebhookEvent
+class ClientEventAbstract extends EventAbstract
 {
 
 }

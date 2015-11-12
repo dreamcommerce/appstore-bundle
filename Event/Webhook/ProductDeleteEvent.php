@@ -2,7 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Event\Webhook;
 
-class ProductDeleteEvent extends ProductEvent
+class ProductDeleteEvent extends ProductEventAbstract
 {
 
 }

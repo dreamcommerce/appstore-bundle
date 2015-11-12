@@ -6,5 +6,5 @@ namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
  * billing user paid for application
  * @package DreamCommerce\ShopAppstoreBundle\Event\Appstore
  */
-class BillingInstallEvent extends InstallEvent{
+class BillingInstallEvent extends PackageEventAbstract{
 }

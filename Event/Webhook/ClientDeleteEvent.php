@@ -2,7 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Event\Webhook;
 
-class ClientDeleteEvent extends ClientEvent
+class ClientDeleteEvent extends ClientEventAbstract
 {
 
 }

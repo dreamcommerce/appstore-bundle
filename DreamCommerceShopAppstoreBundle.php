@@ -5,7 +5,6 @@ namespace DreamCommerce\ShopAppstoreBundle;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
 use DreamCommerce\ShopAppstoreBundle\Utils\DebugProxy;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

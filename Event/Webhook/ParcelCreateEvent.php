@@ -2,7 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Event\Webhook;
 
-class ParcelCreateEvent extends ParcelEvent
+class ParcelCreateEvent extends ParcelEventAbstract
 {
 
 }
