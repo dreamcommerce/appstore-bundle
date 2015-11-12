@@ -57,7 +57,7 @@ class CollectionChoiceList extends LazyChoiceList implements ChoiceLoaderInterfa
      */
     public function loadChoicesForValues(array $values, $value = null)
     {
-        // TODO: Implement loadChoicesForValues() method.
+        // not needed so far
     }
 
     /**
@@ -65,6 +65,6 @@ class CollectionChoiceList extends LazyChoiceList implements ChoiceLoaderInterfa
      */
     public function loadValuesForChoices(array $choices, $value = null)
     {
-        // TODO: Implement loadValuesForChoices() method.
+        // not needed so far
     }
 }

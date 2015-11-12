@@ -2,6 +2,10 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
+/**
+ * Class Billing
+ * @package DreamCommerce\ShopAppstoreBundle\Model
+ */
 abstract class Billing implements BillingInterface
 {
     protected $shop;

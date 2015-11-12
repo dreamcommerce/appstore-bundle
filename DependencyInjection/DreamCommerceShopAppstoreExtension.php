@@ -2,13 +2,9 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
 
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -30,8 +26,8 @@ class DreamCommerceShopAppstoreExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $xmlLoader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $xmlLoader->load('services.xml');
 
         $container->setParameter($this->getAlias().'.applications', $config['applications']);
         $container->setParameter($this->getAlias().'.routes', $config['routes']);
@@ -39,22 +35,15 @@ class DreamCommerceShopAppstoreExtension extends Extension
         $container->setParameter($this->getAlias().'.objects', $config['objects']);
         $container->setParameter($this->getAlias().'.object_manager', $config['object_manager']);
 
-        $loader->load(sprintf('%s.yml', $config['db_driver']));
+        if($config['db_driver']!='custom'){
+            $xmlLoader->load(sprintf('%s.xml', $config['db_driver']));
+        }
 
         if($config['db_driver']=='orm'){
             $container->setParameter($this->getAlias().'.orm', $config['orm']);
         }
 
-        foreach($config['applications'] as $app=>$data){
-
-            $definition = new Definition('DreamCommerce\\ShopAppstoreBundle\\Handler\\Application');
-            $definition->addArgument($app);
-            $definition->addArgument($data['app_id']);
-            $definition->addArgument($data['app_secret']);
-            $definition->addArgument($data['appstore_secret']);
-
-            $container->setDefinition($this->getAlias().'.app.'.$app, $definition);
-        }
+        $container->setParameter($this->getAlias().'.debug', $config['debug']);
 
     }
 

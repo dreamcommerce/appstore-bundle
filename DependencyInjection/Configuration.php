@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('debug')->defaultNull()->end() //false - disable debug completely; null - depends on kernel.debug. string - logger service
                 ->scalarNode('db_driver')
                     ->defaultValue('orm')
                     ->validate()

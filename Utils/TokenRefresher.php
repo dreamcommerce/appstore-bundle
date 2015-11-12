@@ -5,8 +5,9 @@ namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
 use DreamCommerce\Client;
+use DreamCommerce\ClientInterface;
 use DreamCommerce\Exception\ClientException;
-use DreamCommerce\ShopAppstoreBundle\EntityManager\TokenManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher\Exception;
 
@@ -17,17 +18,20 @@ class TokenRefresher {
      */
     protected $shop;
     /**
-     * @var TokenManagerInterface
+     * @var ObjectManagerInterface
      */
     protected $manager;
 
+    /**
+     * @var ClientInterface
+     */
     protected $client;
 
-    public function __construct(TokenManagerInterface $manager){
+    public function __construct(ObjectManagerInterface $manager){
         $this->manager = $manager;
     }
 
-    public function setClient(Client $client){
+    public function setClient(ClientInterface $client){
         $this->client = $client;
     }
 

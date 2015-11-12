@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="dream_commerce_shop_appstore_responder" path="/responder" methods="POST">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Responder:index</default>
+    </route>
+
+    <route id="dream_commerce_shop_appstore.unpaid" path="/exception/unpaid">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Exception:unpaid</default>
+    </route>
+
+    <route id="dream_commerce_shop_appstore.unsubscribed" path="/exception/usubscribed">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Exception:unsubscribed</default>
+    </route>
+
+    <route id="dream_commerce_shop_appstore.not_installed" path="/exception/not_installed">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Exception:notInstalled</default>
+    </route>
+
+    <route id="dream_commerce_shop_appstore.reinstall" path="/exception/reinstall">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Exception:reinstall</default>
+    </route>
+
+    <route id="dream_commerce_shop_appstore.upgrade" path="/exception/upgrade">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Exception:upgrade</default>
+    </route>
+
+</routes>

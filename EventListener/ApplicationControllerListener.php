@@ -7,6 +7,8 @@ use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\PaidControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
@@ -28,9 +30,9 @@ class ApplicationControllerListener{
      */
     protected $applications;
     /**
-     * @var ShopManagerInterface
+     * @var ObjectManagerInterface
      */
-    protected $shopManager;
+    protected $objectManager;
     /**
      * exception routes name
      * @var array
@@ -51,10 +53,10 @@ class ApplicationControllerListener{
      */
     protected $version;
 
-    public function __construct($applications, $routes, ShopManagerInterface $shopManager, TokenRefresher $refresher, $version = null){
+    public function __construct($applications, $routes, ObjectManagerInterface $shopManager, TokenRefresher $refresher, $version = null){
         $this->applications = $applications;
         $this->routes = $routes;
-        $this->shopManager = $shopManager;
+        $this->objectManager = $shopManager;
         $this->refresher = $refresher;
         $this->version = $version;
     }
@@ -109,7 +111,11 @@ class ApplicationControllerListener{
             }
 
             // search for installed shop instance by app
-            $shop = $this->shopManager->getRepository()->findOneByNameAndApplication($params['shop'], $appName);
+            /**
+             * @var $repo ShopRepositoryInterface
+             */
+            $repo = $this->objectManager->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+            $shop = $repo->findOneByNameAndApplication($params['shop'], $appName);
 
             // not installed - throw an error
             if(!$shop){
@@ -148,8 +154,8 @@ class ApplicationControllerListener{
             // get shop token
             $token = $shop->getToken();
 
+            // todo: shit to get from register
             // instantiate a client
-            // todo: get a client from already instanced applications - from DI (extension compile stage)
             $client = new Client($shop->getShopUrl(), $appData['app_id'], $appData['app_secret']);
 
             // token expired - attempt to refresh

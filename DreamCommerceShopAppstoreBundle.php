@@ -2,9 +2,13 @@
 
 namespace DreamCommerce\ShopAppstoreBundle;
 
+use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\ApplicationsPass;
+use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\CustomObjectManagerPass;
+use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DebuggerPass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
 use DreamCommerce\ShopAppstoreBundle\Utils\DebugProxy;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -13,11 +17,11 @@ class DreamCommerceShopAppstoreBundle extends Bundle
 
     public function boot(){
 
-        $debug = $this->container->getParameter('kernel.environment') == 'dev';
-
-        if($debug){
-            $this->enableLibraryDebugging();
-        }
+//        $debug = $this->container->getParameter('kernel.environment') == 'dev';
+//
+//        if($debug){
+//            $this->enableLibraryDebugging();
+//        }
 
     }
 
@@ -25,7 +29,19 @@ class DreamCommerceShopAppstoreBundle extends Bundle
     {
         parent::build($container);
 
-        if(class_exists('\Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
+        $this->addDoctrinePass($container);
+
+        $container->addCompilerPass(new CustomObjectManagerPass(), PassConfig::TYPE_BEFORE_REMOVING);
+        $container->addCompilerPass(new DebuggerPass());
+        $container->addCompilerPass(new ApplicationsPass());
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    protected function addDoctrinePass(ContainerBuilder $container)
+    {
+        if (class_exists('\Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
 
             $mappings = array(
                 realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model'
@@ -36,31 +52,5 @@ class DreamCommerceShopAppstoreBundle extends Bundle
             );
             $container->addCompilerPass(new DoctrinePass());
         }
-
-        //todo: bound classes validation
     }
-
-    protected function enableLibraryDebugging()
-    {
-
-        // todo: debug disabling from configuration independent from kernel.debug
-
-        if(in_array('dreamcommercelogger', stream_get_wrappers())){
-            return;
-        }
-
-        /**
-         * @var $logger LoggerInterface
-         */
-        $loggerName = $this->container->getParameter('dream_commerce_shop_appstore.logger');
-        $logger = $this->container->get($loggerName);
-
-        DebugProxy::setLogger($logger);
-
-        stream_register_wrapper('dreamcommercelogger', 'DreamCommerce\ShopAppstoreBundle\Utils\DebugProxy');
-
-        define('DREAMCOMMERCE_DEBUG', true);
-        define('DREAMCOMMERCE_LOG_FILE', 'dreamcommercelogger://debug');
-    }
-
 }

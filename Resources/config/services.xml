@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+
+    <services>
+        <service id="dream_commerce_shop_appstore.token_refresher"
+                 class="DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher">
+            <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
+        </service>
+        <service id="dream_commerce_shop_appstore.request_validator"
+                 class="DreamCommerce\ShopAppstoreBundle\Utils\RequestValidatorService">
+            <call method="setRequestStack">
+                <argument type="service" id="request_stack"/>
+            </call>
+        </service>
+        <service id="dream_commerce_shop_appstore.controller_filter"
+                 class="DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener">
+            <argument>%dream_commerce_shop_appstore.applications%</argument>
+            <argument>%dream_commerce_shop_appstore.routes%</argument>
+            <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
+            <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
+            <argument>%minimal_version%</argument>
+
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
+        </service>
+        <service id="dream_commerce_shop_appstore.url" class="DreamCommerce\ShopAppstoreBundle\Utils\Url">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="dream_commerce_shop_appstore.request_validator"/>
+            <argument type="service" id="router"/>
+        </service>
+        <service id="dream_commerce_shop_appstore.locale_listener"
+                 class="DreamCommerce\ShopAppstoreBundle\EventListener\LocaleListener">
+            <argument>%locale%</argument>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="dream_commerce_shop_appstore.event.install"
+                 class="DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener">
+            <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
+
+            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.install" method="onInstall"/>
+            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.uninstall"
+                 method="onUninstall"/>
+            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.pay" method="onPay"/>
+            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.subscribe"
+                 method="onSubscribe"/>
+            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.upgrade" method="onUpgrade"/>
+        </service>
+        <service id="dream_commerce_shop_appstore.twig_tags" class="DreamCommerce\ShopAppstoreBundle\Twig\PathExtension"
+                 public="false">
+            <argument type="service" id="dream_commerce_shop_appstore.url"/>
+            <tag name="twig.extension"/>
+        </service>
+    </services>
+</container>

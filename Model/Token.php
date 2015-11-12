@@ -12,11 +12,6 @@ abstract class Token implements TokenInterface
 
     protected $shop;
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function setExpiresAt(\DateTime $expiresAt)
     {
         $this->expiresAt = $expiresAt;

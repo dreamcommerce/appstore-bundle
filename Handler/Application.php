@@ -6,6 +6,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Handler;
 
 use DreamCommerce\Client;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+use Psr\Log\LoggerInterface;
 
 class Application
 {
@@ -13,13 +14,17 @@ class Application
     private $appId;
     private $appSecret;
     private $appstoreSecret;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct($app, $appId, $appSecret, $appstoreSecret){
-
+    public function __construct($app, $appId, $appSecret, $appstoreSecret, LoggerInterface $logger = null){
         $this->app = $app;
         $this->appId = $appId;
         $this->appSecret = $appSecret;
         $this->appstoreSecret = $appstoreSecret;
+        $this->logger = $logger;
     }
 
     /**
@@ -54,12 +59,31 @@ class Application
         return $this->appstoreSecret;
     }
 
+    /**
+     * @param ShopInterface $shop
+     * @return Client\OAuth
+     * @throws \DreamCommerce\Exception\ClientException
+     */
     public function getClient(ShopInterface $shop)
     {
         $tokens = $shop->getToken();
 
-        $client = new Client($shop->getShopUrl(), $this->getAppId(), $this->getAppSecret());
+        /**
+         * @var $client Client\OAuth
+         */
+        $client = Client::factory(
+            Client::ADAPTER_OAUTH,
+            [
+                'entrypoint'=>$shop->getShopUrl(),
+                'client_id'=>$this->getAppId(),
+                'client_secret'=>$this->getAppSecret()
+            ]
+        );
+
         $client->setAccessToken($tokens->getAccessToken());
+        if($this->logger){
+            $client->setLogger($this->logger);
+        }
 
         return $client;
     }

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-31
- * Time: 12:48
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\Form\Extension;
 
 
@@ -13,6 +6,7 @@ use DreamCommerce\ShopAppstoreBundle\EventListener\AppFormListener;
 use DreamCommerce\ShopAppstoreBundle\Utils\Url;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 
 abstract class ApplicationType extends AbstractType{
 

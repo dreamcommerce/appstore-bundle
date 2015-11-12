@@ -1,59 +1,33 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-25
- * Time: 13:18
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
-use BillingBundle\Entity\Billing;
-use BillingBundle\Entity\Subscription;
 use DreamCommerce\Client;
 use DreamCommerce\Exception\ClientException;
-use DreamCommerce\ShopAppstoreBundle\EntityManager\ShopManagerInterface;
-use DreamCommerce\ShopAppstoreBundle\EntityManager\TokenManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
-use DreamCommerce\ShopAppstoreBundle\EntityManager\BillingManagerInterface;
-use DreamCommerce\ShopAppstoreBundle\EntityManager\SubscriptionManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\EventAbstract;
+use DreamCommerce\ShopAppstoreBundle\Model\BillingInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface;
+use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
 
-class AppstoreListener implements ActionListenerInterface{
-
+class AppstoreListener{
     /**
-     * @var ShopManagerInterface
+     * @var ObjectManagerInterface
      */
-    protected $shopManager;
-    /**
-     * @var TokenManagerInterface
-     */
-    protected $tokenManager;
-    /**
-     * @var BillingManagerInterface
-     */
-    protected $billingManager;
-    /**
-     * @var SubscriptionManagerInterface
-     */
-    protected $subscriptionManager;
+    protected $objectManager;
 
     /**
-     * @param ShopManagerInterface $shopManager
-     * @param TokenManagerInterface $tokenManager
-     * @param BillingManagerInterface $billingManager
-     * @param SubscriptionManagerInterface $subscriptionManager
+     * @param ObjectManagerInterface $objectManager
      */
-    public function __construct(ShopManagerInterface $shopManager, TokenManagerInterface $tokenManager, BillingManagerInterface $billingManager, SubscriptionManagerInterface $subscriptionManager){
-        $this->shopManager = $shopManager;
-        $this->tokenManager = $tokenManager;
-        $this->billingManager = $billingManager;
-        $this->subscriptionManager = $subscriptionManager;
+    public function __construct(ObjectManagerInterface $objectManager){
+        $this->objectManager = $objectManager;
     }
 
     /**
@@ -67,7 +41,11 @@ class AppstoreListener implements ActionListenerInterface{
         $appName = $event->getApplicationName();
         $shopName = $params['shop'];
 
-        return $this->shopManager->getRepository()->findOneByNameAndApplication($shopName, $appName);
+        /**
+         * @var $repo ShopRepositoryInterface
+         */
+        $repo = $this->objectManager->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+        $repo->findOneByNameAndApplication($shopName, $appName);
     }
 
     /**
@@ -108,16 +86,22 @@ class AppstoreListener implements ActionListenerInterface{
         }
 
         // region shop
-        $shopModel = $this->shopManager->create();
+        /**
+         * @var $shopModel ShopInterface
+         */
+        $shopModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
         $shopModel->setApp($event->getApplicationName());
         $shopModel->setName($params['shop']);
         $shopModel->setShopUrl($params['shop_url']);
         $shopModel->setVersion($params['application_version']);
-        $this->shopManager->save($shopModel, false);
+        $this->objectManager->save($shopModel, false);
         // endregion
 
         // region token
-        $tokenModel = $this->tokenManager->create();
+        /**
+         * @var $tokenModel TokenInterface
+         */
+        $tokenModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
         $tokenModel->setAccessToken($token['access_token']);
         $tokenModel->setRefreshToken($token['refresh_token']);
 
@@ -127,7 +111,7 @@ class AppstoreListener implements ActionListenerInterface{
         $tokenModel->setExpiresAt($expiresAt);
         $tokenModel->setShop($shopModel);
 
-        $this->tokenManager->save($tokenModel);
+        $this->objectManager->save($tokenModel);
         // endregion
 
     }
@@ -146,7 +130,7 @@ class AppstoreListener implements ActionListenerInterface{
         }
 
         // simply delete entity by manager
-        $this->shopManager->delete($shop);
+        $this->objectManager->delete($shop);
     }
 
     /**
@@ -154,7 +138,7 @@ class AppstoreListener implements ActionListenerInterface{
      * @param BillingInstallEvent $event
      * @return bool
      */
-    public function onPaid(BillingInstallEvent $event){
+    public function onPay(BillingInstallEvent $event){
 
         $shop = $this->getShopByEvent($event);
 
@@ -162,10 +146,13 @@ class AppstoreListener implements ActionListenerInterface{
             return false;
         }
 
-        $billing = new Billing();
+        /**
+         * @var $billing BillingInterface
+         */
+        $billing = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\BillingInterface');
         $billing->setShop($shop);
 
-        $this->billingManager->save($billing);
+        $this->objectManager->save($billing);
     }
 
     /**
@@ -173,7 +160,7 @@ class AppstoreListener implements ActionListenerInterface{
      * @param SubscriptionEvent $event
      * @return bool
      */
-    public function onSubscribed(SubscriptionEvent $event){
+    public function onSubscribe(SubscriptionEvent $event){
 
         $shop = $this->getShopByEvent($event);
 
@@ -181,7 +168,10 @@ class AppstoreListener implements ActionListenerInterface{
             return false;
         }
 
-        $subscription = new Subscription();
+        /**
+         * @var $subscription SubscriptionInterface
+         */
+        $subscription = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface');
 
         // convert date string to an object
         $expiresAt = new \DateTime($event->getPayload()['subscription_end_time']);
@@ -189,7 +179,7 @@ class AppstoreListener implements ActionListenerInterface{
         $subscription->setExpiresAt($expiresAt);
         $subscription->setShop($shop);
 
-        $this->subscriptionManager->save($subscription);
+        $this->objectManager->save($subscription);
 
     }
 
@@ -198,7 +188,7 @@ class AppstoreListener implements ActionListenerInterface{
      * @param UpgradeEvent $event
      * @return bool
      */
-    public function onUpgraded(UpgradeEvent $event){
+    public function onUpgrade(UpgradeEvent $event){
         $shop = $this->getShopByEvent($event);
 
         if(!$shop){
@@ -206,7 +196,7 @@ class AppstoreListener implements ActionListenerInterface{
         }
 
         $shop->setVersion($event->getPayload()['application_version']);
-        $this->shopManager->save($shop);
+        $this->objectManager->save($shop);
     }
 
 }

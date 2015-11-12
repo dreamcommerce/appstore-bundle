@@ -20,8 +20,10 @@ class DoctrinePass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $this->mapInterfaces($container);
-        $this->injectEntityManager($container);
+        if($container->hasParameter(DreamCommerceShopAppstoreExtension::ALIAS.'.orm')) {
+            $this->mapInterfaces($container);
+            $this->injectEntityManager($container);
+        }
     }
 
     /**
