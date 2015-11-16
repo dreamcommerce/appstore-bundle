@@ -19,10 +19,14 @@ class DreamCommerceShopAppstoreBundle extends Bundle
     {
         parent::build($container);
 
+        // add Doctrine passes if available
         $this->addDoctrinePass($container);
 
+        // verify and set object manager
         $container->addCompilerPass(new CustomObjectManagerPass(), PassConfig::TYPE_BEFORE_REMOVING);
+        // instantiate a debugger is enabled
         $container->addCompilerPass(new DebuggerPass(), PassConfig::TYPE_BEFORE_REMOVING);
+        // add applications services
         $container->addCompilerPass(new ApplicationsPass(), PassConfig::TYPE_BEFORE_REMOVING);
     }
 
