@@ -15,16 +15,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class DreamCommerceShopAppstoreBundle extends Bundle
 {
 
-    public function boot(){
-
-//        $debug = $this->container->getParameter('kernel.environment') == 'dev';
-//
-//        if($debug){
-//            $this->enableLibraryDebugging();
-//        }
-
-    }
-
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -33,7 +23,7 @@ class DreamCommerceShopAppstoreBundle extends Bundle
 
         $container->addCompilerPass(new CustomObjectManagerPass(), PassConfig::TYPE_BEFORE_REMOVING);
         $container->addCompilerPass(new DebuggerPass(), PassConfig::TYPE_BEFORE_REMOVING);
-        $container->addCompilerPass(new ApplicationsPass());
+        $container->addCompilerPass(new ApplicationsPass(), PassConfig::TYPE_BEFORE_REMOVING);
     }
 
     /**
