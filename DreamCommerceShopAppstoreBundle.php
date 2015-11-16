@@ -32,7 +32,7 @@ class DreamCommerceShopAppstoreBundle extends Bundle
         $this->addDoctrinePass($container);
 
         $container->addCompilerPass(new CustomObjectManagerPass(), PassConfig::TYPE_BEFORE_REMOVING);
-        $container->addCompilerPass(new DebuggerPass());
+        $container->addCompilerPass(new DebuggerPass(), PassConfig::TYPE_BEFORE_REMOVING);
         $container->addCompilerPass(new ApplicationsPass());
     }
 
@@ -47,6 +47,7 @@ class DreamCommerceShopAppstoreBundle extends Bundle
                 realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model'
             );
 
+            // hint: DO NOT shorthand this import - it will screw up environments with no Doctrine installed
             $container->addCompilerPass(
                 \Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass::createXmlMappingDriver($mappings)
             );

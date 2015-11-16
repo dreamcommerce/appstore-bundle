@@ -26,6 +26,8 @@ class DebuggerPass implements CompilerPassInterface
         if(is_null($value)){
             $status = $container->getParameter('kernel.debug');
             $service = 'logger';
+        }else if($value===false) {
+            $status = false;
         }else{
             $status = true;
             $service = $value;
@@ -33,20 +35,21 @@ class DebuggerPass implements CompilerPassInterface
 
         if($status){
 
-            $debugKey = DreamCommerceShopAppstoreExtension::ALIAS.'.debugger';
+            $debugKey = DreamCommerceShopAppstoreExtension::ALIAS.'.logger';
 
-            if(!$container->has($debugKey)){
+            if(!$container->has($service)){
                 throw new Exception(sprintf('Debugger service %s does not exist', $service));
             }
 
-            $def = $container->getDefinition($service);
+            $def = $container->findDefinition($service);
+
             $class = $def->getClass();
 
             if(!is_subclass_of($class, 'Psr\Log\LoggerInterface')){
                 throw new Exception(sprintf('Debugger service %s does not implement Psr\Log\LoggerInterface', $service));
             }
 
-            $container->setAlias($service, $debugKey);
+            $container->setAlias($debugKey, $service);
         }
 
     }
