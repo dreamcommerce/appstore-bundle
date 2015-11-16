@@ -23,20 +23,25 @@ class DebuggerPass implements CompilerPassInterface
 
         $service = null;
 
+        // if debug is null - use Symfony's debug settings and logger
         if(is_null($value)){
             $status = $container->getParameter('kernel.debug');
             $service = 'logger';
+        // false means DISABLED
         }else if($value===false) {
             $status = false;
+        // anything else - LoggerInterface compatible service logger
         }else{
             $status = true;
             $service = $value;
         }
 
+        // only if service is specified
         if($status){
 
             $debugKey = DreamCommerceShopAppstoreExtension::ALIAS.'.logger';
 
+            // check if exists
             if(!$container->has($service)){
                 throw new Exception(sprintf('Debugger service %s does not exist', $service));
             }
@@ -45,6 +50,7 @@ class DebuggerPass implements CompilerPassInterface
 
             $class = $def->getClass();
 
+            // check if service is LoggerInterface compatible
             if(!is_subclass_of($class, 'Psr\Log\LoggerInterface')){
                 throw new Exception(sprintf('Debugger service %s does not implement Psr\Log\LoggerInterface', $service));
             }
