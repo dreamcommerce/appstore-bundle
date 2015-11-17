@@ -24,7 +24,7 @@ class ApplicationsPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         // get applications configuration array
-        $applications = $container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS.'.applications');
+        $applications = $container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS.'.apps');
 
         // create definition for application registry
         $applicationsDefinition = new Definition('DreamCommerce\ShopAppstoreBundle\Handler\ApplicationRegistry');

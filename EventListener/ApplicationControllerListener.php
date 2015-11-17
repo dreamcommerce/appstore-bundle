@@ -6,6 +6,7 @@ use DreamCommerce\Client;
 use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\PaidControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
+use DreamCommerce\ShopAppstoreBundle\Handler\ApplicationRegistry;
 use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
@@ -51,13 +52,25 @@ class ApplicationControllerListener{
      * @var null
      */
     protected $version;
+    /**
+     * @var ApplicationRegistry
+     */
+    protected $applicationRegistry;
 
-    public function __construct($applications, $routes, ObjectManagerInterface $shopManager, TokenRefresher $refresher, $version = null){
+    public function __construct(
+        $applications,
+        $routes,
+        ApplicationRegistry $applicationRegistry,
+        ObjectManagerInterface $shopManager,
+        TokenRefresher $refresher,
+        $version = null
+    ){
         $this->applications = $applications;
         $this->routes = $routes;
         $this->objectManager = $shopManager;
         $this->refresher = $refresher;
         $this->version = $version;
+        $this->applicationRegistry = $applicationRegistry;
     }
 
     /**
@@ -121,6 +134,7 @@ class ApplicationControllerListener{
                 $this->redirect($event, 'not_installed');
             }
 
+            // verify version requirements
             if($this->version){
                 if($shop->getVersion()<$this->version){
                     $this->redirect($event, 'upgrade');
@@ -153,9 +167,8 @@ class ApplicationControllerListener{
             // get shop token
             $token = $shop->getToken();
 
-            // todo: shit to get from register
             // instantiate a client
-            $client = new Client($shop->getShopUrl(), $appData['app_id'], $appData['app_secret']);
+            $client = $this->applicationRegistry->get($appName)->getClient($shop);
 
             // token expired - attempt to refresh
             if($token->getExpiresAt()->getTimestamp() - (new \DateTime())->getTimestamp() < 86400){

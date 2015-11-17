@@ -29,7 +29,7 @@ class DreamCommerceShopAppstoreExtension extends Extension
         $xmlLoader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $xmlLoader->load('services.xml');
 
-        $container->setParameter($this->getAlias().'.applications', $config['applications']);
+        $container->setParameter($this->getAlias().'.apps', $config['applications']);
         $container->setParameter($this->getAlias().'.routes', $config['routes']);
 
         $container->setParameter($this->getAlias().'.objects', $config['objects']);

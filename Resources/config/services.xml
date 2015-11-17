@@ -18,8 +18,9 @@
         </service>
         <service id="dream_commerce_shop_appstore.controller_filter"
                  class="DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener">
-            <argument>%dream_commerce_shop_appstore.applications%</argument>
+            <argument>%dream_commerce_shop_appstore.apps%</argument>
             <argument>%dream_commerce_shop_appstore.routes%</argument>
+            <argument type="service" id="dream_commerce_shop_appstore.apps"/>
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
             <argument>%minimal_version%</argument>

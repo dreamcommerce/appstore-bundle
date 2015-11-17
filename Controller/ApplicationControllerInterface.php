@@ -3,6 +3,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 
 use DreamCommerce\Client;
+use DreamCommerce\ClientInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 
 /**
@@ -12,6 +13,6 @@ use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
  */
 interface ApplicationControllerInterface {
 
-    public function injectClient(Client $client, ShopInterface $shop);
+    public function injectClient(ClientInterface $client, ShopInterface $shop);
 
 }
