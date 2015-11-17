@@ -27,11 +27,13 @@ class ResponderController extends Controller
     public function indexAction(Request $request)
     {
 
+        // get applications configuration list
         $apps = $this->container->getParameter('dream_commerce_shop_appstore.applications');
 
         $validator = new RequestValidator($request);
 
         try {
+            // validate application settings
             $appName = $validator->getApplicationName($apps);
             $validator->setApplication($apps[$appName]);
             $params = $validator->validateAppstoreRequest();
@@ -44,6 +46,7 @@ class ResponderController extends Controller
          */
         $eventDispatcher = $this->get('event_dispatcher');
 
+        // dispatch appstore action
         switch($params['action']){
             case 'install':
                 $event = new InstallEvent($appName, $apps[$appName], $params);
