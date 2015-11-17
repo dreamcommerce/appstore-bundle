@@ -168,6 +168,9 @@ class ApplicationControllerListener{
             $token = $shop->getToken();
 
             // instantiate a client
+            /**
+             * @var $client Client\Bearer
+             */
             $client = $this->applicationRegistry->get($appName)->getClient($shop);
 
             // token expired - attempt to refresh

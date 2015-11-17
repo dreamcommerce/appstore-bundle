@@ -10,5 +10,9 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
  */
 interface RepositoryInterface
 {
-
+    /**
+     * @param $id
+     * @return \stdClass
+     */
+    public function findById($id);
 }

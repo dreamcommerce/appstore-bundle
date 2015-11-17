@@ -29,4 +29,10 @@ interface ShopRepositoryInterface extends RepositoryInterface
      * @return ShopInterface
      */
     public function findOneByNameAndApplication($name, $application);
+
+    /**
+     * @inheritdoc
+     * @return ShopInterface
+     */
+    public function findById($id);
 }

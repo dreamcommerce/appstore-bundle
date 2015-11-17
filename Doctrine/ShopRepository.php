@@ -7,7 +7,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Doctrine;
 use Doctrine\ORM\EntityRepository;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 
-class ShopRepository extends EntityRepository implements ShopRepositoryInterface
+class ShopRepository extends RepositoryAbstract implements ShopRepositoryInterface
 {
 
     public function findByApplication($application){
@@ -28,7 +28,7 @@ class ShopRepository extends EntityRepository implements ShopRepositoryInterface
     {
         return $this->findOneBy([
             'name'=>$name,
-            'application'=>$application
+            'app'=>$application
         ]);
     }
 }
