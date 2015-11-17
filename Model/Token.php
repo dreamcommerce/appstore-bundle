@@ -2,59 +2,98 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
+/**
+ * Class Token
+ *
+ * OAuth tokens instance
+ *
+ * @package DreamCommerce\ShopAppstoreBundle\Model
+ */
 abstract class Token implements TokenInterface
 {
+    /**
+     * expiration date
+     * @var \DateTime
+     */
     protected $expiresAt;
 
+    /**
+     * access token
+     * @var string
+     */
     protected $accessToken;
 
+    /**
+     * refresh token
+     * @var string
+     */
     protected $refreshToken;
 
+    /**
+     * shop handle
+     * @var ShopInterface
+     */
     protected $shop;
 
+    /**
+     * @inheritdoc
+     */
     public function setExpiresAt(\DateTime $expiresAt)
     {
         $this->expiresAt = $expiresAt;
-
-        return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getExpiresAt()
     {
         return $this->expiresAt;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
-
-        return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAccessToken()
     {
         return $this->accessToken;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function setRefreshToken($refreshToken)
     {
         $this->refreshToken = $refreshToken;
-
-        return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getRefreshToken()
     {
         return $this->refreshToken;
     }
 
-    public function setShop(ShopInterface $shop = null)
+    /**
+     * @inheritdoc
+     */
+    public function setShop(ShopInterface $shop)
     {
         $this->shop = $shop;
-
-        return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getShop()
     {
         return $this->shop;

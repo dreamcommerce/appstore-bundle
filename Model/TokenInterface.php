@@ -1,30 +1,64 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-23
- * Time: 17:49
- */
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
+/**
+ * Interface TokenInterface
+ *
+ * tokens information
+ *
+ * @package DreamCommerce\ShopAppstoreBundle\Model
+ */
 interface TokenInterface
 {
+    /**
+     * set expiration date
+     * @param \DateTime $expiresAt
+     * @return void
+     */
     public function setExpiresAt(\DateTime $expiresAt);
 
     /**
+     * get expiration date
      * @return \DateTime
      */
     public function getExpiresAt();
 
+    /**
+     * set access token
+     * @param string $accessToken
+     * @return mixed
+     */
     public function setAccessToken($accessToken);
 
+    /**
+     * get access token
+     * @return string
+     */
     public function getAccessToken();
 
+    /**
+     * set refresh token
+     * @param string $refreshToken
+     * @return mixed
+     */
     public function setRefreshToken($refreshToken);
 
+    /**
+     * get refresh token
+     * @return string
+     */
     public function getRefreshToken();
 
-    public function setShop(ShopInterface $shop = null);
+    /**
+     * set shop
+     * @param ShopInterface $shop
+     * @return mixed
+     */
+    public function setShop(ShopInterface $shop);
 
+    /**
+     * get shop
+     * @return ShopInterface
+     */
     public function getShop();
 }

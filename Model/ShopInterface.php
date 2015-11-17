@@ -1,49 +1,95 @@
 <?php
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
+/**
+ * Interface ShopInterface
+ *
+ * shop entity interface
+ *
+ * @package DreamCommerce\ShopAppstoreBundle\Model
+ */
 interface ShopInterface
 {
+    /**
+     * @return BillingInterface
+     */
     public function getBilling();
 
+    /**
+     * set shop name
+     * @param string $name
+     * @return void
+     */
     public function setName($name);
 
+    /**
+     * get shop name
+     * @return string
+     */
     public function getName();
 
+    /**
+     * set shop url
+     * @param string $shopUrl
+     * @return void
+     */
     public function setShopUrl($shopUrl);
 
+    /**
+     * get shop url
+     * @return string
+     */
     public function getShopUrl();
 
     /**
+     * get token information
      * @return TokenInterface
      */
     public function getToken();
 
+    /**
+     * set token information
+     * @param TokenInterface $token
+     * @return void
+     */
     public function setToken(TokenInterface $token);
 
     /**
+     * get paid subscriptions by shop
      * @return SubscriptionInterface[]
      */
     public function getSubscriptions();
 
+    /**
+     * add subscription
+     * @param SubscriptionInterface $subscription
+     * @return void
+     */
     public function addSubscription(SubscriptionInterface $subscription);
 
     /**
-     * @return mixed
+     * get application name
+     * @return string
      */
     public function getApp();
 
     /**
-     * @param mixed $app
+     * set application name
+     * @param string $app
+     * @return void
      */
     public function setApp($app);
 
     /**
-     * @return mixed
+     * get installed version
+     * @return integer
      */
     public function getVersion();
 
     /**
-     * @param mixed $version
+     * set installed application version
+     * @param integer $version
+     * @return void
      */
     public function setVersion($version);
 }

@@ -3,8 +3,11 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
-
-class TokenRepositoryInterface extends RepositoryInterface
+/**
+ * Interface TokenRepositoryInterface
+ * @package DreamCommerce\ShopAppstoreBundle\Model
+ */
+interface TokenRepositoryInterface extends RepositoryInterface
 {
 
 }

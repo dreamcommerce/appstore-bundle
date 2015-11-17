@@ -1,10 +1,11 @@
 <?php
-
-
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
-
-class SubscriptionRepositoryInterface extends RepositoryInterface
+/**
+ * Interface SubscriptionRepositoryInterface
+ * @package DreamCommerce\ShopAppstoreBundle\Model
+ */
+interface SubscriptionRepositoryInterface extends RepositoryInterface
 {
 
 }

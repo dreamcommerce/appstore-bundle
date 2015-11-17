@@ -13,6 +13,7 @@
 
         <service id="dream_commerce_shop_appstore.entity_manager" class="Doctrine\ORM\EntityManager" public="false">
             <factory service="doctrine" method="getManager"/>
+            <!-- manager name injected by compiler pass -->
         </service>
 
     </services>

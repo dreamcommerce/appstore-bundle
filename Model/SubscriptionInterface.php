@@ -1,20 +1,35 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-19
- * Time: 14:27
- */
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
-
+/**
+ * Interface SubscriptionInterface
+ * @package DreamCommerce\ShopAppstoreBundle\Model
+ */
 interface SubscriptionInterface
 {
+    /**
+     * set expiration date
+     * @param \DateTime $expiresAt
+     * @return void
+     */
     public function setExpiresAt(\DateTime $expiresAt);
 
+    /**
+     * get expiration date
+     * @return \DateTime
+     */
     public function getExpiresAt();
 
-    public function setShop(ShopInterface $shop = null);
+    /**
+     * set shop for subscription
+     * @param ShopInterface $shop
+     * @return void
+     */
+    public function setShop(ShopInterface $shop);
 
+    /**
+     * get shop bound to subscription
+     * @return ShopInterface
+     */
     public function getShop();
 }
