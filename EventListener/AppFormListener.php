@@ -37,7 +37,7 @@ class AppFormListener {
      */
     public function appendValidationTokens(FormEvent $event){
         $action = $this->builder->getAction();
-        $url = $this->url->adjustUrl($action);
+        $url = $this->url->appendApplicationParameters($action);
         $this->builder->setAction($url);
     }
 

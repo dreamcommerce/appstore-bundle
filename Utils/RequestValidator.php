@@ -1,39 +1,61 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-03-25
- * Time: 13:45
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
 use DreamCommerce\Exception\HandlerException;
 use DreamCommerce\Handler;
+use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class RequestValidator
+ *
+ * validates request against shop/appstore parameters
+ *
+ * @package DreamCommerce\ShopAppstoreBundle\Utils
+ */
 class RequestValidator{
 
+    /**
+     * Symfony request object
+     * @var Request
+     */
     protected $request;
+    /**
+     * application configuration data
+     * @var array
+     */
     protected $application;
 
+    /**
+     * @param Request $req
+     */
     public function __construct(Request $req){
         $this->request = $req;
     }
 
+    /**
+     * tests request against applications information
+     * @param array $applications configuration data
+     * @return string
+     * @throws InvalidRequestException
+     */
     public function getApplicationName($applications){
 
+        // get request application code
         $code = $this->request->query->get('application');
 
+        // if it's not GET - check code from POST
         if(!$code){
             $code = $this->request->request->get('application_code');
         }
 
+        // no code - no work
         if(!$code){
             throw new InvalidRequestException('Cannot find application_code field');
         }
 
+        // iterate over applications list
         foreach($applications as $key=>$data) {
             $found = null;
 
@@ -42,13 +64,23 @@ class RequestValidator{
             }
         }
 
+        // application has not been found
         throw new InvalidRequestException(sprintf('Application ID#%s not configured', $code));
     }
 
+    /**
+     * set current application
+     * @param array $application
+     */
     public function setApplication($application){
         $this->application = $application;
     }
 
+    /**
+     * validate application iframe request parameters
+     * @return array parameters needed to pass through to next request
+     * @throws InvalidRequestException
+     */
     public function validateAppRequest(){
 
         try{
@@ -66,6 +98,11 @@ class RequestValidator{
 
     }
 
+    /**
+     * validate appstore responder request
+     * @return array
+     * @throws InvalidRequestException
+     */
     public function validateAppstoreRequest(){
 
         try {
@@ -84,6 +121,10 @@ class RequestValidator{
 
     }
 
+    /**
+     * get library handler instance
+     * @return Handler
+     */
     protected function getHandler()
     {
         return new Handler(
@@ -95,6 +136,7 @@ class RequestValidator{
     }
 
     /**
+     * get request needed variables - useful in URL generating
      * @return array
      */
     public function getAppValidationParams()
