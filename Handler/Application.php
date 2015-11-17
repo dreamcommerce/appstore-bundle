@@ -8,17 +8,45 @@ use DreamCommerce\Client;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Class Application
+ * @package DreamCommerce\ShopAppstoreBundle\Handler
+ */
 class Application
 {
-    private $app;
-    private $appId;
-    private $appSecret;
-    private $appstoreSecret;
     /**
+     * application name
+     * @var string
+     */
+    protected $app;
+    /**
+     * application identifier
+     * @var string
+     */
+    protected $appId;
+    /**
+     * app secret
+     * @var string
+     */
+    protected $appSecret;
+    /**
+     * appstore secret
+     * @var string
+     */
+    protected $appstoreSecret;
+    /**
+     * logger handler
      * @var LoggerInterface
      */
-    private $logger;
+    protected $logger;
 
+    /**
+     * @param string $app app name
+     * @param string $appId application ID
+     * @param string $appSecret app secret
+     * @param string $appstoreSecret appstore secret
+     * @param LoggerInterface|null $logger if not null, logger used to pass ShopAppstoreLib debug information
+     */
     public function __construct($app, $appId, $appSecret, $appstoreSecret, LoggerInterface $logger = null){
         $this->app = $app;
         $this->appId = $appId;
@@ -28,6 +56,7 @@ class Application
     }
 
     /**
+     * get application name
      * @return mixed
      */
     public function getApp()
@@ -36,6 +65,7 @@ class Application
     }
 
     /**
+     * get application ID
      * @return mixed
      */
     public function getAppId()
@@ -44,6 +74,7 @@ class Application
     }
 
     /**
+     * get app secret
      * @return mixed
      */
     public function getAppSecret()
@@ -52,6 +83,7 @@ class Application
     }
 
     /**
+     * get appstore secret
      * @return mixed
      */
     public function getAppstoreSecret()
@@ -60,6 +92,7 @@ class Application
     }
 
     /**
+     * get ShopAppstoreLib client
      * @param ShopInterface $shop
      * @return Client\OAuth
      * @throws \DreamCommerce\Exception\ClientException
