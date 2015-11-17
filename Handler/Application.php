@@ -5,6 +5,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Handler;
 
 
 use DreamCommerce\Client;
+use DreamCommerce\ClientInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use Psr\Log\LoggerInterface;
 
@@ -94,7 +95,7 @@ class Application
     /**
      * get ShopAppstoreLib client
      * @param ShopInterface $shop
-     * @return Client\OAuth
+     * @return ClientInterface
      * @throws \DreamCommerce\Exception\ClientException
      */
     public function getClient(ShopInterface $shop)
