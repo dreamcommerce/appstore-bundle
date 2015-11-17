@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-04-01
- * Time: 14:18
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
@@ -14,25 +7,41 @@ use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\RelatedResourceListIterator;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceConnection;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceListIterator;
 
+/**
+ * Class Fetcher
+ *
+ * takes care of fetching data with records exceeding single page
+ *
+ * @package DreamCommerce\ShopAppstoreBundle\Utils
+ */
 class Fetcher {
 
     /**
+     * fetched resource
      * @var Resource
      */
     protected $resource;
 
+    /**
+     * @var ResourceConnection[]
+     */
     protected $connections = [];
 
+    /**
+     * @param Resource $resource
+     */
     public function __construct(Resource $resource){
         $this->resource = $resource;
     }
 
     /**
+     * fetches all data transparently
      * @return ResourceListIterator
      * @throws \DreamCommerce\Exception\ResourceException
      */
     public function fetchAll(){
 
+        // if have we any connections?
         if($this->connections){
             return new RelatedResourceListIterator($this->resource, $this->connections);
         }

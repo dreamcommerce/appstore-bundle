@@ -1,13 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: eRIZ
- * Date: 2015-04-01
- * Time: 14:36
- */
-
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
+/**
+ * Class CollectionWrapper
+ *
+ * adds some helper methods for fetched collection
+ *
+ * @package DreamCommerce\ShopAppstoreBundle\Utils
+ */
 class CollectionWrapper {
 
     /**

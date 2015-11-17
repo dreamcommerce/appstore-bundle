@@ -1,6 +1,4 @@
 <?php
-
-
 namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 
@@ -8,8 +6,9 @@ use DreamCommerce\Resource;
 use DreamCommerce\ResourceList;
 
 /**
- * Class ResourceListIterator. Helps doing stuff on auto-lazy-load
- * larger (>1 page) collections
+ * Class ResourceListIterator.
+ *
+ * Helps doing stuff on auto-lazy-load larger (>1 page) collections
  *
  * @package DreamCommerce\ShopAppstoreBundle\Utils\Fetcher
  */

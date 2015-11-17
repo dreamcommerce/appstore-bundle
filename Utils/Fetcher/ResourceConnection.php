@@ -1,13 +1,14 @@
 <?php
-
-
 namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 
 use DreamCommerce\Resource;
 
 /**
- * Class ResourceConnection describes connection between two resources for bulk fetching
+ * Class ResourceConnection
+ *
+ * describes connection between two resources for bulk fetching
+ *
  * @package DreamCommerce\ShopAppstoreBundle\Utils\Fetcher
  */
 class ResourceConnection
@@ -37,7 +38,7 @@ class ResourceConnection
     /**
      * @param Resource|Resource $resource
      * @param string $selfKey
-     * @param string|null $foreignKey
+     * @param string|null $foreignKey if null - copies selfKey
      * @param array $filters
      */
     public function __construct(Resource $resource, $selfKey, $foreignKey = null, $filters = [])
@@ -46,11 +47,12 @@ class ResourceConnection
         $this->selfKey = $selfKey;
         $this->foreignKey = $foreignKey;
 
-        $this->class = $this->getClassName($resource);
+        $this->class = $this->transformClassName($resource);
         $this->filters = $filters;
     }
 
     /**
+     * get foreign resource class
      * @return Resource
      */
     public function getResource()
@@ -59,6 +61,7 @@ class ResourceConnection
     }
 
     /**
+     * get self key name
      * @return string
      */
     public function getSelfKey()
@@ -67,6 +70,7 @@ class ResourceConnection
     }
 
     /**
+     * get foreign key name
      * @return string
      */
     public function getForeignKey()
@@ -82,7 +86,7 @@ class ResourceConnection
      * @param $resource
      * @return string
      */
-    protected function getClassName($resource)
+    protected function transformClassName($resource)
     {
         $key = get_class($resource);
         $key = substr($key, strrpos($key, '\\')+1);
@@ -90,14 +94,16 @@ class ResourceConnection
     }
 
     /**
+     * get resource class name
      * @return string
      */
-    public function getClass()
+    public function getClassName()
     {
         return $this->class;
     }
 
     /**
+     * get defined filters
      * @return array
      */
     public function getFilters()

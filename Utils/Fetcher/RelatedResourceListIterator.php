@@ -1,6 +1,4 @@
 <?php
-
-
 namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 
@@ -9,8 +7,9 @@ use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 /**
- * Class ResourceListIterator. Helps doing stuff on auto-lazy-load
- * larger (>1 page) collections
+ * Class ResourceListIterator.
+ *
+ * Helps doing stuff on auto-lazy-load larger (>1 page) collections
  *
  * @package DreamCommerce\ShopAppstoreBundle\Utils\Fetcher
  */
@@ -18,11 +17,16 @@ class RelatedResourceListIterator extends ResourceListIterator
 {
 
     /**
+     * related connections
      * @var ResourceConnection[]
      */
     protected $connections = [];
 
-    protected $resData = [];
+    /**
+     * connected resources keys
+     * @var array
+     */
+    protected $relatedData = [];
 
     /**
      * @param Resource $resource
@@ -42,9 +46,11 @@ class RelatedResourceListIterator extends ResourceListIterator
     protected function fetch($page){
         parent::fetch($page);
 
+        // get primary keys values
         $primaryKeys = $this->getPrimaryKeys($this->collection, $this->connections);
 
-        $this->resData = $this->fetchRelatedData($primaryKeys, $this->connections);
+        // related resources data
+        $this->relatedData = $this->fetchRelatedData($primaryKeys, $this->connections);
 
         $this->iterator->rewind();
 
@@ -65,7 +71,7 @@ class RelatedResourceListIterator extends ResourceListIterator
                 /**
                  * @var $c ResourceConnection
                  */
-                $primaryKeys[$c->getClass()][] = $i->{$c->getSelfKey()};
+                $primaryKeys[$c->getClassName()][] = $i->{$c->getSelfKey()};
             }
         }
         return $primaryKeys;
@@ -80,34 +86,40 @@ class RelatedResourceListIterator extends ResourceListIterator
     protected function fetchRelatedData($primaryKeys, $connections)
     {
         // get related collections
-        $resData = [];
+        $resourcesData = [];
 
+        // no related keys, no fetching
         if(empty($primaryKeys)){
-            return $resData;
+            return $resourcesData;
         }
 
         foreach($connections as $connection){
             $resource = $connection->getResource();
 
+            // get current page related values keys
             $filters = [
                 $connection->getSelfKey()=>[
-                    'in'=>array_values($primaryKeys[$connection->getClass()])
+                    'in'=>array_values($primaryKeys[$connection->getClassName()])
                 ]
             ];
 
+            // merge additional conditions on filters
             $filters = array_merge($filters, $connection->getFilters());
 
-            $result = $resource->filters($filters);
+            // apply filters on resource
+            $resource->filters($filters);
 
-            $fetcher = new Fetcher($result);
+            // fetch collection for iteration
+            $fetcher = new Fetcher($resource);
             $items = $fetcher->fetchAll();
             $wrapper = new CollectionWrapper($items);
 
-            $class = $connection->getClass();
-            $resData[$class] = $wrapper->getCollectionsArray($connection->getForeignKey());
+            // inject connections data
+            $class = $connection->getClassName();
+            $resourcesData[$class] = $wrapper->getCollectionsArray($connection->getForeignKey());
         }
 
-        return $resData;
+        return $resourcesData;
     }
 
     /**
@@ -117,15 +129,21 @@ class RelatedResourceListIterator extends ResourceListIterator
      */
     protected function transformRow($row){
 
+        // if nothing to do
         if($row===null || is_scalar($row)){
             return $row;
         }
 
         foreach($this->connections as $data){
+            // get self value
             $self = $row->{$data->getSelfKey()};
-            $class = $data->getClass();
-            if(isset($this->resData[$class][$self])){
-                $row->{$class} = $this->resData[$class][$self];
+
+            $class = $data->getClassName();
+
+            // if data isset - inject into key
+            if(isset($this->relatedData[$class][$self])){
+                $row->{$class} = $this->relatedData[$class][$self];
+            // or inject empty value
             }else{
                 $row->{$class} = [];
             }
