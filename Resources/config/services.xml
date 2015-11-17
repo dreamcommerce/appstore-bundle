@@ -11,7 +11,7 @@
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
         </service>
         <service id="dream_commerce_shop_appstore.request_validator"
-                 class="DreamCommerce\ShopAppstoreBundle\Utils\RequestValidatorService">
+                 class="DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\Service">
             <call method="setRequestStack">
                 <argument type="service" id="request_stack"/>
             </call>
