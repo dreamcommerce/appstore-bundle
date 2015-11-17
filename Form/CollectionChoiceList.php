@@ -2,10 +2,17 @@
 namespace DreamCommerce\ShopAppstoreBundle\Form;
 
 
+use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 use Symfony\Component\Form\ChoiceList\LazyChoiceList;
 use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
+/**
+ * Class CollectionChoiceList
+ *
+ * choice from resource result
+ *
+ * @package DreamCommerce\ShopAppstoreBundle\Form
+ */
 class CollectionChoiceList extends LazyChoiceList implements ChoiceLoaderInterface{
 
     /**
@@ -37,19 +44,17 @@ class CollectionChoiceList extends LazyChoiceList implements ChoiceLoaderInterfa
      * Should be implemented by child classes.
      *
      * @param null $value
-     * @return ChoiceList The loaded choice list
+     * @return ArrayChoiceList The loaded choice list
      */
     public function loadChoiceList($value = null)
     {
-        $values = [];
-        $keys = [];
+        $result = [];
 
         foreach($this->resource as $r){
-            $keys[] = call_user_func($this->keyResolver, $r);
-            $values[] = call_user_func($this->valueResolver, $r);
+            $result[call_user_func($this->keyResolver, $r)] = call_user_func($this->valueResolver, $r);
         }
 
-        return new ChoiceList($values, $keys);
+        return new ArrayChoiceList($result);
     }
 
     /**
