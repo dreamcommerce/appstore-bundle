@@ -74,7 +74,8 @@ class AppstoreListener{
                 [
                     'entrypoint'=>$params['shop_url'],
                     'client_id'=>$app['app_id'],
-                    'client_secret'=>$app['app_secret']
+                    'client_secret'=>$app['app_secret'],
+                    'auth_code'=>$params['auth_code']
                 ]
             );
 
@@ -101,7 +102,7 @@ class AppstoreListener{
         /**
          * @var $tokenModel TokenInterface
          */
-        $tokenModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+        $tokenModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\TokenInterface');
         $tokenModel->setAccessToken($token['access_token']);
         $tokenModel->setRefreshToken($token['refresh_token']);
 
