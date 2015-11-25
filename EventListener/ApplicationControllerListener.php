@@ -3,6 +3,7 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
 use DreamCommerce\Client;
+use DreamCommerce\ClientInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\PaidControllerInterface;
 use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
@@ -210,10 +211,10 @@ class ApplicationControllerListener{
 
     /**
      * called when current token is invalid
-     * @param Client $client
+     * @param ClientInterface $client
      * @param \Exception $ex
      */
-    public function invalidTokenRedirect(Client $client, \Exception $ex){
+    public function invalidTokenRedirect(ClientInterface $client, \Exception $ex){
         $this->redirect($this->lastEvent, 'reinstall');
     }
 
