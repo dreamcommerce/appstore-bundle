@@ -45,7 +45,7 @@ class AppstoreListener{
          * @var $repo ShopRepositoryInterface
          */
         $repo = $this->objectManager->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
-        $repo->findOneByNameAndApplication($shopName, $appName);
+        return $repo->findOneByNameAndApplication($shopName, $appName);
     }
 
     /**
