@@ -80,7 +80,7 @@ class AppstoreListener{
             );
 
             // and get tokens
-            $token = $client->authenticate($params['auth_code']);
+            $token = $client->authenticate(true);
 
         }catch(ClientException $ex){
             return false;
