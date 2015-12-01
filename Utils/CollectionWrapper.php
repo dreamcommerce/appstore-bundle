@@ -52,6 +52,25 @@ class CollectionWrapper {
 
     }
 
+    public function appendCollection(\Traversable $collection)
+    {
+        $buff = [];
+        foreach($this->collection as $i){
+            $buff[] = $i;
+        }
+
+        foreach($collection as $i){
+            $buff[] = $i;
+        }
+
+        $this->collection->exchangeArray($buff);
+    }
+
+    public function getCollection()
+    {
+        return $this->collection;
+    }
+
     /**
      * associative list from collection, eg.
      * row [primary_key=1, ...]
