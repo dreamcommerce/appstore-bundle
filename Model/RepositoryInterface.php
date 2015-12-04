@@ -1,4 +1,5 @@
 <?php
+
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 /**

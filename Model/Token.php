@@ -9,7 +9,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
  *
  * @package DreamCommerce\ShopAppstoreBundle\Model
  */
-abstract class Token implements TokenInterface
+abstract class Token extends ShopDependent implements TokenInterface
 {
     /**
      * expiration date
@@ -28,12 +28,6 @@ abstract class Token implements TokenInterface
      * @var string
      */
     protected $refreshToken;
-
-    /**
-     * shop handle
-     * @var ShopInterface
-     */
-    protected $shop;
 
     /**
      * @inheritdoc
@@ -82,21 +76,4 @@ abstract class Token implements TokenInterface
     {
         return $this->refreshToken;
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function setShop(ShopInterface $shop)
-    {
-        $this->shop = $shop;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getShop()
-    {
-        return $this->shop;
-    }
-
 }

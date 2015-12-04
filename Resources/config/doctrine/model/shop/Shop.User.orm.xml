@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="DreamCommerce\ShopAppstoreBundle\Doctrine\Shop\User">
+        <field name="login" type="string" column="login" length="100" nullable="false"/>
+        <field name="dateAdd" type="datetime" column="date_add" nullable="false"/>
+        <field name="lastvisit" type="datetime" column="lastvisit" nullable="false"/>
+        <field name="verifyEmail" type="boolean" column="verify_email" nullable="false"/>
+        <field name="verifyCode" type="string" column="verify_code" length="32" nullable="false"/>
+        <field name="origin" type="boolean" column="origin" nullable="false"/>
+        <field name="firstname" type="string" column="firstname" length="100" nullable="false"/>
+        <field name="lastname" type="string" column="lastname" length="100" nullable="false"/>
+        <field name="email" type="string" column="email" length="100" nullable="false"/>
+        <field name="discount" type="float" column="discount" precision="13" scale="2" nullable="false"/>
+        <field name="newsletter" type="boolean" column="newsletter" nullable="false"/>
+        <field name="active" type="boolean" column="active" nullable="false"/>
+        <field name="comment" type="text" column="comment" nullable="false"/>
+    </mapped-superclass>
+</doctrine-mapping>

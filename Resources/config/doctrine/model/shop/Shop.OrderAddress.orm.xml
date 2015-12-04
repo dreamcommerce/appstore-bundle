@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="DreamCommerce\ShopAppstoreBundle\Doctrine\Shop\OrderAddress">
+        <field name="type" type="boolean" column="type" nullable="false"/>
+        <field name="firstname" type="string" column="firstname" length="100" nullable="false"/>
+        <field name="lastname" type="string" column="lastname" length="100" nullable="false"/>
+        <field name="company" type="string" column="company" length="100" nullable="false"/>
+        <field name="taxIdentificationNumber" type="string" column="tax_identification_number" length="50" nullable="false"/>
+        <field name="pesel" type="string" column="pesel" length="11" nullable="false"/>
+        <field name="city" type="string" column="city" length="100" nullable="false"/>
+        <field name="postcode" type="string" column="postcode" length="12" nullable="false"/>
+        <field name="street1" type="string" column="street1" length="100" nullable="false"/>
+        <field name="street2" type="string" column="street2" length="100" nullable="false"/>
+        <field name="state" type="string" column="state" length="100" nullable="false"/>
+        <field name="phone" type="string" column="phone" length="100" nullable="false"/>
+        <field name="countryCode" type="string" column="country_code" length="2" nullable="false"/>
+    </mapped-superclass>
+</doctrine-mapping>

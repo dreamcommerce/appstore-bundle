@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="DreamCommerce\ShopAppstoreBundle\Doctrine\Shop\AdditionalField">
+        <field name="type" type="boolean" column="type" nullable="false"/>
+        <field name="locate" type="boolean" column="locate" nullable="false"/>
+        <field name="req" type="boolean" column="req" nullable="false"/>
+        <field name="active" type="boolean" column="active" nullable="false"/>
+        <field name="order" type="integer" column="order" nullable="false"/>
+    </mapped-superclass>
+</doctrine-mapping>

@@ -9,19 +9,13 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
  *
  * @package DreamCommerce\ShopAppstoreBundle\Model
  */
-abstract class Subscription implements SubscriptionInterface
+abstract class Subscription extends ShopDependent implements SubscriptionInterface
 {
     /**
      * expiration date
      * @var \DateTime
      */
     protected $expiresAt;
-
-    /**
-     * shop instance
-     * @var ShopInterface
-     */
-    protected $shop;
 
     /**
      * @inheritdoc
@@ -37,21 +31,5 @@ abstract class Subscription implements SubscriptionInterface
     public function getExpiresAt()
     {
         return $this->expiresAt;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setShop(ShopInterface $shop)
-    {
-        $this->shop = $shop;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getShop()
-    {
-        return $this->shop;
     }
 }

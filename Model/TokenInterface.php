@@ -1,4 +1,5 @@
 <?php
+
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 /**
@@ -8,7 +9,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
  *
  * @package DreamCommerce\ShopAppstoreBundle\Model
  */
-interface TokenInterface
+interface TokenInterface extends ShopDependentInterface
 {
     /**
      * set expiration date
@@ -48,17 +49,4 @@ interface TokenInterface
      * @return string
      */
     public function getRefreshToken();
-
-    /**
-     * set shop
-     * @param ShopInterface $shop
-     * @return mixed
-     */
-    public function setShop(ShopInterface $shop);
-
-    /**
-     * get shop
-     * @return ShopInterface
-     */
-    public function getShop();
 }

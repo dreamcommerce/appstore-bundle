@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="DreamCommerce\ShopAppstoreBundle\Doctrine\Shop\UserGroup">
+        <field name="name" type="string" column="name" length="100" nullable="false" />
+        <field name="discount" type="float" column="discount" precision="13" scale="2" nullable="false" />
+        <field name="priceLevel" type="boolean" column="price_level" nullable="false" />
+    </mapped-superclass>
+</doctrine-mapping>

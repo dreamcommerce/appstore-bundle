@@ -6,6 +6,9 @@
         "php": ">=5.4.0",
         "dreamcommerce/shop-appstore-lib": "0.2.*"
     },
+    "require-dev": {
+        "doctrine/common": "2.5.*"
+    },
     "autoload": {
         "psr-4": {
             "DreamCommerce\\ShopAppstoreBundle\\": ""

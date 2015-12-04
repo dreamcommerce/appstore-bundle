@@ -1,11 +1,12 @@
 <?php
+
 namespace DreamCommerce\ShopAppstoreBundle\Model;
 
 /**
  * Interface SubscriptionInterface
  * @package DreamCommerce\ShopAppstoreBundle\Model
  */
-interface SubscriptionInterface
+interface SubscriptionInterface extends ShopDependentInterface
 {
     /**
      * set expiration date
@@ -19,17 +20,4 @@ interface SubscriptionInterface
      * @return \DateTime
      */
     public function getExpiresAt();
-
-    /**
-     * set shop for subscription
-     * @param ShopInterface $shop
-     * @return void
-     */
-    public function setShop(ShopInterface $shop);
-
-    /**
-     * get shop bound to subscription
-     * @return ShopInterface
-     */
-    public function getShop();
 }

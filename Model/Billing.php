@@ -9,14 +9,8 @@ namespace DreamCommerce\ShopAppstoreBundle\Model;
  *
  * @package DreamCommerce\ShopAppstoreBundle\Model
  */
-abstract class Billing implements BillingInterface
+abstract class Billing extends ShopDependent implements BillingInterface
 {
-    /**
-     * shop this information is bound to
-     * @var ShopInterface
-     */
-    protected $shop;
-
     /**
      * when event occurred
      * @var \DateTime
@@ -25,24 +19,6 @@ abstract class Billing implements BillingInterface
 
     public function __construct(){
         $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setShop(ShopInterface $shop)
-    {
-        $this->shop = $shop;
-
-        return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getShop()
-    {
-        return $this->shop;
     }
 
     /**

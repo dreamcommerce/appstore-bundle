@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <mapped-superclass name="DreamCommerce\ShopAppstoreBundle\Doctrine\Shop\Order">
+        <field name="date" type="datetime" column="date" nullable="false"/>
+        <field name="statusDate" type="datetime" column="status_date" nullable="false"/>
+        <field name="confirmDate" type="datetime" column="confirm_date" nullable="false"/>
+        <field name="deliveryDate" type="date" column="delivery_date" nullable="false"/>
+        <field name="sum" type="float" column="sum" precision="13" scale="2" nullable="false"/>
+        <field name="userOrder" type="boolean" column="user_order" nullable="false"/>
+        <field name="shippingCost" type="float" column="shipping_cost" precision="13" scale="2" nullable="false"/>
+        <field name="email" type="string" column="email" length="100" nullable="false"/>
+        <field name="deliveryCode" type="string" column="delivery_code" length="100" nullable="false"/>
+        <field name="code" type="string" column="code" length="32" nullable="false"/>
+        <field name="confirm" type="boolean" column="confirm" nullable="false"/>
+        <field name="notes" type="text" column="notes" nullable="false"/>
+        <field name="notesPriv" type="text" column="notes_priv" nullable="false"/>
+        <field name="notesPub" type="text" column="notes_pub" nullable="false"/>
+        <field name="currencyRate" type="float" column="currency_rate" precision="10" scale="0" nullable="false"/>
+        <field name="paid" type="float" column="paid" precision="13" scale="2" nullable="false"/>
+        <field name="ipAddress" type="string" column="ip_address" length="39" nullable="false"/>
+        <field name="discountClient" type="float" column="discount_client" precision="10" scale="0" nullable="false"/>
+        <field name="discountGroup" type="float" column="discount_group" precision="10" scale="0" nullable="false"/>
+        <field name="discountLevels" type="float" column="discount_levels" precision="10" scale="0" nullable="false"/>
+        <field name="discountCode" type="float" column="discount_code" precision="10" scale="0" nullable="false"/>
+        <field name="shippingVatValue" type="float" column="shipping_vat_value" precision="10" scale="0" nullable="false"/>
+        <field name="shippingVatName" type="string" column="shipping_vat_name" length="50" nullable="false"/>
+        <field name="origin" type="smallint" column="origin" nullable="false"/>
+    </mapped-superclass>
+</doctrine-mapping>

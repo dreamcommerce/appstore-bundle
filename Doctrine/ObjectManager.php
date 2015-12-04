@@ -1,21 +1,28 @@
 <?php
 
-
 namespace DreamCommerce\ShopAppstoreBundle\Doctrine;
-
 
 use Doctrine\ORM\EntityManager;
 use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
 
 class ObjectManager implements ObjectManagerInterface
 {
-    protected $em;
     /**
-     * @var
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var string[]
      */
     protected $classMappings = [];
 
-    public function __construct(EntityManager $em, $classMappings){
+    /**
+     * @param EntityManager $em
+     * @param string[] $classMappings
+     */
+    public function __construct(EntityManager $em, $classMappings)
+    {
         $this->em = $em;
         $this->classMappings = $classMappings;
     }
@@ -34,18 +41,20 @@ class ObjectManager implements ObjectManagerInterface
         return $class;
     }
 
-    public function save($entity, $commit = true){
+    public function save($entity, $commit = true)
+    {
         $this->em->persist($entity);
         $commit && $this->em->flush();
     }
 
-    public function delete($entity){
+    public function delete($entity)
+    {
         $this->em->remove($entity);
         $this->em->flush();
     }
 
-    protected function getClassForInterface($arg){
-
+    protected function getClassForInterface($arg)
+    {
         $class = null;
 
         if(!isset($this->classMappings[$arg])){
