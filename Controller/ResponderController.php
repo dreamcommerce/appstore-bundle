@@ -28,7 +28,7 @@ class ResponderController extends Controller
     {
 
         // get applications configuration list
-        $apps = $this->container->getParameter('dream_commerce_shop_appstore.applications');
+        $apps = $this->container->getParameter('dream_commerce_shop_appstore.apps');
 
         $validator = new RequestValidator($request);
 
