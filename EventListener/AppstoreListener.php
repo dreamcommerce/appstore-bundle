@@ -45,7 +45,7 @@ class AppstoreListener{
          * @var $repo ShopRepositoryInterface
          */
         $repo = $this->objectManager->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
-        $repo->findOneByNameAndApplication($shopName, $appName);
+        return $repo->findOneByNameAndApplication($shopName, $appName);
     }
 
     /**
@@ -74,12 +74,13 @@ class AppstoreListener{
                 [
                     'entrypoint'=>$params['shop_url'],
                     'client_id'=>$app['app_id'],
-                    'client_secret'=>$app['app_secret']
+                    'client_secret'=>$app['app_secret'],
+                    'auth_code'=>$params['auth_code']
                 ]
             );
 
             // and get tokens
-            $token = $client->authenticate($params['auth_code']);
+            $token = $client->authenticate(true);
 
         }catch(ClientException $ex){
             return false;
@@ -101,7 +102,7 @@ class AppstoreListener{
         /**
          * @var $tokenModel TokenInterface
          */
-        $tokenModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+        $tokenModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\TokenInterface');
         $tokenModel->setAccessToken($token['access_token']);
         $tokenModel->setRefreshToken($token['refresh_token']);
 
