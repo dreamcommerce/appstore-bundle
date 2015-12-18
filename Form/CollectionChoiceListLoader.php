@@ -16,7 +16,7 @@ use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
 class CollectionChoiceListLoader implements ChoiceLoaderInterface{
 
     /**
-     * @var Resource
+     * @var \ArrayObject|\Traversable
      */
     protected $resource;
     /**
@@ -34,11 +34,11 @@ class CollectionChoiceListLoader implements ChoiceLoaderInterface{
     protected $data = [];
 
     /**
-     * @param ResourceList $resource passed options resource
+     * @param \ArrayObject|\Traversable $resource passed options resource
      * @param callable $keyResolver
      * @param callable $valueResolver
      */
-    public function __construct(ResourceList $resource, callable $keyResolver, callable $valueResolver){
+    public function __construct($resource, callable $keyResolver, callable $valueResolver){
 
         $this->resource = $resource;
         $this->valueResolver = $valueResolver;
