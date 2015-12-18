@@ -1,6 +1,6 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
+namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 use DreamCommerce\Client;
 use DreamCommerce\ClientInterface;
@@ -11,8 +11,7 @@ use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
  * if a controller implements this interface, it will be checked against iframe parameters
  * @package DreamCommerce\ShopAppstoreBundle\Controller
  */
-interface ApplicationControllerInterface {
-
+interface ApplicationControllerInterface
+{
     public function injectClient(ClientInterface $client, ShopInterface $shop);
-
 }

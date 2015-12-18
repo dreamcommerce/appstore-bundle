@@ -35,6 +35,23 @@ interface LanguageInterface extends ResourceDependentInterface
     /**
      * @return \ArrayAccess
      */
+    public function getAdditionalFieldTranslations();
+
+    /**
+     * @param AdditionalFieldTranslationInterface $additionalFieldTranslationInterface
+     * @return $this
+     */
+    public function addAdditionalFieldTranslation(AdditionalFieldTranslationInterface $additionalFieldTranslationInterface);
+
+    /**
+     * @param \ArrayAccess $additionalFieldTranslations
+     * @return $this
+     */
+    public function setAdditionalFieldTranslations($additionalFieldTranslations);
+
+    /**
+     * @return \ArrayAccess
+     */
     public function getAttributeGroups();
 
     /**

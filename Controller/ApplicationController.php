@@ -17,8 +17,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * provides shop-protected, generic controller class
  * @package DreamCommerce\ShopAppstoreBundle\Controller
  */
-abstract class ApplicationController extends Controller implements ApplicationControllerInterface{
-
+abstract class ApplicationController extends Controller implements ApplicationControllerInterface
+{
     /**
      * @var Client
      */
@@ -31,7 +31,7 @@ abstract class ApplicationController extends Controller implements ApplicationCo
 
     /**
      * method used by request filter - injects current client and shop instance
-     * @param Client $client
+     * @param ClientInterface $client
      * @param ShopInterface $shop
      */
     public function injectClient(ClientInterface $client, ShopInterface $shop){
@@ -43,7 +43,7 @@ abstract class ApplicationController extends Controller implements ApplicationCo
      * generates URL injecting iframe params to the query
      * @param string $route #Route
      * @param array $parameters
-     * @param bool $referenceType
+     * @param int $referenceType
      * @return string
      */
     public function generateAppUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -75,6 +75,4 @@ abstract class ApplicationController extends Controller implements ApplicationCo
 
         return $builder;
     }
-
-
 }

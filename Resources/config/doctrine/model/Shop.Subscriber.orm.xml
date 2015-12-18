@@ -3,7 +3,6 @@
     <mapped-superclass name="DreamCommerce\ShopAppstoreBundle\Doctrine\Shop\Subscriber">
         <field name="email" type="string" column="email" length="255" nullable="false"/>
         <field name="active" type="boolean" column="active" nullable="false"/>
-        <field name="verifyCode" type="string" column="verify_code" length="32" nullable="false"/>
         <field name="dateadd" type="datetime" column="dateadd" nullable="false"/>
     </mapped-superclass>
 </doctrine-mapping>

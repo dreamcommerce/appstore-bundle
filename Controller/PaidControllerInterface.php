@@ -1,4 +1,5 @@
 <?php
+
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 /**
@@ -6,6 +7,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Controller;
  * if implemented, the bundle checks if application has been paid
  * @package DreamCommerce\ShopAppstoreBundle\Controller
  */
-interface PaidControllerInterface {
+interface PaidControllerInterface
+{
 
 }

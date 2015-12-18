@@ -20,6 +20,11 @@ class UserGroup extends ResourceDependent implements UserGroupInterface
     protected $discount;
 
     /**
+     * @var int
+     */
+    protected $priceLevel;
+
+    /**
      * @var \ArrayAccess
      */
     protected $users;
@@ -82,6 +87,24 @@ class UserGroup extends ResourceDependent implements UserGroupInterface
     public function setDiscount($discount)
     {
         $this->discount = $discount;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceLevel()
+    {
+        return $this->priceLevel;
+    }
+
+    /**
+     * @param int $priceLevel
+     * @return $this
+     */
+    public function setPriceLevel($priceLevel)
+    {
+        $this->priceLevel = $priceLevel;
         return $this;
     }
 

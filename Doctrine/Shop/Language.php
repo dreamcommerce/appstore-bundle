@@ -10,6 +10,7 @@ class Language extends LanguageBase
     public function __construct()
     {
         $this->aboutPages = new ArrayCollection();
+        $this->additionalFieldTranslations = new ArrayCollection();
         $this->attributeGroups = new ArrayCollection();
         $this->availabilityTranslations = new ArrayCollection();
         $this->categoryTranslations = new ArrayCollection();

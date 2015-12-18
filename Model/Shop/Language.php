@@ -37,6 +37,11 @@ class Language extends ResourceDependent implements LanguageInterface
     /**
      * @var \ArrayAccess
      */
+    protected $additionalFieldTranslations;
+
+    /**
+     * @var \ArrayAccess
+     */
     protected $attributeGroups;
 
     /**
@@ -112,6 +117,7 @@ class Language extends ResourceDependent implements LanguageInterface
     public function __construct()
     {
         $this->aboutPages = new \ArrayObject();
+        $this->additionalFieldTranslations = new \ArrayObject();
         $this->attributeGroups = new \ArrayObject();
         $this->availabilityTranslations = new \ArrayObject();
         $this->categoryTranslations = new \ArrayObject();
@@ -235,6 +241,34 @@ class Language extends ResourceDependent implements LanguageInterface
     public function setAboutPages($aboutPages)
     {
         $this->aboutPages = $aboutPages;
+        return $this;
+    }
+
+    /**
+     * @return \ArrayAccess
+     */
+    public function getAdditionalFieldTranslations()
+    {
+        return $this->additionalFieldTranslations;
+    }
+
+    /**
+     * @param AdditionalFieldTranslationInterface $additionalFieldTranslationInterface
+     * @return $this
+     */
+    public function addAdditionalFieldTranslation(AdditionalFieldTranslationInterface $additionalFieldTranslationInterface)
+    {
+        $this->additionalFieldTranslations[] = $additionalFieldTranslationInterface;
+        return $this;
+    }
+
+    /**
+     * @param \ArrayAccess $additionalFieldTranslations
+     * @return $this
+     */
+    public function setAdditionalFieldTranslations($additionalFieldTranslations)
+    {
+        $this->additionalFieldTranslations = $additionalFieldTranslations;
         return $this;
     }
 

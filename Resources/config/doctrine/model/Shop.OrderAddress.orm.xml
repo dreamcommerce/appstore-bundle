@@ -6,7 +6,6 @@
         <field name="lastname" type="string" column="lastname" length="100" nullable="false"/>
         <field name="company" type="string" column="company" length="100" nullable="false"/>
         <field name="taxIdentificationNumber" type="string" column="tax_identification_number" length="50" nullable="false"/>
-        <field name="pesel" type="string" column="pesel" length="11" nullable="false"/>
         <field name="city" type="string" column="city" length="100" nullable="false"/>
         <field name="postcode" type="string" column="postcode" length="12" nullable="false"/>
         <field name="street1" type="string" column="street1" length="100" nullable="false"/>

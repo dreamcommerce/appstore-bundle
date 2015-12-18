@@ -6,8 +6,6 @@ use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\ApplicationsPa
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\CustomObjectManagerPass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DebuggerPass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
-use DreamCommerce\ShopAppstoreBundle\Utils\DebugProxy;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -38,7 +36,8 @@ class DreamCommerceShopAppstoreBundle extends Bundle
         if (class_exists('\Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
 
             $mappings = array(
-                realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model'
+                //realpath(__DIR__ . '/Resources/config/doctrine/model/shop') => 'DreamCommerce\ShopAppstoreBundle\Doctrine\Shop',
+                realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Doctrine'
             );
 
             // hint: DO NOT shorthand this import - it will screw up environments with no Doctrine installed

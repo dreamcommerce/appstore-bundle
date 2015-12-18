@@ -5,7 +5,6 @@
         <field name="dateAdd" type="datetime" column="date_add" nullable="false"/>
         <field name="lastvisit" type="datetime" column="lastvisit" nullable="false"/>
         <field name="verifyEmail" type="boolean" column="verify_email" nullable="false"/>
-        <field name="verifyCode" type="string" column="verify_code" length="32" nullable="false"/>
         <field name="origin" type="boolean" column="origin" nullable="false"/>
         <field name="firstname" type="string" column="firstname" length="100" nullable="false"/>
         <field name="lastname" type="string" column="lastname" length="100" nullable="false"/>
