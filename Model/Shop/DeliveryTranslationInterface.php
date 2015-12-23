@@ -2,9 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model\Shop;
 
-use DreamCommerce\ShopAppstoreBundle\Model\ShopDependentInterface;
-
-interface DeliveryTranslationInterface extends TranslationInterface, ShopDependentInterface
+interface DeliveryTranslationInterface extends TranslationInterface
 {
     /**
      * @return DeliveryInterface

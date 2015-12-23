@@ -2,9 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model\Shop;
 
-use DreamCommerce\ShopAppstoreBundle\Model\ShopDependent;
-
-class PaymentTranslation extends ShopDependent implements PaymentTranslationInterface
+class PaymentTranslation implements PaymentTranslationInterface
 {
     /**
      * @var int

@@ -2,9 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model\Shop;
 
-use DreamCommerce\ShopAppstoreBundle\Model\ShopDependent;
-
-class AvailabilityTranslation extends ShopDependent implements AvailabilityTranslationInterface
+class AvailabilityTranslation implements AvailabilityTranslationInterface
 {
     /**
      * @var int

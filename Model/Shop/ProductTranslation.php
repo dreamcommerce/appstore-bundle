@@ -2,9 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model\Shop;
 
-use DreamCommerce\ShopAppstoreBundle\Model\ShopDependent;
-
-class ProductTranslation extends ShopDependent implements ProductTranslationInterface
+class ProductTranslation implements ProductTranslationInterface
 {
     /**
      * @var int

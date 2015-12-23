@@ -2,9 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Model\Shop;
 
-use DreamCommerce\ShopAppstoreBundle\Model\ShopDependent;
-
-class GaugeTranslation extends ShopDependent implements GaugeTranslationInterface
+class GaugeTranslation implements GaugeTranslationInterface
 {
     /**
      * @var int
