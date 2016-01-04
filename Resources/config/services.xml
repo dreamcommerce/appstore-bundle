@@ -23,7 +23,6 @@
             <argument type="service" id="dream_commerce_shop_appstore.apps"/>
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
-            <argument>%minimal_version%</argument>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
         </service>

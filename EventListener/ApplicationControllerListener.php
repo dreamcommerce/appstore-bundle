@@ -50,10 +50,6 @@ class ApplicationControllerListener{
      */
     protected $lastEvent;
     /**
-     * @var null
-     */
-    protected $version;
-    /**
      * @var ApplicationRegistry
      */
     protected $applicationRegistry;
@@ -63,14 +59,12 @@ class ApplicationControllerListener{
         $routes,
         ApplicationRegistry $applicationRegistry,
         ObjectManagerInterface $shopManager,
-        TokenRefresher $refresher,
-        $version = null
+        TokenRefresher $refresher
     ){
         $this->applications = $applications;
         $this->routes = $routes;
         $this->objectManager = $shopManager;
         $this->refresher = $refresher;
-        $this->version = $version;
         $this->applicationRegistry = $applicationRegistry;
     }
 
@@ -136,8 +130,8 @@ class ApplicationControllerListener{
             }
 
             // verify version requirements
-            if($this->version){
-                if($shop->getVersion()<$this->version){
+            if($appData['minimal_version']>0){
+                if($shop->getVersion()<$appData['minimal_version']){
                     $this->redirect($event, 'upgrade');
                 }
             }
