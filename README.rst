@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``0.1.4``
+    fixed token refreshing issues
+
 ``0.1.3``
     repo maintenance commit
 
