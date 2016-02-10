@@ -29,7 +29,7 @@ class TokenRefresher {
 
     /**
      * shop communication library
-     * @var ClientInterface
+     * @var ClientInterface|Client\OAuth
      */
     protected $client;
 
@@ -65,7 +65,8 @@ class TokenRefresher {
         $refreshToken = $token->getRefreshToken();
 
         try{
-            $newToken = $this->client->refreshToken($refreshToken);
+            $this->client->setRefreshToken($refreshToken);
+            $newToken = $this->client->refreshTokens();
             $token->setExpiresAt(new \DateTime('+'.(int)$newToken['expires_in'].' seconds'));
             $token->setAccessToken($newToken['access_token']);
             $token->setRefreshToken($newToken['refresh_token']);
