@@ -42,6 +42,11 @@ class ApplicationsPass implements CompilerPassInterface
                 new Reference(DreamCommerceShopAppstoreExtension::ALIAS.'.logger', ContainerInterface::NULL_ON_INVALID_REFERENCE)
             );
 
+            // ignore SSL errors?
+            $definition->addArgument(
+                $container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS.'.skip_ssl')
+            );
+
             $app = DreamCommerceShopAppstoreExtension::ALIAS . '.app.' . $app;
 
             // append definition

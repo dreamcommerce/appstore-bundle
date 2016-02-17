@@ -4,8 +4,8 @@
 namespace DreamCommerce\ShopAppstoreBundle\Handler;
 
 
-use DreamCommerce\Client;
-use DreamCommerce\ClientInterface;
+use DreamCommerce\ShopAppstoreLib\Client;
+use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use Psr\Log\LoggerInterface;
 
@@ -40,6 +40,11 @@ class Application
      * @var LoggerInterface
      */
     protected $logger;
+    /**
+     * skip SSL validation
+     * @var bool
+     */
+    protected $skipSsl;
 
     /**
      * @param string $app app name
@@ -47,13 +52,15 @@ class Application
      * @param string $appSecret app secret
      * @param string $appstoreSecret appstore secret
      * @param LoggerInterface|null $logger if not null, logger used to pass ShopAppstoreLib debug information
+     * @param bool $skipSsl
      */
-    public function __construct($app, $appId, $appSecret, $appstoreSecret, LoggerInterface $logger = null){
+    public function __construct($app, $appId, $appSecret, $appstoreSecret, LoggerInterface $logger = null, $skipSsl = false){
         $this->app = $app;
         $this->appId = $appId;
         $this->appSecret = $appSecret;
         $this->appstoreSecret = $appstoreSecret;
         $this->logger = $logger;
+        $this->skipSsl = $skipSsl;
     }
 
     /**
@@ -96,7 +103,7 @@ class Application
      * get ShopAppstoreLib client
      * @param ShopInterface $shop
      * @return ClientInterface
-     * @throws \DreamCommerce\Exception\ClientException
+     * @throws \DreamCommerce\ShopAppstoreLib\Exception\ClientException
      */
     public function getClient(ShopInterface $shop)
     {
@@ -110,7 +117,8 @@ class Application
             [
                 'entrypoint'=>$shop->getShopUrl(),
                 'client_id'=>$this->getAppId(),
-                'client_secret'=>$this->getAppSecret()
+                'client_secret'=>$this->getAppSecret(),
+                'skip_ssl'=>$this->skipSsl
             ]
         );
 

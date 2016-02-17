@@ -2,7 +2,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 
-use DreamCommerce\Resource;
+use DreamCommerce\ShopAppstoreLib\Resource;
 use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 

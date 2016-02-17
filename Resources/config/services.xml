@@ -3,21 +3,32 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services
         http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+>
+
+    <parameters>
+        <parameter key="dream_commerce_shop_appstore.token_refresher.class">DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher</parameter>
+        <parameter key="dream_commerce_shop_appstore.request_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\Service</parameter>
+        <parameter key="dream_commerce_shop_appstore.controller_filter.class">DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.url.class">DreamCommerce\ShopAppstoreBundle\Utils\Url</parameter>
+        <parameter key="dream_commerce_shop_appstore.locale_listener.class">DreamCommerce\ShopAppstoreBundle\EventListener\LocaleListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.event.handler.class">DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.twig_tags.class">DreamCommerce\ShopAppstoreBundle\Twig\PathExtension</parameter>
+        <parameter key="dream_commerce_shop_appstore.exception_handler.class">DreamCommerce\ShopAppstoreBundle\EventListener\ResourceExceptionListener</parameter>
+    </parameters>
 
     <services>
         <service id="dream_commerce_shop_appstore.token_refresher"
-                 class="DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher">
+                 class="%dream_commerce_shop_appstore.token_refresher.class%">
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
         </service>
         <service id="dream_commerce_shop_appstore.request_validator"
-                 class="DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\Service">
+                 class="%dream_commerce_shop_appstore.request_validator.class%">
             <call method="setRequestStack">
                 <argument type="service" id="request_stack"/>
             </call>
         </service>
         <service id="dream_commerce_shop_appstore.controller_filter"
-                 class="DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener">
+                 class="%dream_commerce_shop_appstore.controller_filter.class%">
             <argument>%dream_commerce_shop_appstore.apps%</argument>
             <argument>%dream_commerce_shop_appstore.routes%</argument>
             <argument type="service" id="dream_commerce_shop_appstore.apps"/>
@@ -26,19 +37,20 @@
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
         </service>
-        <service id="dream_commerce_shop_appstore.url" class="DreamCommerce\ShopAppstoreBundle\Utils\Url">
+        <service id="dream_commerce_shop_appstore.url" class="%dream_commerce_shop_appstore.url.class%">
             <argument type="service" id="request_stack"/>
             <argument type="service" id="dream_commerce_shop_appstore.request_validator"/>
             <argument type="service" id="router"/>
         </service>
         <service id="dream_commerce_shop_appstore.locale_listener"
-                 class="DreamCommerce\ShopAppstoreBundle\EventListener\LocaleListener">
+                 class="%dream_commerce_shop_appstore.locale_listener.class%">
             <argument>%locale%</argument>
             <tag name="kernel.event_subscriber"/>
         </service>
-        <service id="dream_commerce_shop_appstore.event.install"
-                 class="DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener">
+        <service id="dream_commerce_shop_appstore.event.handler"
+                 class="%dream_commerce_shop_appstore.event.handler.class%">
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
+            <argument type="expression">"%dream_commerce_shop_appstore.skip_ssl%"</argument>
 
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.install" method="onInstall"/>
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.uninstall"
@@ -48,10 +60,16 @@
                  method="onSubscribe"/>
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.upgrade" method="onUpgrade"/>
         </service>
-        <service id="dream_commerce_shop_appstore.twig_tags" class="DreamCommerce\ShopAppstoreBundle\Twig\PathExtension"
-                 public="false">
+        <service id="dream_commerce_shop_appstore.twig_tags" class="%dream_commerce_shop_appstore.twig_tags.class%"
+                 >
             <argument type="service" id="dream_commerce_shop_appstore.url"/>
             <tag name="twig.extension"/>
+        </service>
+        <service id="dream_commerce_shop_appstore.exception_handler"
+                 class="%dream_commerce_shop_appstore.exception_handler.class%">
+            <tag name="kernel.event_listener" event="kernel.exception" method="onAppException" priority="1"/>
+            <tag name="kernel.event_listener" event="console.exception"  method="onConsoleException" priority="1"/>
+            <argument type="service" id="logger"/>
         </service>
     </services>
 </container>

@@ -2,8 +2,8 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\Exception\HandlerException;
-use DreamCommerce\Handler;
+use DreamCommerce\ShopAppstoreLib\Exception\HandlerException;
+use DreamCommerce\ShopAppstoreLib\Handler;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
 use Symfony\Component\HttpFoundation\Request;
 

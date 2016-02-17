@@ -2,7 +2,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\Resource;
+use DreamCommerce\ShopAppstoreLib\Resource;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\RelatedResourceListIterator;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceConnection;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceListIterator;

@@ -2,10 +2,9 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 
-use DreamCommerce\Exception\ResourceException;
-use DreamCommerce\Resource;
-use DreamCommerce\ResourceList;
-use DreamCommerce\ShopAppstoreBundle\Utils\ApiExceptionParser;
+use DreamCommerce\ShopAppstoreLib\Resource\Exception\ResourceException;
+use DreamCommerce\ShopAppstoreLib\Resource;
+use DreamCommerce\ShopAppstoreLib\ResourceList;
 
 /**
  * Class ResourceListIterator.
@@ -154,7 +153,7 @@ class ResourceListIterator implements \Iterator, \Countable
     /**
      * fetches collection for particular page
      * @param $page
-     * @throws \DreamCommerce\Exception\ResourceException
+     * @throws ResourceException
      */
     protected function fetch($page){
         $resourceCopy = clone $this->resource;
@@ -166,19 +165,15 @@ class ResourceListIterator implements \Iterator, \Countable
 
         try {
             $this->collection = $resourceCopy->get();
-        // empty collection received
-        }catch (ResourceException $ex){
-            $code = ApiExceptionParser::getHttpErrorCode($ex);
-            if($code==404){
-                $object = new \ArrayObject();
-                $object->count = 0;
-                $object->pages = 0;
-                $object->page = 1;
-                $this->collection = $object;
-            }else{
-                throw $ex;
-            }
+            // empty collection received
+        }catch(Resource\Exception\NotFoundException $ex){
+            $object = new \ArrayObject();
+            $object->count = 0;
+            $object->pages = 0;
+            $object->page = 1;
+            $this->collection = $object;
         }
+
         $this->iterator = new \ArrayIterator($this->collection);
         $this->iterator->rewind();
 

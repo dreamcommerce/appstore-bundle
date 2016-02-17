@@ -2,8 +2,8 @@
 namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
-use DreamCommerce\Client;
-use DreamCommerce\Exception\ClientException;
+use DreamCommerce\ShopAppstoreLib\Client;
+use DreamCommerce\ShopAppstoreLib\Exception\ClientException;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
@@ -22,12 +22,18 @@ class AppstoreListener{
      * @var ObjectManagerInterface
      */
     protected $objectManager;
+    /**
+     * @var bool
+     */
+    protected $skipSsl;
 
     /**
      * @param ObjectManagerInterface $objectManager
+     * @param $skipSsl
      */
-    public function __construct(ObjectManagerInterface $objectManager){
+    public function __construct(ObjectManagerInterface $objectManager, $skipSsl){
         $this->objectManager = $objectManager;
+        $this->skipSsl = $skipSsl;
     }
 
     /**
@@ -75,7 +81,8 @@ class AppstoreListener{
                     'entrypoint'=>$params['shop_url'],
                     'client_id'=>$app['app_id'],
                     'client_secret'=>$app['app_secret'],
-                    'auth_code'=>$params['auth_code']
+                    'auth_code'=>$params['auth_code'],
+                    'skip_ssl'=>$this->skipSsl
                 ]
             );
 

@@ -96,6 +96,10 @@ class Url {
      * @return array
      */
     public function getApplicationParameters(){
+        if(!$this->request){
+            return [];
+        }
+
         $params = $this->requestValidator->getAppValidationParams();
 
         $additionalParams = [];

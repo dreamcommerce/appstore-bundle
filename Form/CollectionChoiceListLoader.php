@@ -2,7 +2,6 @@
 namespace DreamCommerce\ShopAppstoreBundle\Form;
 
 
-use DreamCommerce\ResourceList;
 use Symfony\Component\Form\ChoiceList\ArrayKeyChoiceList;
 use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
 
