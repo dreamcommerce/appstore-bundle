@@ -23,9 +23,7 @@
         </service>
         <service id="dream_commerce_shop_appstore.request_validator"
                  class="%dream_commerce_shop_appstore.request_validator.class%">
-            <call method="setRequestStack">
-                <argument type="service" id="request_stack"/>
-            </call>
+            <argument type="service" id="request_stack"/>
         </service>
         <service id="dream_commerce_shop_appstore.controller_filter"
                  class="%dream_commerce_shop_appstore.controller_filter.class%">
@@ -61,7 +59,7 @@
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.upgrade" method="onUpgrade"/>
         </service>
         <service id="dream_commerce_shop_appstore.twig_tags" class="%dream_commerce_shop_appstore.twig_tags.class%"
-                 >
+                 public="false">
             <argument type="service" id="dream_commerce_shop_appstore.url"/>
             <tag name="twig.extension"/>
         </service>
