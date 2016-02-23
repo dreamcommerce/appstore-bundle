@@ -4,7 +4,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.4.0",
-        "dreamcommerce/shop-appstore-lib": "0.2.*"
+        "dreamcommerce/shop-appstore-lib": "~1.0"
     },
     "autoload": {
         "psr-4": {
@@ -17,5 +17,5 @@
             "email": "przemyslaw.pawliczuk@shoper.pl"
         }
     ],
-    "version": "0.2-dev"
+    "version": "1.0.0"
 }
