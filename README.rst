@@ -14,6 +14,7 @@ Changelog
     - removed calls marked as deprecated in Symfony 2.8
     - fixed incorrect ``RequestStack`` handling in Symfony 2.8
     - added option ``skip_ssl`` to ignore SSL errors
+    - improved related resource fetching - added redundant values removal
 
 ``0.1.4``
     - fixed token refreshing issues
