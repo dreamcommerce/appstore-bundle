@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 abstract class ApplicationController extends Controller implements ApplicationControllerInterface{
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
