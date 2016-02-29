@@ -15,6 +15,7 @@ Changelog
     - fixed incorrect ``RequestStack`` handling in Symfony 2.8
     - added option ``skip_ssl`` to ignore SSL errors
     - improved related resource fetching - added redundant values removal
+    - added method which helps to partition query_string arguments
 
 ``0.1.4``
     - fixed token refreshing issues
