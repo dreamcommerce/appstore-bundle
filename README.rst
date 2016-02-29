@@ -16,6 +16,7 @@ Changelog
     - added option ``skip_ssl`` to ignore SSL errors
     - improved related resource fetching - added redundant values removal
     - added method which helps to partition query_string arguments
+    - added ``ParamConverter`` support in ``ApplicationControllerInterface``-aware controllers - for ``ShopInterface`` and ``ClientInterface`` arguments
 
 ``0.1.4``
     - fixed token refreshing issues

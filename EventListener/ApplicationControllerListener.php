@@ -181,6 +181,10 @@ class ApplicationControllerListener{
 
             // pass shop and client
             $controller[0]->injectClient($client, $shop);
+
+            // save variables
+            $event->getRequest()->attributes->set('_dream_commerce_shop_appstore_client', $client);
+            $event->getRequest()->attributes->set('_dream_commerce_shop_appstore_shop', $shop);
         }
     }
 

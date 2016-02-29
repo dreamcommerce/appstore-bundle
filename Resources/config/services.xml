@@ -14,6 +14,7 @@
         <parameter key="dream_commerce_shop_appstore.event.handler.class">DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener</parameter>
         <parameter key="dream_commerce_shop_appstore.twig_tags.class">DreamCommerce\ShopAppstoreBundle\Twig\PathExtension</parameter>
         <parameter key="dream_commerce_shop_appstore.exception_handler.class">DreamCommerce\ShopAppstoreBundle\EventListener\ResourceExceptionListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.application_param_converter.class">DreamCommerce\ShopAppstoreBundle\Request\ApplicationParamConverter</parameter>
     </parameters>
 
     <services>
@@ -68,6 +69,9 @@
             <tag name="kernel.event_listener" event="kernel.exception" method="onAppException" priority="1"/>
             <tag name="kernel.event_listener" event="console.exception"  method="onConsoleException" priority="1"/>
             <argument type="service" id="logger"/>
+        </service>
+        <service id="dream_commerce_shop_appstore.application_param_converter" class="%dream_commerce_shop_appstore.application_param_converter.class%">
+            <tag name="request.param_converter" priority="-100" />
         </service>
     </services>
 </container>
