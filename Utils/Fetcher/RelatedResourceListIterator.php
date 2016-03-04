@@ -2,7 +2,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 
-use DreamCommerce\Resource;
+use DreamCommerce\ShopAppstoreLib\Resource;
 use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
@@ -71,9 +71,18 @@ class RelatedResourceListIterator extends ResourceListIterator
                 /**
                  * @var $c ResourceConnection
                  */
-                $primaryKeys[$c->getClassName()][] = $i->{$c->getSelfKey()};
+                $class = $c->getClassName();
+                $key = $i->{$c->getSelfKey()};
+
+                $primaryKeys[$class][] = $key;
             }
         }
+
+        // remove redundant keys
+        foreach($primaryKeys as &$v){
+            $v = array_unique($v);
+        }
+
         return $primaryKeys;
     }
 

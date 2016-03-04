@@ -2,9 +2,9 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\Client;
-use DreamCommerce\ClientInterface;
-use DreamCommerce\Exception\ClientException;
+use DreamCommerce\ShopAppstoreLib\Client\OAuth;
+use DreamCommerce\ShopAppstoreLib\ClientInterface;
+use DreamCommerce\ShopAppstoreLib\Exception\ClientException;
 use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
@@ -29,7 +29,7 @@ class TokenRefresher {
 
     /**
      * shop communication library
-     * @var ClientInterface|Client\OAuth
+     * @var OAuth
      */
     protected $client;
 
@@ -44,7 +44,7 @@ class TokenRefresher {
      * shop client library
      * @param ClientInterface $client
      */
-    public function setClient(ClientInterface $client){
+    public function setClient(OAuth $client){
         $this->client = $client;
     }
 

@@ -2,7 +2,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\Resource;
+use DreamCommerce\ShopAppstoreLib\Resource;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\RelatedResourceListIterator;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceConnection;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceListIterator;
@@ -80,5 +80,35 @@ class Fetcher {
         }while($objects->page < $objects->pages);
     }
 
+    /**
+     * partition arguments list to conform with query string limit
+     * @param $arguments
+     * @param $maxLength
+     * @return array
+     */
+    static public function partitionFilterArguments($arguments, $maxLength = 8192){
+
+        $partitions = [];
+        $bufferLength = 0;
+
+        $buffer = [];
+        while($element = array_shift($arguments)){
+            // "",
+            $length = strlen($element)+3;
+            if($bufferLength+$length<$maxLength){
+                $buffer[] = $element;
+                $bufferLength += $length;
+            }else{
+                $partitions[] = $buffer;
+                $buffer = [$element];
+                $bufferLength = $length;
+            }
+        }
+
+        $partitions[] = $buffer;
+
+        return $partitions;
+
+    }
 
 }

@@ -2,8 +2,8 @@
 namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\Exception\HandlerException;
-use DreamCommerce\Handler;
+use DreamCommerce\ShopAppstoreLib\Exception\HandlerException;
+use DreamCommerce\ShopAppstoreLib\Handler;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,6 +35,14 @@ class RequestValidator{
     }
 
     /**
+     * return request object
+     * @return Request
+     */
+    protected function getRequest(){
+        return $this->request;
+    }
+
+    /**
      * tests request against applications information
      * @param array $applications configuration data
      * @return string
@@ -43,11 +51,11 @@ class RequestValidator{
     public function getApplicationName($applications){
 
         // get request application code
-        $code = $this->request->query->get('application');
+        $code = $this->getRequest()->query->get('application');
 
         // if it's not GET - check code from POST
         if(!$code){
-            $code = $this->request->request->get('application_code');
+            $code = $this->getRequest()->request->get('application_code');
         }
 
         // no code - no work
@@ -109,7 +117,7 @@ class RequestValidator{
 
             $handler = $this->getHandler();
 
-            $payload = $this->request->request->all();
+            $payload = $this->getRequest()->request->all();
 
             $handler->verifyPayload($payload);
 
@@ -128,7 +136,7 @@ class RequestValidator{
     protected function getHandler()
     {
         return new Handler(
-            $this->request->request->get('shop_url', 'https://example.org'),
+            $this->getRequest()->request->get('shop_url', 'https://example.org'),
             $this->application['app_id'],
             $this->application['app_secret'],
             $this->application['appstore_secret']
@@ -143,7 +151,7 @@ class RequestValidator{
     {
         $payload = array();
         foreach (array('place', 'shop', 'timestamp', 'hash') as $f) {
-            $payload[$f] = $this->request->query->get($f);
+            $payload[$f] = $this->getRequest()->query->get($f);
         }
         return $payload;
     }

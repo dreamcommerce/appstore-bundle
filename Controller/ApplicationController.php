@@ -2,8 +2,8 @@
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 
-use DreamCommerce\Client;
-use DreamCommerce\ClientInterface;
+use DreamCommerce\ShopAppstoreLib\Client;
+use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\ShopAppstoreBundle\EventListener\AppFormListener;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\Url;
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 abstract class ApplicationController extends Controller implements ApplicationControllerInterface{
 
     /**
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
