@@ -55,7 +55,11 @@ class CollectionChoiceListLoader implements ChoiceLoaderInterface{
         $result = [];
 
         foreach($this->resource as $r){
-            $result[call_user_func($this->keyResolver, $r)] = call_user_func($this->valueResolver, $r);
+            $value = call_user_func($this->valueResolver, $r);
+            if(!$value){
+                continue;
+            }
+            $result[call_user_func($this->keyResolver, $r)] = $value;
         }
 
         $this->data = $result;
