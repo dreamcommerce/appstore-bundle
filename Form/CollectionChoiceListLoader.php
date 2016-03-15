@@ -2,7 +2,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\Form;
 
 
-use Symfony\Component\Form\ChoiceList\ArrayKeyChoiceList;
+use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
 
 /**
@@ -59,7 +59,8 @@ class CollectionChoiceListLoader implements ChoiceLoaderInterface{
             if(!$value){
                 continue;
             }
-            $result[call_user_func($this->keyResolver, $r)] = $value;
+            $key = call_user_func($this->keyResolver, $r);
+            $result[$value] = $key;
         }
 
         $this->data = $result;
@@ -68,11 +69,11 @@ class CollectionChoiceListLoader implements ChoiceLoaderInterface{
     /**
      * creates options for form
      * @param null $value unused - needed to satisfy an interface
-     * @return ArrayKeyChoiceList
+     * @return ArrayChoiceList
      */
     public function loadChoiceList($value = null)
     {
-        return new ArrayKeyChoiceList($this->data);
+        return new ArrayChoiceList($this->data);
     }
 
     /**
