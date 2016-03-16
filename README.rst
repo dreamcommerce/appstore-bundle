@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.0.1``
+    - CollectionChoiceListLoader deprecated dependencies removed
+
 ``1.0.0``
     - using client library 1.x - needed to increase first number due to the exceptions API changed
     - improved library exception handling - now any uncaught library exception is being handled with data used for request, even in production
