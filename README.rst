@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.1.0``
+    - added ``dream_commerce_shop_appstore:refresh_tokens`` command that can be executed periodically in order to automatically extend shop tokens validity
+
 ``1.0.1``
     - CollectionChoiceListLoader deprecated dependencies removed
 
