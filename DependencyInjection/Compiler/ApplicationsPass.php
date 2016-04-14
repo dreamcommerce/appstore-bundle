@@ -46,6 +46,9 @@ class ApplicationsPass implements CompilerPassInterface
             $definition->addArgument(
                 $container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS.'.skip_ssl')
             );
+            
+            // application version
+            $definition->addArgument($data['minimal_version']);
 
             $app = DreamCommerceShopAppstoreExtension::ALIAS . '.app.' . $app;
 

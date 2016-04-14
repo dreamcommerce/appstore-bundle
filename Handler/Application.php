@@ -45,6 +45,10 @@ class Application
      * @var bool
      */
     protected $skipSsl;
+    /**
+     * @var null|integer
+     */
+    protected $minimalVersion;
 
     /**
      * @param string $app app name
@@ -54,13 +58,14 @@ class Application
      * @param LoggerInterface|null $logger if not null, logger used to pass ShopAppstoreLib debug information
      * @param bool $skipSsl
      */
-    public function __construct($app, $appId, $appSecret, $appstoreSecret, LoggerInterface $logger = null, $skipSsl = false){
+    public function __construct($app, $appId, $appSecret, $appstoreSecret, LoggerInterface $logger = null, $skipSsl = false, $minimalVersion = null){
         $this->app = $app;
         $this->appId = $appId;
         $this->appSecret = $appSecret;
         $this->appstoreSecret = $appstoreSecret;
         $this->logger = $logger;
         $this->skipSsl = $skipSsl;
+        $this->minimalVersion = $minimalVersion;
     }
 
     /**
@@ -128,6 +133,14 @@ class Application
         }
 
         return $client;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMinimalVersion()
+    {
+        return $this->minimalVersion;
     }
 
 }
