@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.1.1``
+    - security: added ``<meta name="referrer" content="origin">`` to the main layout file
+
 ``1.1.0``
     - added ``dream_commerce_shop_appstore:refresh_tokens`` command that can be executed periodically in order to automatically extend shop tokens validity
     - added ``ShopChecker`` with method ``verifySsl`` to verify if specified shop has a SSL stack set up correctly
