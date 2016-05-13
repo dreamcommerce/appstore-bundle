@@ -6,6 +6,10 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.1.2``
+    - fixed token refresh on application update
+    - fixed incorrect exception catching on appstore exception
+
 ``1.1.1``
     - security: added ``<meta name="referrer" content="origin">`` to the main layout file
 

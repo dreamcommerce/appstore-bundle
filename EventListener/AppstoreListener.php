@@ -2,8 +2,10 @@
 namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
+use DreamCommerce\ShopAppstoreBundle\Handler\Application;
+use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
 use DreamCommerce\ShopAppstoreLib\Client;
-use DreamCommerce\ShopAppstoreLib\Exception\ClientException;
+use DreamCommerce\ShopAppstoreLib\Client\Exception\Exception;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
@@ -26,14 +28,20 @@ class AppstoreListener{
      * @var bool
      */
     protected $skipSsl;
+    /**
+     * @var TokenRefresher
+     */
+    protected $tokenRefresher;
 
     /**
      * @param ObjectManagerInterface $objectManager
      * @param $skipSsl
+     * @param TokenRefresher $tokenRefresher
      */
-    public function __construct(ObjectManagerInterface $objectManager, $skipSsl){
+    public function __construct(ObjectManagerInterface $objectManager, $skipSsl, TokenRefresher $tokenRefresher){
         $this->objectManager = $objectManager;
         $this->skipSsl = $skipSsl;
+        $this->tokenRefresher = $tokenRefresher;
     }
 
     /**
@@ -89,7 +97,7 @@ class AppstoreListener{
             // and get tokens
             $token = $client->authenticate(true);
 
-        }catch(ClientException $ex){
+        }catch(Exception $ex){
             return false;
         }
 
@@ -202,6 +210,21 @@ class AppstoreListener{
         if(!$shop){
             return false;
         }
+
+        // todo: refactor this on major change: push application object thru event
+        $appData = $event->getApplication();
+
+        $app = new Application(
+            $event->getApplicationName(),
+            $appData['app_id'],
+            $appData['app_secret'],
+            $appData['appstore_secret'],
+            null,
+            $this->skipSsl
+        );
+
+        $this->tokenRefresher->setClient($app->getClient($shop));
+        $this->tokenRefresher->refresh($shop);
 
         $shop->setVersion($event->getPayload()['application_version']);
         $this->objectManager->save($shop);

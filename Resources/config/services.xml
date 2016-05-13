@@ -50,6 +50,7 @@
                  class="%dream_commerce_shop_appstore.event.handler.class%">
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
             <argument type="expression">"%dream_commerce_shop_appstore.skip_ssl%"</argument>
+            <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
 
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.install" method="onInstall"/>
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.uninstall"
