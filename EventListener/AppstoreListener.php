@@ -98,7 +98,8 @@ class AppstoreListener{
             $token = $client->authenticate(true);
 
         }catch(Exception $ex){
-            return false;
+            // allow error to be logged
+            throw $ex;
         }
 
         // region shop
