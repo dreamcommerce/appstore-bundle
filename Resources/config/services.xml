@@ -33,6 +33,7 @@
             <argument type="service" id="dream_commerce_shop_appstore.apps"/>
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
+            <argument type="service" id="router"/>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
         </service>
