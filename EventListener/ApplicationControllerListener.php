@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class ApplicationControllerListener
@@ -53,19 +54,25 @@ class ApplicationControllerListener{
      * @var ApplicationRegistry
      */
     protected $applicationRegistry;
+    /**
+     * @var RouterInterface
+     */
+    protected $router;
 
     public function __construct(
         $applications,
         $routes,
         ApplicationRegistry $applicationRegistry,
         ObjectManagerInterface $shopManager,
-        TokenRefresher $refresher
+        TokenRefresher $refresher,
+        RouterInterface $router
     ){
         $this->applications = $applications;
         $this->routes = $routes;
         $this->objectManager = $shopManager;
         $this->refresher = $refresher;
         $this->applicationRegistry = $applicationRegistry;
+        $this->router = $router;
     }
 
     /**
@@ -190,19 +197,14 @@ class ApplicationControllerListener{
 
     /**
      * redirect to error page info
-     * @param FilterControllerEvent $event
+     * @param FilterControllerEvent $event kept for backwards compatibility
      * @param $routeName
      */
     protected function redirect(FilterControllerEvent $event, $routeName){
-        /**
-         * @var $controller Controller
-         */
-        $controller = $event->getController();
-        $controller = is_array($controller) ? $controller[0] : $controller;
 
         $route = $this->routes[$routeName];
 
-        $url = $controller->generateUrl($route);
+        $url = $this->router->generate($route);
 
         throw new HttpException(307, null, null, array('Location' => $url));
     }
