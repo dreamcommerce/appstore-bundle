@@ -6,6 +6,10 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.2.0``
+    - refactored URL-generating routines to make them compatible with Symfony 3.0
+    - automatic messages errors are now passed-through instead of muting
+
 ``1.1.2``
     - fixed token refresh on application update
     - fixed incorrect exception catching on appstore exception
