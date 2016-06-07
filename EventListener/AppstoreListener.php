@@ -67,6 +67,7 @@ class AppstoreListener{
      * handle installation event
      * @param InstallEvent $event
      * @return bool
+     * @throws Exception
      */
     public function onInstall(InstallEvent $event){
 
@@ -86,6 +87,9 @@ class AppstoreListener{
             $app = $event->getApplication();
 
             $url = $shopChecker->getRealShopUrl($params['shop_url']);
+            if(!$url){
+                throw new Exception('Cannot determine real URL for: '.$params['shop_url']);
+            }
 
             // perform client instantiation
             $client = Client::factory(

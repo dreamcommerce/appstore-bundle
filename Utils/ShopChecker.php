@@ -61,27 +61,25 @@ class ShopChecker
         $limit = self::MAX_REDIRECTS;
 
         do {
+            $limit--;
+
             $headers = get_headers($url);
             if (!$headers) {
                 return false;
             }
 
-            $statusLine = $headers[0];
-            $matches = [];
-            preg_match('#HTTP/1.[0-1] ([0-9]{3})(.*)#si', $statusLine, $matches);
+            $hasLocation = false;
 
-            $code = $matches[1];
-            if($code==301){
-                foreach($headers as $h){
-                    $row = explode(': ', $h, 2);
-                    if($row[0]=='Location'){
-                        $url = trim($row[1]);
-                        break;
-                    }
+            foreach($headers as $h){
+                $row = explode(': ', $h, 2);
+                if($row[0]=='Location'){
+                    $url = trim($row[1]);
+                    $hasLocation = true;
+                    break;
                 }
             }
 
-        }while($limit>0 && $code==301);
+        }while($limit>0 && $hasLocation);
 
         if($limit==0){
             return false;
