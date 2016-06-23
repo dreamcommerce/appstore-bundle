@@ -55,6 +55,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('app_secret')->isRequired(true)->end()
                             ->scalarNode('appstore_secret')->isRequired(true)->end()
                             ->scalarNode('minimal_version')->defaultNull()->end()
+                            ->scalarNode('user_agent')->defaultNull()->end()
                         ->end()
                     ->end()
                 ->end()

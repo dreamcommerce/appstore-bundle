@@ -49,6 +49,10 @@ class Application
      * @var null|integer
      */
     protected $minimalVersion;
+    /**
+     * @var null|string
+     */
+    protected $userAgent;
 
     /**
      * @param string $app app name
@@ -141,6 +145,22 @@ class Application
     public function getMinimalVersion()
     {
         return $this->minimalVersion;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    /**
+     * @param null|string $userAgent
+     */
+    public function setUserAgent($userAgent)
+    {
+        $this->userAgent = $userAgent;
     }
 
 }

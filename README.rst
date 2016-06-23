@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.3.0``
+    - added User-Agent configuration entry to distinguish app within access_logs
+
 ``1.2.0``
     - refactored URL-generating routines to make them compatible with Symfony 3.0
     - automatic messages errors are now passed-through instead of muting

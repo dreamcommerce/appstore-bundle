@@ -50,6 +50,11 @@ class ApplicationsPass implements CompilerPassInterface
             // application version
             $definition->addArgument($data['minimal_version']);
 
+            // user agent, todo: make calls consistent, eg. logger argument -> call like this
+            $definition->addMethodCall('setUserAgent', [
+                $data['user_agent']
+            ]);
+
             $app = DreamCommerceShopAppstoreExtension::ALIAS . '.app.' . $app;
 
             // append definition
