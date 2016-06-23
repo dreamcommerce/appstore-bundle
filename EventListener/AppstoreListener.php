@@ -2,6 +2,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
+use DreamCommerce\ShopAppstoreBundle\Utils\ShopChecker;
 use DreamCommerce\ShopAppstoreBundle\Handler\Application;
 use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
 use DreamCommerce\ShopAppstoreLib\Client;
@@ -66,6 +67,7 @@ class AppstoreListener{
      * handle installation event
      * @param InstallEvent $event
      * @return bool
+     * @throws Exception
      */
     public function onInstall(InstallEvent $event){
 
@@ -77,16 +79,23 @@ class AppstoreListener{
             return false;
         }
 
+        $shopChecker = new ShopChecker();
+
         try {
 
             $params = $event->getPayload();
             $app = $event->getApplication();
 
+            $url = $shopChecker->getRealShopUrl($params['shop_url']);
+            if(!$url){
+                throw new Exception('Cannot determine real URL for: '.$params['shop_url']);
+            }
+
             // perform client instantiation
             $client = Client::factory(
                 Client::ADAPTER_OAUTH,
                 [
-                    'entrypoint'=>$params['shop_url'],
+                    'entrypoint'=>$url,
                     'client_id'=>$app['app_id'],
                     'client_secret'=>$app['app_secret'],
                     'auth_code'=>$params['auth_code'],

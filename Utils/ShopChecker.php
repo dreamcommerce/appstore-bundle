@@ -10,6 +10,7 @@ class ShopChecker
 {
 
     const HTTP_READ_TIMEOUT = 3;
+    const MAX_REDIRECTS = 5;
 
     /**
      * @param string $url
@@ -48,6 +49,44 @@ class ShopChecker
     {
         $url = $shop->getShopUrl();
         return $this->verifySslUrl($url.'/basket');
+    }
+
+    /**
+     * jump over redirects and return target URL
+     * @param string $url
+     * @return bool
+     */
+    public function getRealShopUrl($url)
+    {
+        $limit = self::MAX_REDIRECTS;
+
+        do {
+            $limit--;
+
+            $headers = get_headers($url);
+            if (!$headers) {
+                return false;
+            }
+
+            $hasLocation = false;
+
+            foreach($headers as $h){
+                $row = explode(': ', $h, 2);
+                if($row[0]=='Location'){
+                    $url = trim($row[1]);
+                    $hasLocation = true;
+                    break;
+                }
+            }
+
+        }while($limit>0 && $hasLocation);
+
+        if($limit==0){
+            return false;
+        }
+
+        return $url;
+
     }
 
 }
