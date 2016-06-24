@@ -127,7 +127,8 @@ class Application
                 'entrypoint'=>$shop->getShopUrl(),
                 'client_id'=>$this->getAppId(),
                 'client_secret'=>$this->getAppSecret(),
-                'skip_ssl'=>$this->skipSsl
+                'skip_ssl'=>$this->skipSsl,
+                'user_agent'=>$this->getUserAgent()
             ]
         );
 
