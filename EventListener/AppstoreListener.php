@@ -99,7 +99,8 @@ class AppstoreListener{
                     'client_id'=>$app['app_id'],
                     'client_secret'=>$app['app_secret'],
                     'auth_code'=>$params['auth_code'],
-                    'skip_ssl'=>$this->skipSsl
+                    'skip_ssl'=>$this->skipSsl,
+                    'user_agent'=>$app['user_agent']
                 ]
             );
 
@@ -232,6 +233,8 @@ class AppstoreListener{
             null,
             $this->skipSsl
         );
+
+        $app->setUserAgent($appData['user_agent']);
 
         $this->tokenRefresher->setClient($app->getClient($shop));
         $this->tokenRefresher->refresh($shop);
