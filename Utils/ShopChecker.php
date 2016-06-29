@@ -13,6 +13,7 @@ class ShopChecker
     const MAX_REDIRECTS = 5;
 
     /**
+     * verifies if URL has SSL valid
      * @param string $url
      * @see http://stackoverflow.com/a/27706327/2324004
      * @return bool
@@ -41,7 +42,7 @@ class ShopChecker
     }
 
     /**
-     * check if specified shop supports full SSL
+     * check if specified shop supports valid SSL
      * @param ShopInterface $shop
      * @return bool
      */
@@ -63,23 +64,22 @@ class ShopChecker
         do {
             $limit--;
 
-            $headers = get_headers($url);
+            $hasSsl = $this->verifySslUrl($url);
+            if(!$hasSsl){
+                $url = $this->toHttp($url);
+            }
+
+            $headers = get_headers($url, true);
             if (!$headers) {
                 return false;
             }
 
-            $hasLocation = false;
-
-            foreach($headers as $h){
-                $row = explode(': ', $h, 2);
-                if($row[0]=='Location'){
-                    $url = trim($row[1]);
-                    $hasLocation = true;
-                    break;
-                }
+            if(!empty($headers['Location'])){
+                $url = $headers['Location'];
+                break;
             }
 
-        }while($limit>0 && $hasLocation);
+        }while($limit>0);
 
         if($limit==0){
             return false;
@@ -87,6 +87,19 @@ class ShopChecker
 
         return $url;
 
+    }
+
+    /**
+     * make HTTPS URL HTTP
+     * @param string $url
+     * @return string
+     */
+    protected function toHttp($url){
+        if(substr($url, 0, 5)=='https'){
+            $url = 'http'.substr($url, 5);
+        }
+
+        return $url;
     }
 
 }
