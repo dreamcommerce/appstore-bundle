@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.3.2``
+    - removed version constraint from ``composer.json``
+
 ``1.3.1``
     - fixed 301-redirects on install process detection
 
