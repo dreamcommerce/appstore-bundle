@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.3.1``
+    - fixed 301-redirects on install process detection
+
 ``1.3.0``
     - added User-Agent configuration entry to distinguish app within access_logs
 
