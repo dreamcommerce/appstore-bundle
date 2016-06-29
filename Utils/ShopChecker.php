@@ -64,6 +64,7 @@ class ShopChecker
         do {
             $limit--;
 
+            $url = $this->toHttp($url, true);
             $hasSsl = $this->verifySslUrl($url);
             if(!$hasSsl){
                 $url = $this->toHttp($url);
@@ -92,11 +93,19 @@ class ShopChecker
     /**
      * make HTTPS URL HTTP
      * @param string $url
+     * @param bool $ssl convert to https
      * @return string
      */
-    protected function toHttp($url){
-        if(substr($url, 0, 5)=='https'){
-            $url = 'http'.substr($url, 5);
+    protected function toHttp($url, $ssl = false){
+        $proto = substr($url, 0, 5);
+        if($proto=='https'){
+            if(!$ssl) {
+                $url = 'http'.substr($url, 5);
+            }
+        }else{
+            if($ssl){
+                $url = 'https'.substr($url, 4);
+            }
         }
 
         return $url;
