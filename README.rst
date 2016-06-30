@@ -6,8 +6,21 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.4.0``
+    - narrowed exceptions thrown on invalid bundle configuration supplied
+    - webhooks support added
+
+``1.3.2``
+    - removed version constraint from ``composer.json``
+
+``1.3.1``
+    - fixed 301-redirects on install process detection
+
 ``1.3.0``
     - added User-Agent configuration entry to distinguish app within access_logs
+
+``1.2.1``
+    - added workaround on 301-redirects with shop URL during install process
 
 ``1.2.0``
     - refactored URL-generating routines to make them compatible with Symfony 3.0

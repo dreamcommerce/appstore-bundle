@@ -55,6 +55,11 @@ class ApplicationsPass implements CompilerPassInterface
                 $data['user_agent']
             ]);
 
+            // defined application webhooks configuration
+            $definition->addMethodCall('setWebhooks', [
+                $data['webhooks']
+            ]);
+
             $app = DreamCommerceShopAppstoreExtension::ALIAS . '.app.' . $app;
 
             // append definition
