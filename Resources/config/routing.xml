@@ -9,11 +9,11 @@
     </route>
 
     <route id="dream_commerce_shop_appstore.webhook" path="/webhook/{appId}/{webhookId}" methods="POST">
-        <default key="_controller">DreamCommerceShopAppstoreBundle:Responder:applicationWebhook</default>
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Webhook:application</default>
     </route>
 
     <route id="dream_commerce_shop_appstore.webhook" path="/webhook/{webhookId}" methods="POST">
-        <default key="_controller">DreamCommerceShopAppstoreBundle:Responder:globalWebhook</default>
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Webhook:global</default>
     </route>
 
     <route id="dream_commerce_shop_appstore.unpaid" path="/exception/unpaid">
