@@ -4,6 +4,7 @@
 namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler;
 
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -43,7 +44,7 @@ class DebuggerPass implements CompilerPassInterface
 
             // check if exists
             if(!$container->has($service)){
-                throw new Exception(sprintf('Debugger service %s does not exist', $service));
+                throw new InvalidArgumentException(sprintf('Debugger service %s does not exist', $service));
             }
 
             $def = $container->findDefinition($service);
@@ -52,7 +53,7 @@ class DebuggerPass implements CompilerPassInterface
 
             // check if service is LoggerInterface compatible
             if(!is_subclass_of($class, 'Psr\Log\LoggerInterface')){
-                throw new Exception(sprintf('Debugger service %s does not implement Psr\Log\LoggerInterface', $service));
+                throw new InvalidArgumentException(sprintf('Debugger service %s does not implement Psr\Log\LoggerInterface', $service));
             }
 
             $container->setAlias($debugKey, $service);

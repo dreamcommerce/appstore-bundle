@@ -6,6 +6,7 @@ namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler;
 
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
 use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -38,7 +39,7 @@ class CustomObjectManagerPass implements CompilerPassInterface
         $interfaces = class_implements($class);
 
         if(!in_array('DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface', $interfaces)){
-            throw new Exception('Specified object manager service class should implement DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface');
+            throw new InvalidArgumentException('Specified object manager service class should implement DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface');
         }
 
         /**
@@ -53,14 +54,14 @@ class CustomObjectManagerPass implements CompilerPassInterface
             // object
             $obj = $manager->create($objectInterfaceName);
             if(!$obj || !is_subclass_of($obj, $objectInterfaceName)){
-                throw new Exception(sprintf('Specified object manager did not create %s instance correctly', $objectInterfaceName));
+                throw new InvalidArgumentException(sprintf('Specified object manager did not create %s instance correctly', $objectInterfaceName));
             }
 
             // repository
             $repo = $manager->getRepository($objectInterfaceName);
             $repoInterfaceName = sprintf('DreamCommerce\ShopAppstoreBundle\Model\%sRepositoryInterface', $object);
             if(!$repo || !is_subclass_of($repo, $repoInterfaceName)){
-                throw new Exception(sprintf('Specified object manager did not return %s repository instance correctly - it does not implement %s', $objectInterfaceName, $repoInterfaceName));
+                throw new InvalidArgumentException(sprintf('Specified object manager did not return %s repository instance correctly - it does not implement %s', $objectInterfaceName, $repoInterfaceName));
             }
         }
 
