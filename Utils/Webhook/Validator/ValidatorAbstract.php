@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Utils\WebhookValidator;
+namespace DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator;
 
 
 use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;

@@ -46,7 +46,7 @@ class WebhooksPass implements CompilerPassInterface
         $class = $def->getClass();
 
         $interfaces = class_implements($class);
-        $neededInterface = sprintf('DreamCommerce\ShopAppstoreBundle\Utils\WebhookValidator\%sValidatorInterface', $appContext ? 'App' : 'Global');
+        $neededInterface = sprintf('DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\%sValidatorInterface', $appContext ? 'App' : 'Global');
 
         if(!in_array($neededInterface, $interfaces)){
             throw new \Exception(sprintf('Service "%s" doesn\'t implement %s', $serviceId, $neededInterface));

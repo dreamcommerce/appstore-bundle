@@ -15,9 +15,9 @@
         <parameter key="dream_commerce_shop_appstore.twig_tags.class">DreamCommerce\ShopAppstoreBundle\Twig\PathExtension</parameter>
         <parameter key="dream_commerce_shop_appstore.exception_handler.class">DreamCommerce\ShopAppstoreBundle\EventListener\ResourceExceptionListener</parameter>
         <parameter key="dream_commerce_shop_appstore.application_param_converter.class">DreamCommerce\ShopAppstoreBundle\Request\ApplicationParamConverter</parameter>
-        <parameter key="dream_commerce_shop_appstore.webhook.processor.class">DreamCommerce\ShopAppstoreBundle\Utils\WebhookProcessor</parameter>
-        <parameter key="dream_commerce_shop_appstore.webhook.app_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\WebhookValidator\AppValidator</parameter>
-        <parameter key="dream_commerce_shop_appstore.webhook.global_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\WebhookValidator\GlobalValidator</parameter>
+        <parameter key="dream_commerce_shop_appstore.webhook.processor.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Processor</parameter>
+        <parameter key="dream_commerce_shop_appstore.webhook.app_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidator</parameter>
+        <parameter key="dream_commerce_shop_appstore.webhook.global_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidator</parameter>
     </parameters>
 
     <services>
