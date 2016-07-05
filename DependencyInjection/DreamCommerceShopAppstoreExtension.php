@@ -32,6 +32,8 @@ class DreamCommerceShopAppstoreExtension extends Extension
         $container->setParameter($this->getAlias().'.apps', $config['applications']);
         $container->setParameter($this->getAlias().'.routes', $config['routes']);
 
+        $container->setParameter($this->getAlias().'.webhooks', $config['webhooks']);
+
         $container->setParameter($this->getAlias().'.objects', $config['objects']);
         $container->setParameter($this->getAlias().'.object_manager', $config['object_manager']);
 
