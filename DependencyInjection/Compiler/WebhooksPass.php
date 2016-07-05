@@ -21,7 +21,7 @@ class WebhooksPass implements CompilerPassInterface
         $globalWebhooks = $container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS.'.webhooks');
         foreach($globalWebhooks as $k=>$v){
             try {
-                $this->validateWebhooksValidator($container, $v['validator']);
+                $this->webhooksValidator($container, $v['validator']);
             }catch(\Exception $ex){
                 throw new \InvalidArgumentException(sprintf('Global webhook (%s): %s', $k, $ex->getMessage()));
             }
@@ -31,7 +31,7 @@ class WebhooksPass implements CompilerPassInterface
         foreach($apps as $appId=>$app){
             foreach ($app['webhooks'] as $k => $v) {
                 try {
-                    $this->validateWebhooksValidator($container, $v['validator'], true);
+                    $this->webhooksValidator($container, $v['validator'], true);
                 } catch (\Exception $ex) {
                     throw new \InvalidArgumentException(sprintf('Application (%s) webhook (%s): %s', $appId, $k, $ex->getMessage()));
                 }
@@ -39,7 +39,7 @@ class WebhooksPass implements CompilerPassInterface
         }
     }
 
-    protected function validateWebhooksValidator(ContainerBuilder $container, $serviceId, $appContext = false){
+    protected function webhooksValidator(ContainerBuilder $container, $serviceId, $appContext = false){
 
         // non-existing definition -> ServiceNotFoundException
         $def = $container->findDefinition($serviceId);

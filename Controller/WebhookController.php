@@ -60,7 +60,7 @@ class WebhookController extends Controller
          */
         $repo = $om->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
 
-        $shopName = $request->headers->get('HTTP_X_SHOP_LICENSE');
+        $shopName = $request->headers->get('X-Shop-License');
         $shop = $repo->findOneByNameAndApplication($shopName, $appId);
         if(!$shop){
             throw new NotFoundException(sprintf('Shop %s not found', $shopName));
@@ -75,6 +75,7 @@ class WebhookController extends Controller
 
         $processor = $this->get('dream_commerce_shop_appstore.webhook.processor');
         $processor->setShop($shop);
+        $processor->setApplication($app);
         $processor->process($validator, $request);
 
         return new Response();

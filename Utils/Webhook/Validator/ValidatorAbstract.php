@@ -33,9 +33,9 @@ abstract class ValidatorAbstract implements ValidatorInterface
     public function isRequestValid(Request $request)
     {
         $hash = sha1(
-            $request->headers->get('HTTP_X_WEBHOOK_ID') . ':' . $this->secret . ':' . $request->getContent()
+            $request->headers->get('X-Webhook-Id') . ':' . $this->secret . ':' . $request->getContent()
         );
 
-        return $hash==$request->headers->get('HTTP_X_WEBHOOK_SHA1');
+        return $hash==$request->headers->get('X-Webhook-Sha1');
     }
 }
