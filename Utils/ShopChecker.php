@@ -77,8 +77,10 @@ class ShopChecker
 
             if(!empty($headers['Location'])){
                 $url = $headers['Location'];
-                break;
+                continue;
             }
+
+            break;
 
         }while($limit>0);
 
