@@ -6,6 +6,10 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.4.0``
+    - narrowed exceptions thrown on invalid bundle configuration supplied
+    - webhooks support added
+
 ``1.3.3``
     - fixed ``ShopChecker`` URL jumping
 

@@ -2,6 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
 
+use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -24,7 +25,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('debug')->defaultNull()->end() //false - disable debug completely; null - depends on kernel.debug. string - logger service
+                ->scalarNode('debug')->info('false - disable debug completely; null - depends on kernel.debug. string - logger service')->defaultNull()->end()
                 ->scalarNode('skip_ssl')->defaultValue(false)->end()
                 ->scalarNode('db_driver')
                     ->defaultValue('orm')
@@ -56,6 +57,7 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('appstore_secret')->isRequired(true)->end()
                             ->scalarNode('minimal_version')->defaultNull()->end()
                             ->scalarNode('user_agent')->defaultNull()->end()
+                            ->append($this->injectWebhooksStructure(true))
                         ->end()
                     ->end()
                 ->end()
@@ -68,6 +70,8 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('upgrade')->defaultValue('dream_commerce_shop_appstore.upgrade')->end()
                     ->end()
                 ->end()
+                ->append($this->injectWebhooksStructure())
+                ->end()
             ->end();
 
         // Here you should define the parameters that are allowed to
@@ -75,5 +79,43 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
 
         return $treeBuilder;
+    }
+
+    protected function injectWebhooksStructure($appContext = false)
+    {
+        $eventsListClass = new DreamCommerceShopAppstoreEvents();
+
+        $treeBuilder = new TreeBuilder();
+        $root = $treeBuilder->root('webhooks');
+
+        $events = $eventsListClass->getSupportedWebhooks();
+        $root
+            ->prototype('array')
+                ->children()
+                    ->scalarNode('secret')->isRequired(true)->end()
+                    ->scalarNode('validator')->defaultValue(
+                        sprintf('dream_commerce_shop_appstore.webhook.%s_validator', $appContext ? 'app' : 'global')
+                    )->validate()->always(function($value){
+                        $value = $value[0]=='@' ? substr($value, 1) : $value;
+                        return $value;
+                    })->end()->end()
+                    ->arrayNode('events')
+                        ->prototype('scalar')
+                        ->validate()
+                            ->ifNotInArray($events)
+                            ->thenInvalid('Invalid webhook event "%s"')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->beforeNormalization()
+                ->ifString()
+                    ->then(function($value) use ($events) {
+                        return ['validator' => $value, 'secret'=>'', 'events'=>$events]; })
+                ->end()
+            ->end()
+        ->end();
+
+        return $root;
     }
 }

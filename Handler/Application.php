@@ -53,6 +53,11 @@ class Application
      * @var null|string
      */
     protected $userAgent;
+    /**
+     * webhooks definition list
+     * @var []
+     */
+    protected $webhooks;
 
     /**
      * @param string $app app name
@@ -162,6 +167,30 @@ class Application
     public function setUserAgent($userAgent)
     {
         $this->userAgent = $userAgent;
+    }
+
+    /**
+     * @param string|null $webhook name to get or return all
+     * @return null|[]
+     */
+    public function getWebhook($webhook = null)
+    {
+        if($webhook){
+            if(isset($this->webhooks[$webhook])){
+                return $this->webhooks[$webhook];
+            }else{
+                return null;
+            }
+        }
+        return $this->webhooks;
+    }
+
+    /**
+     * @param [] $webhooks
+     */
+    public function setWebhooks($webhooks)
+    {
+        $this->webhooks = $webhooks;
     }
 
 }
