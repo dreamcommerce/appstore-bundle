@@ -16,10 +16,6 @@ class AppValidator extends ValidatorAbstract implements AppValidatorInterface
     protected $shop;
 
     /**
-     * @var string
-     */
-    protected $oldSecret = null;
-    /**
      * @var Application
      */
     protected $app;
@@ -27,22 +23,8 @@ class AppValidator extends ValidatorAbstract implements AppValidatorInterface
     /**
      * @param ShopInterface $shop
      */
-    protected function createSecret(ShopInterface $shop){
-        
-        /*if(empty($this->oldSecret)){
-            $this->oldSecret = $this->secret;
-        }        
-        
-        $this->secret = hash_hmac('sha512', $shop->getName() . ":" . $this->oldSecret, $this->app->getAppstoreSecret());*/
-    }
-
-    /**
-     * @param ShopInterface $shop
-     */
     public function setShop(ShopInterface $shop)
     {
-        $this->createSecret($shop);
-
         $this->shop = $shop;
     }
 

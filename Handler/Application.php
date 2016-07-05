@@ -170,7 +170,8 @@ class Application
     }
 
     /**
-     * @return []
+     * @param string|null $webhook name to get or return all
+     * @return null|[]
      */
     public function getWebhook($webhook = null)
     {

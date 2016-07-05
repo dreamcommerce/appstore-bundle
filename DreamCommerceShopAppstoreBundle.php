@@ -7,8 +7,6 @@ use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\CustomObjectMa
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DebuggerPass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\WebhooksPass;
-use DreamCommerce\ShopAppstoreBundle\Utils\DebugProxy;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

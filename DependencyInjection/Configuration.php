@@ -2,11 +2,7 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
 
-// todo: $node->append()
-
 use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -96,7 +92,6 @@ class Configuration implements ConfigurationInterface
         $root
             ->prototype('array')
                 ->children()
-                    // secret empty = validate manually using service reference
                     ->scalarNode('secret')->isRequired(true)->end()
                     ->scalarNode('validator')->defaultValue(
                         sprintf('dream_commerce_shop_appstore.webhook.%s_validator', $appContext ? 'app' : 'global')
