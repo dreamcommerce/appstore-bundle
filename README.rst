@@ -5,6 +5,8 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 
 Changelog
 ---------
+``1.4.2``
+    - self-issued certificate support in shop checker
 
 ``1.4.1``
     - fixed an issue with redirection loops if shop platform returns an URL with protocol reduction (SSL->no-SSL->SSL)

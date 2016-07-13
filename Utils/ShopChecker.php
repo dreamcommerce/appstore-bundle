@@ -36,9 +36,9 @@ class ShopChecker
         }
 
         $cont = stream_context_get_params($read);
-        $var = ($cont['options']['ssl']['peer_certificate']);
+        $var = !empty($cont['options']['ssl']['peer_certificate']);
 
-        return (!is_null($var)) ? true : false;
+        return $var;
     }
 
     /**
