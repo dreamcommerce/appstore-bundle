@@ -61,6 +61,8 @@ class ShopChecker
     {
         $limit = self::MAX_REDIRECTS;
 
+        $baseUrl = $this->getUrlWithoutProtocol($url);
+
         do {
             $limit--;
 
@@ -77,6 +79,12 @@ class ShopChecker
 
             if(!empty($headers['Location'])){
                 $url = $headers['Location'];
+                $localUrl = $this->getUrlWithoutProtocol($url);
+
+                if($baseUrl==$localUrl){
+                    break;
+                }
+
                 continue;
             }
 
@@ -111,6 +119,17 @@ class ShopChecker
         }
 
         return $url;
+    }
+
+    /**
+     * returns an URL without protocol
+     * @param string $url
+     * @return string
+     */
+    protected function getUrlWithoutProtocol($url){
+        $url = substr($url, -1)=='/' ? substr($url, 0, -1) : $url;
+        $urlComponents = explode('://', $url, 2);
+        return $urlComponents[1];
     }
 
 }

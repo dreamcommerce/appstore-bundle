@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.4.1``
+    - fixed an issue with redirection loops if shop platform returns an URL with protocol reduction (SSL->no-SSL->SSL)
+
 ``1.4.0``
     - narrowed exceptions thrown on invalid bundle configuration supplied
     - webhooks support added

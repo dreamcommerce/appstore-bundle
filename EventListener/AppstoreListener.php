@@ -119,7 +119,7 @@ class AppstoreListener{
         $shopModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
         $shopModel->setApp($event->getApplicationName());
         $shopModel->setName($params['shop']);
-        $shopModel->setShopUrl($params['shop_url']);
+        $shopModel->setShopUrl($url);
         $shopModel->setVersion($params['application_version']);
         $this->objectManager->save($shopModel, false);
         // endregion
