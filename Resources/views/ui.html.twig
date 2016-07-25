@@ -1,0 +1,18 @@
+{% macro section_start(title) %}
+    <fieldset>
+    <header>
+        <span>{{ title }}</span>
+    </header>
+{% endmacro %}
+
+{% macro section_end() %}
+    </fieldset>
+{% endmacro %}
+
+{% macro buttons_start() %}
+    <div class="edition-form-buttons">
+{% endmacro %}
+
+{% macro buttons_end() %}
+    </div>
+{% endmacro %}

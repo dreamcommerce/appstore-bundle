@@ -2,8 +2,11 @@
 namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 
-use DreamCommerce\Client;
-use DreamCommerce\Exception\ClientException;
+use DreamCommerce\ShopAppstoreBundle\Utils\ShopChecker;
+use DreamCommerce\ShopAppstoreBundle\Handler\Application;
+use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
+use DreamCommerce\ShopAppstoreLib\Client;
+use DreamCommerce\ShopAppstoreLib\Client\Exception\Exception;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
@@ -22,12 +25,24 @@ class AppstoreListener{
      * @var ObjectManagerInterface
      */
     protected $objectManager;
+    /**
+     * @var bool
+     */
+    protected $skipSsl;
+    /**
+     * @var TokenRefresher
+     */
+    protected $tokenRefresher;
 
     /**
      * @param ObjectManagerInterface $objectManager
+     * @param $skipSsl
+     * @param TokenRefresher $tokenRefresher
      */
-    public function __construct(ObjectManagerInterface $objectManager){
+    public function __construct(ObjectManagerInterface $objectManager, $skipSsl, TokenRefresher $tokenRefresher){
         $this->objectManager = $objectManager;
+        $this->skipSsl = $skipSsl;
+        $this->tokenRefresher = $tokenRefresher;
     }
 
     /**
@@ -52,6 +67,7 @@ class AppstoreListener{
      * handle installation event
      * @param InstallEvent $event
      * @return bool
+     * @throws Exception
      */
     public function onInstall(InstallEvent $event){
 
@@ -63,27 +79,37 @@ class AppstoreListener{
             return false;
         }
 
+        $shopChecker = new ShopChecker();
+
         try {
 
             $params = $event->getPayload();
             $app = $event->getApplication();
 
+            $url = $shopChecker->getRealShopUrl($params['shop_url']);
+            if(!$url){
+                throw new Exception('Cannot determine real URL for: '.$params['shop_url']);
+            }
+
             // perform client instantiation
             $client = Client::factory(
                 Client::ADAPTER_OAUTH,
                 [
-                    'entrypoint'=>$params['shop_url'],
+                    'entrypoint'=>$url,
                     'client_id'=>$app['app_id'],
                     'client_secret'=>$app['app_secret'],
-                    'auth_code'=>$params['auth_code']
+                    'auth_code'=>$params['auth_code'],
+                    'skip_ssl'=>$this->skipSsl,
+                    'user_agent'=>$app['user_agent']
                 ]
             );
 
             // and get tokens
             $token = $client->authenticate(true);
 
-        }catch(ClientException $ex){
-            return false;
+        }catch(Exception $ex){
+            // allow error to be logged
+            throw $ex;
         }
 
         // region shop
@@ -93,7 +119,7 @@ class AppstoreListener{
         $shopModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
         $shopModel->setApp($event->getApplicationName());
         $shopModel->setName($params['shop']);
-        $shopModel->setShopUrl($params['shop_url']);
+        $shopModel->setShopUrl($url);
         $shopModel->setVersion($params['application_version']);
         $this->objectManager->save($shopModel, false);
         // endregion
@@ -195,6 +221,23 @@ class AppstoreListener{
         if(!$shop){
             return false;
         }
+
+        // todo: refactor this on major change: push application object thru event
+        $appData = $event->getApplication();
+
+        $app = new Application(
+            $event->getApplicationName(),
+            $appData['app_id'],
+            $appData['app_secret'],
+            $appData['appstore_secret'],
+            null,
+            $this->skipSsl
+        );
+
+        $app->setUserAgent($appData['user_agent']);
+
+        $this->tokenRefresher->setClient($app->getClient($shop));
+        $this->tokenRefresher->refresh($shop);
 
         $shop->setVersion($event->getPayload()['application_version']);
         $this->objectManager->save($shop);

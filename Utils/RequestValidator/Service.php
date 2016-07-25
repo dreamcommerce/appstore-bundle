@@ -14,21 +14,23 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class Service extends RequestValidator{
 
+    protected $requestStack = null;
+
+    /**
+     * Service constructor.
+     * @param RequestStack|null $rs
+     */
     public function __construct(RequestStack $rs = null){
-        $this->setRequestStack($rs);
+        $this->requestStack = $rs;
     }
 
     /**
-     * method for request injection
-     * @param RequestStack|null $requestStack
+     * override parent::getRequest in order to fetch Request from stack
+     * @return null|\Symfony\Component\HttpFoundation\Request
      */
-    public function setRequestStack(RequestStack $requestStack = null){
-        if($requestStack){
-            $request = $requestStack->getCurrentRequest();
-            if($request) {
-                parent::__construct($request);
-            }
-        }
+    protected function getRequest()
+    {
+        return $this->requestStack->getMasterRequest();
     }
 
 }

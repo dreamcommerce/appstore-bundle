@@ -8,6 +8,14 @@
         <default key="_controller">DreamCommerceShopAppstoreBundle:Responder:index</default>
     </route>
 
+    <route id="dream_commerce_shop_appstore.webhook.app" path="/webhook/{appId}/{webhookId}" methods="POST">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Webhook:application</default>
+    </route>
+
+    <route id="dream_commerce_shop_appstore.webhook.global" path="/webhook/{webhookId}" methods="POST">
+        <default key="_controller">DreamCommerceShopAppstoreBundle:Webhook:global</default>
+    </route>
+
     <route id="dream_commerce_shop_appstore.unpaid" path="/exception/unpaid">
         <default key="_controller">DreamCommerceShopAppstoreBundle:Exception:unpaid</default>
     </route>

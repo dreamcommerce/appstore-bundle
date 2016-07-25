@@ -6,6 +6,7 @@ use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\ApplicationsPa
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\CustomObjectManagerPass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DebuggerPass;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
+use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\WebhooksPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -26,6 +27,8 @@ class DreamCommerceShopAppstoreBundle extends Bundle
         $container->addCompilerPass(new DebuggerPass(), PassConfig::TYPE_BEFORE_REMOVING);
         // add applications services
         $container->addCompilerPass(new ApplicationsPass(), PassConfig::TYPE_BEFORE_REMOVING);
+        // webhooks
+        $container->addCompilerPass(new WebhooksPass(), PassConfig::TYPE_OPTIMIZE);
     }
 
     /**

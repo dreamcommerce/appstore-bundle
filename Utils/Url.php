@@ -3,7 +3,6 @@ namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\Service;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Router;
@@ -18,9 +17,9 @@ use Symfony\Component\Routing\Router;
 class Url {
 
     /**
-     * @var Request
+     * @var RequestStack
      */
-    protected $request;
+    protected $requestStack;
     /**
      * @var Service
      */
@@ -36,9 +35,9 @@ class Url {
      * @param Router $router
      */
     public function __construct(RequestStack $requestStack, Service $requestValidatorService, Router $router){
-        $this->request = $requestStack->getCurrentRequest();
         $this->requestValidator = $requestValidatorService;
         $this->router = $router;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -96,6 +95,8 @@ class Url {
      * @return array
      */
     public function getApplicationParameters(){
+        $request = $this->requestStack->getMasterRequest();
+
         $params = $this->requestValidator->getAppValidationParams();
 
         $additionalParams = [];
@@ -107,7 +108,7 @@ class Url {
             'version',
             'place'
         ] as $param){
-            $value = $this->request->query->get($param);
+            $value = $request->query->get($param);
             if($value){
                 $additionalParams[$param] = $value;
             }
