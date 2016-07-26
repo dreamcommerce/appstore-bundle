@@ -5,6 +5,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 
 Changelog
 ---------
+``1.4.3``
+    - class name fixed
+
 ``1.4.2``
     - self-issued certificate support in shop checker
 
