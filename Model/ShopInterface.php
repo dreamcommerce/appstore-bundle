@@ -92,4 +92,17 @@ interface ShopInterface
      * @return void
      */
     public function setVersion($version);
+
+    /**
+     * get installed flag
+     * @return bool
+     */
+    public function getInstalled();
+
+    /**
+     * set installed flag
+     * @param bool $version
+     * @return void
+     */
+    public function setInstalled($version);
 }
