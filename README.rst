@@ -5,6 +5,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 
 Changelog
 ---------
+``1.4.4``
+    - added support for shops with a valid SSL-chain but disabled in admin panel
+
 ``1.4.3``
     - class name fixed
 
