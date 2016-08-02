@@ -10,7 +10,6 @@ class ShopChecker
 {
 
     const HTTP_READ_TIMEOUT = 3;
-    const MAX_REDIRECTS = 5;
 
     /**
      * verifies if URL has SSL valid
@@ -59,45 +58,27 @@ class ShopChecker
      */
     public function getRealShopUrl($url)
     {
-        $limit = self::MAX_REDIRECTS;
+        $headers = get_headers($url, true);
+        $target = $url;
+        if(!empty($headers['Location'])){
+            $location = (array)$headers['Location'];
+            $target = end($location);
+        }
 
-        $baseUrl = $this->getUrlWithoutProtocol($url);
+        $url = $this->toHttp($target, true);
+        if($url!=$target) {
+            $sslHeaders = get_headers($url, true);
+        }else{
+            $sslHeaders = $headers;
+        }
 
-        do {
-            $limit--;
-
-            $url = $this->toHttp($url, true);
-            $hasSsl = $this->verifySslUrl($url);
-            if(!$hasSsl){
-                $url = $this->toHttp($url);
-            }
-
-            $headers = get_headers($url, true);
-            if (!$headers) {
-                return false;
-            }
-
-            if(!empty($headers['Location'])){
-                $url = $headers['Location'];
-                $localUrl = $this->getUrlWithoutProtocol($url);
-
-                if($baseUrl==$localUrl){
-                    break;
-                }
-
-                continue;
-            }
-
-            break;
-
-        }while($limit>0);
-
-        if($limit==0){
-            return false;
+        $hasSsl = $this->verifySslUrl($url);
+        // someone may disable SSL manually (although shop has a valid chain) - prevent redirect loop
+        if(!$hasSsl || !empty($sslHeaders['Location'])){
+            $url = $this->toHttp($url);
         }
 
         return $url;
-
     }
 
     /**
