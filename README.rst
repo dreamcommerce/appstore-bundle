@@ -5,6 +5,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 
 Changelog
 ---------
+``1.4.6``
+    - added ``subscriber.(create|delete|edit)`` webhook events support
+
 ``1.4.5``
     - fixed ``ParcelDispatchEvent`` webhook
 
