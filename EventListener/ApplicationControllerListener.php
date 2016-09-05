@@ -153,7 +153,7 @@ class ApplicationControllerListener{
             // need a subscription?
             if($controller[0] instanceof SubscribedControllerInterface){
                 $subscriptions = $shop->getSubscriptions();
-                if(empty($subscriptions)){
+                if(!count($subscriptions)){
                     $this->redirect($event, 'unsubscribed');
                 }
 

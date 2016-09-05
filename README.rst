@@ -5,6 +5,10 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 
 Changelog
 ---------
+
+``1.4.7``
+    - fixed subscription limiter
+
 ``1.4.6``
     - added ``subscriber.(create|delete|edit)`` webhook events support
 
