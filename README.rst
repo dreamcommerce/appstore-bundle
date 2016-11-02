@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.4.8``
+    - fixed interfaces mapping due to changes in event_listener/event_subscriber
+
 ``1.4.7``
     - fixed subscription limiter
 
