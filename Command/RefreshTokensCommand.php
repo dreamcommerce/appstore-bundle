@@ -63,15 +63,22 @@ class RefreshTokensCommand extends ContainerAwareCommand
             $shops = $repo->findByApplication($id);
 
             foreach ($shops as $s) {
-                $client = $obj->getClient($s);
-                $refresher->setClient($client);
+                if ($s->getInstalled()) {
+                    if ($s->getToken()->getExpiresAt()->getTimestamp() <= time() + 604800
+                    && $s->getToken()->getExpiresAt()->getTimestamp() >= time()
+                    ) {
+                        $client = $obj->getClient($s);
+                        $refresher->setClient($client);
 
-                try {
-                    $output->writeln(sprintf('Refreshing shop: %s # %s', $s->getShopUrl(), $s->getName()));
-                    $refresher->refresh($s);
-                    $output->writeln('Done');
-                } catch (\Exception $ex) {
-                    $output->writeln('<error>An error occurred during the token refresh</error>');
+                        try {
+                            $output->writeln(sprintf('Refreshing shop: %s # %s', $s->getShopUrl(), $s->getName()));
+                            $refresher->refresh($s);
+                            $output->writeln('Done');
+                        } catch (\Exception $ex) {
+                            $output->writeln('<error>An error occurred during the token refresh</error>');
+                        }
+                    }
+
                 }
             }
         }
