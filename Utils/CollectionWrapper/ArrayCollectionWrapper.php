@@ -1,7 +1,6 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils;
+namespace DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
 
-use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper\AbstractCollectionWrapper;
 use \Traversable;
 
 /**
@@ -11,7 +10,7 @@ use \Traversable;
  *
  * @package DreamCommerce\ShopAppstoreBundle\Utils
  */
-class CollectionWrapper extends AbstractCollectionWrapper
+class ArrayCollectionWrapper extends AbstractCollectionWrapper
 {
     public function getListOfField($fieldName) : Traversable
     {
@@ -25,7 +24,7 @@ class CollectionWrapper extends AbstractCollectionWrapper
             $result[] = $item[$fieldName];
         }
 
-        return $result;
+        return new \ArrayObject($result);
     }
 
     public function getArray($key = null): array {

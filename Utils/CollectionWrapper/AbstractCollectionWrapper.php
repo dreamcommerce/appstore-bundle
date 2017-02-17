@@ -14,7 +14,7 @@ abstract class AbstractCollectionWrapper implements CollectionWrapper
      */
     public function __construct($collection) {
         if (!is_array($collection) && !($collection instanceof \Traversable)) {
-            throw new \UnexpectedValueException('$collection must be instance of \Traversable or array');
+            throw new \InvalidArgumentException('$collection must be instance of \Traversable or array');
         }
 
         if (is_array($collection)) {
@@ -24,7 +24,7 @@ abstract class AbstractCollectionWrapper implements CollectionWrapper
         $this->collection = $collection;
     }
 
-    public function appendCollection($collection): \Traversable
+    public function appendCollection($collection): CollectionWrapper
     {
 
         $buff = [];
@@ -39,6 +39,8 @@ abstract class AbstractCollectionWrapper implements CollectionWrapper
         }
 
         $this->collection->exchangeArray($buff);
+
+        return $this;
     }
 
     public function getCollection(): \Traversable

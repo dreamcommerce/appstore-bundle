@@ -26,7 +26,7 @@ interface CollectionWrapper
      * @param Traversable $collection
      * @return Traversable
      */
-    public function appendCollection($collection): Traversable;
+    public function appendCollection($collection): CollectionWrapper;
 
     /**
      * get $this->collection
