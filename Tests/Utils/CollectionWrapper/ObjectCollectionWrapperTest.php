@@ -23,6 +23,41 @@ class ObjectCollectionWrapperTest extends TestCase
         $this->assertEquals($collectionWrapper->getListOfField('field'), new \ArrayObject($expectedResult));
     }
 
+    /**
+     * @dataProvider invalidObjectDataProvider
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidObjectTest($data)
+    {
+        $collectionWrapper = new ObjectCollectionWrapper($data);
+        $this->assertEquals($collectionWrapper->getListOfField('param'), new \ArrayObject(['someField']));
+    }
+
+    public function testGetCollectionArray()
+    {
+        $dataSet = [
+            new SomeObject('1'),
+            new SomeObject('1'),
+            new SomeObject('2'),
+            new SomeObject('3'),
+        ];
+
+        $collectionWrapper = new ObjectCollectionWrapper($dataSet);
+        $result = $collectionWrapper->getCollectionsArray('field');
+
+        $this->assertArrayHasKey(1, $result);
+        $this->assertArrayHasKey(2, $result);
+        $this->assertArrayHasKey(3, $result);
+
+        $this->assertCount(2, $result[1]);
+        $this->assertCount(1, $result[2]);
+        $this->assertCount(1, $result[3]);
+
+        $this->assertContainsOnlyInstancesOf(SomeObject::class, $result[1]);
+        $this->assertContainsOnlyInstancesOf(SomeObject::class, $result[2]);
+        $this->assertContainsOnlyInstancesOf(SomeObject::class, $result[3]);
+    }
+
     public function listOfFieldDataProvider() {
         return [
             [
@@ -39,17 +74,6 @@ class ObjectCollectionWrapperTest extends TestCase
             ]
         ];
     }
-
-    /**
-     * @dataProvider invalidObjectDataProvider
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidObjectTest($data)
-    {
-        $collectionWrapper = new ObjectCollectionWrapper($data);
-        $this->assertEquals($collectionWrapper->getListOfField('param'), new \ArrayObject(['someField']));
-    }
-
 
     public function invalidObjectDataProvider()
     {

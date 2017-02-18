@@ -46,7 +46,7 @@ class ObjectCollectionWrapper extends AbstractCollectionWrapper
                 $propertyValue = $item->{$accessorName}();
 
                 if($collection === true) {
-                    if(!is_array($result[$propertyValue])){
+                    if(!isset($result[$propertyValue])){
                         $result[$propertyValue] = [];
                     }
 
