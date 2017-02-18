@@ -69,7 +69,7 @@ class ObjectCollectionWrapper extends AbstractCollectionWrapper
         }
 
         if ($accessorName && !method_exists($item, $accessorName)) {
-            throw new \InvalidArgumentException('Object hasn\'t property or hasn\'t method to read property');
+            throw new \InvalidArgumentException('Object has not property or has not method to read property');
         }
     }
 }
