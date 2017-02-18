@@ -26,7 +26,6 @@ abstract class AbstractCollectionWrapper implements CollectionWrapper
 
     public function appendCollection($collection): CollectionWrapper
     {
-
         $buff = [];
         foreach($this->collection as $i){
             $buff[] = $i;
@@ -47,4 +46,10 @@ abstract class AbstractCollectionWrapper implements CollectionWrapper
     {
         return $this->collection;
     }
+
+    public function toArray(): array
+    {
+        return $this->collection->getArrayCopy();
+    }
 }
+

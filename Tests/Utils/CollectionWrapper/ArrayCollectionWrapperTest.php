@@ -1,68 +1,11 @@
 <?php
 namespace DreamCommerce\ShopAppstoreBundle\Tests\Utils\CollectionWrapper;
 
-use PHPUnit\Framework\TestCase;
 use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper\ArrayCollectionWrapper;
 
 
-Class ArrayCollectionWrapperTest extends TestCase
+Class ArrayCollectionWrapperTest extends AbstractCollectionWrapperTest
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidParameterSetToConstructor()
-    {
-        new ArrayCollectionWrapper('abc');
-    }
-
-    public function testGetCollection() {
-        $arrayCollectorWrapper = new ArrayCollectionWrapper([1,2,3]);
-        $arrayCollectorWrapper2 = new ArrayCollectionWrapper(['a', true, 'b']);
-        $arrayCollectorWrapper3 = new ArrayCollectionWrapper(new \ArrayObject([1,2,3]));
-
-
-        $this->assertEquals($arrayCollectorWrapper->getCollection(), new \ArrayObject([1,2,3]));
-        $this->assertEquals($arrayCollectorWrapper2->getCollection(), new \ArrayObject(['a', true, 'b']));
-        $this->assertEquals($arrayCollectorWrapper3->getCollection(), new \ArrayObject([1,2,3]));
-    }
-
-    public function testGetArray() {
-        $arrayCollectorWrapper = new ArrayCollectionWrapper([1,2,3]);
-        $arrayCollectorWrapper2 = new ArrayCollectionWrapper(['a', true, 'b']);
-        $arrayCollectorWrapper3 = new ArrayCollectionWrapper(new \ArrayObject([1,2,3]));
-
-        $this->assertEquals($arrayCollectorWrapper->getArray(), [1,2,3]);
-        $this->assertEquals($arrayCollectorWrapper2->getArray(), ['a', true, 'b']);
-        $this->assertEquals($arrayCollectorWrapper3->getArray(), [1,2,3]);
-    }
-
-
-    /**
-     * @dataProvider listOfFieldDataProvider
-     */
-    public function testListOfField(array $data, \ArrayObject $expectedResult)
-    {
-        $arrayCollectorWrapper = new ArrayCollectionWrapper($data);
-        $this->assertEquals($arrayCollectorWrapper->getListOfField('key'), $expectedResult);
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionListOfField() {
-        $arrayCollectorWrapper = new ArrayCollectionWrapper([['key' => 1], ['no-key' => 2]]);
-        $arrayCollectorWrapper->getListOfField('key');
-    }
-
-    /**
-     * @dataProvider appendCollectionDataProvider
-     */
-    public function testAppendCollection(array $a1,  $a2, $expectedResult)
-    {
-        $arrayCollectorWrapper = new ArrayCollectionWrapper($a1);
-        $this->assertEquals($arrayCollectorWrapper->appendCollection($a2)->getCollection(), $expectedResult);
-    }
-
     public function listOfFieldDataProvider()
     {
         return [
@@ -99,6 +42,41 @@ Class ArrayCollectionWrapperTest extends TestCase
                 [1,true, null],
                 [1,false,2],
                 new \ArrayObject([1, true, null,1,false,2])
+            ]
+        ];
+    }
+
+    public function getCollectionDataProvider()
+    {
+        return [
+            [[1,2,3], new \ArrayObject([1,2,3])],
+            [['a', true, 'b'], new \ArrayObject(['a', true, 'b'])],
+            [new \ArrayObject([1,2,3]), new \ArrayObject([1,2,3])]
+        ];
+    }
+
+    public function getArrayDataProvider() {
+        return [
+            [[1,2,3], [1,2,3]],
+            [['a', true, 'b'], ['a', true, 'b']],
+            [new \ArrayObject([1,2,3]), [1,2,3]],
+            [['a' => '1', 'b' => 2, 'c' => 3], [1,2,3]]
+        ];
+    }
+
+    public function collectionsArrayDataProvider() {
+        return [
+            [
+                [
+                    ['parama' => 1, 'b' => '1'], ['parama' => 1, 'b' => '2'],
+                    ['parama' => 'test', 'b' => '1'], ['parama' => 'test', 'b' => '2'],
+                    ['parama' => 3]
+                ],
+                [
+                    1 =>        [['parama' => 1, 'b' => '1'], ['parama' => 1, 'b' => '2']],
+                    'test' =>   [['parama' => 'test', 'b' => '1'], ['parama' => 'test', 'b' => '2']],
+                    3 =>        [['parama' => '3']]
+                ]
             ]
         ];
     }

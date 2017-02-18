@@ -31,6 +31,10 @@ class ArrayCollectionWrapper extends AbstractCollectionWrapper
         return $this->collectionToAssoc($key);
     }
 
+    public function getCollectionsArray($key): Traversable {
+        return new \ArrayObject($this->collectionToAssoc($key, true));
+    }
+
     /**
      * internal collection to associative array transformer
      *
@@ -46,14 +50,15 @@ class ArrayCollectionWrapper extends AbstractCollectionWrapper
                     throw new \InvalidArgumentException(sprintf('Collection filtering non-existing key: %s', $key));
                 }
 
-                if($collection && isset($result[$i[$key]])){
-                    if(!is_array($result[$i[$key]])){
-                        $result[$i[$key]] = [$result[$i[$key]]];
+                $val = $i[$key];
+                if($collection === true) {
+                    if(!isset($result[$val])){
+                        $result[$val] = [];
                     }
 
-                    $result[$i[$key]][] = $i;
-                }else {
-                    $result[$i[$key]] = $collection ? [$i] : $i;
+                    $result[$val][] = $i;
+                } else {
+                    $result[$val] = $i;
                 }
             }else{
                 $result[] = $i;
@@ -63,8 +68,6 @@ class ArrayCollectionWrapper extends AbstractCollectionWrapper
         return $result;
     }
 
-    public function getCollectionsArray($key): Traversable {
-        return new \ArrayObject($this->collectionToAssoc($key, true));
-    }
+
 
 }

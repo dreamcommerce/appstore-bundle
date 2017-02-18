@@ -66,4 +66,11 @@ interface CollectionWrapper
      * @return array
      */
     public function getCollectionsArray($key): Traversable;
+
+    /**
+     * convert collection to array, return identical copy of collection as array
+     *
+     * @return array
+     */
+    public function toArray(): array;
 }
