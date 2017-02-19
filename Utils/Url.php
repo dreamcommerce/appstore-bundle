@@ -1,8 +1,8 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\Service;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator\Service;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Router;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Router;
  *
  * URL generating helper service
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils
  */
 class Url {
 

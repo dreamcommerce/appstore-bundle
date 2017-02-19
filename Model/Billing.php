@@ -1,13 +1,13 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
 
 /**
  * Class Billing
  *
  * billing payment instance
  *
- * @package DreamCommerce\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
  */
 abstract class Billing implements BillingInterface
 {

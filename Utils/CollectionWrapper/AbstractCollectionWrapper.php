@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\CollectionWrapper;
 
 
 abstract class AbstractCollectionWrapper implements CollectionWrapper

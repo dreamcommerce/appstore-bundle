@@ -1,12 +1,12 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Twig;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Twig;
 
-use DreamCommerce\ShopAppstoreBundle\Utils\Url;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class PathExtension
- * @package DreamCommerce\ShopAppstoreBundle\Twig
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Twig
  */
 class PathExtension extends \Twig_Extension{
 
@@ -37,7 +37,7 @@ class PathExtension extends \Twig_Extension{
     }
 
     /**
-     * @see DreamCommerce\ShopAppstoreBundle\Utils\Url::generateUrl
+     * @see DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url::generateUrl
      * @param $name
      * @param array $parameters
      * @param bool|false $relative

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Doctrine;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
-use DreamCommerce\ShopAppstoreBundle\Model\Subscription as SubscriptionBase;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Subscription as SubscriptionBase;
 
 class Subscription extends SubscriptionBase
 {

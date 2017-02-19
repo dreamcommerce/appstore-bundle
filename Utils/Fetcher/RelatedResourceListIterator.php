@@ -1,17 +1,17 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher;
 
 
 use DreamCommerce\ShopAppstoreLib\Resource;
-use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper\ArrayCollectionWrapper;
-use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\CollectionWrapper\ArrayCollectionWrapper;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher;
 
 /**
  * Class ResourceListIterator.
  *
  * Helps doing stuff on auto-lazy-load larger (>1 page) collections
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils\Fetcher
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher
  */
 class RelatedResourceListIterator extends ResourceListIterator
 {

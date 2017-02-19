@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler;
 
 
 use Doctrine\ORM\Version;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -37,7 +37,7 @@ class DoctrinePass implements CompilerPassInterface
 
         foreach ($container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS . '.objects') as $interface => $class) {
 
-            $interface = 'DreamCommerce\ShopAppstoreBundle\Model\\' . ucfirst($interface).'Interface';
+            $interface = 'DreamCommerce\Bundle\ShopAppstoreBundle\Model\\' . ucfirst($interface).'Interface';
 
             $objects[$interface] = $class;
 

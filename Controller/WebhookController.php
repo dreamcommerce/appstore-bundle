@@ -1,12 +1,13 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\Controller;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
-use DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidatorInterface;
-use DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidatorInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidatorInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidatorInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreLib\Resource\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,7 +59,7 @@ class WebhookController extends Controller
         /**
          * @var $repo ShopRepositoryInterface
          */
-        $repo = $om->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+        $repo = $om->getRepository(ShopInterface::class);
 
         $shopName = $request->headers->get('X-Shop-License');
         $shop = $repo->findOneByNameAndApplication($shopName, $appId);

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler;
 
 
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -46,7 +46,7 @@ class WebhooksPass implements CompilerPassInterface
         $class = $def->getClass();
 
         $interfaces = class_implements($class);
-        $neededInterface = sprintf('DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\%sValidatorInterface', $appContext ? 'App' : 'Global');
+        $neededInterface = sprintf('DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\%sValidatorInterface', $appContext ? 'App' : 'Global');
 
         if(!in_array($neededInterface, $interfaces)){
             throw new \Exception(sprintf('Service "%s" doesn\'t implement %s', $serviceId, $neededInterface));

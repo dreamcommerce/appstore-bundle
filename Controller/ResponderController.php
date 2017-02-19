@@ -1,15 +1,15 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\Controller;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
-use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
-use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
-use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\InstallEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 /**
  * Class ResponderController
  * responder for appstore events
- * @package DreamCommerce\ShopAppstoreBundle\Controller
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Controller
  */
 class ResponderController extends Controller
 {

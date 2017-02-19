@@ -1,15 +1,15 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Utils\Webhook;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook;
 
 
-use DreamCommerce\ShopAppstoreBundle\Event\Webhook\EventAbstract;
-use DreamCommerce\ShopAppstoreBundle\Handler\Application;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
-use DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Processor\Exception;
-use DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\ValidatorInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Webhook\EventAbstract;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Processor\Exception;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\ValidatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 

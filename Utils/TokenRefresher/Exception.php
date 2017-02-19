@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
 
 
 class Exception extends \Exception{

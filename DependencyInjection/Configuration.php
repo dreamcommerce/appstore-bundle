@@ -1,8 +1,8 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection;
 
-use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
