@@ -32,7 +32,7 @@ class ApplicationsPass implements CompilerPassInterface
         // configuration for every app
         foreach($applications as $app=>$data){
 
-            $definition = new Definition('DreamCommerce\\ShopAppstoreBundle\\Handler\\Application');
+            $definition = new Definition('DreamCommerce\\Bundle\\ShopAppstoreBundle\\Handler\\Application');
             $definition->addArgument($app);
             $definition->addArgument($data['app_id']);
             $definition->addArgument($data['app_secret']);

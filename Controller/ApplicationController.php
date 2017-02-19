@@ -2,8 +2,8 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 
-use DreamCommerce\Bundle\ShopAppstoreLib\Client;
-use DreamCommerce\Bundle\ShopAppstoreLib\ClientInterface;
+use DreamCommerce\ShopAppstoreLib\Client;
+use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\AppFormListener;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url;

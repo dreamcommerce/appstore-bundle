@@ -82,7 +82,7 @@ class Processor
         $className = array_map('ucfirst', $className);
         $className[] = 'Event';
 
-        $fqcn = sprintf('DreamCommerce\\ShopAppstoreBundle\\Event\\Webhook\\%s', implode('', $className));
+        $fqcn = sprintf('DreamCommerce\\Bundle\\ShopAppstoreBundle\\Event\\Webhook\\%s', implode('', $className));
 
         if(!class_exists($fqcn)){
             throw new Exception(sprintf('Class %s not found', $fqcn));
