@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator;
 
 
-use DreamCommerce\ShopAppstoreBundle\Handler\Application;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
 
 interface AppValidatorInterface extends ValidatorInterface
 {

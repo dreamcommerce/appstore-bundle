@@ -1,5 +1,5 @@
 <?PHP
-namespace DreamCommerce\ShopAppstoreBundle\EventListener;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * Class LocaleListener
  *
  * sets application locale based on shop admin panel language
- * @package DreamCommerce\ShopAppstoreBundle\EventListener
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\EventListener
  */
 class LocaleListener implements EventSubscriberInterface
 {

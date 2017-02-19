@@ -1,10 +1,10 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore;
 
 
 /**
  * Class UninstallEvent
- * @package DreamCommerce\ShopAppstoreBundle\Event\Appstore
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore
  */
 class UninstallEvent extends EventAbstract{
 

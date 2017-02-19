@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator;
 
 
-use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class ValidatorAbstract implements ValidatorInterface

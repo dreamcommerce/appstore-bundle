@@ -1,18 +1,18 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\EventListener;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
-use DreamCommerce\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
-use DreamCommerce\ShopAppstoreBundle\Controller\PaidControllerInterface;
-use DreamCommerce\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
-use DreamCommerce\ShopAppstoreBundle\Handler\ApplicationRegistry;
-use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
-use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
-use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
-use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\PaidControllerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\ApplicationRegistry;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -21,7 +21,7 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Class ApplicationControllerListener
  * takes care of restricting controller access
- * @package DreamCommerce\ShopAppstoreBundle\EventListener
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\EventListener
  */
 class ApplicationControllerListener{
 
@@ -127,7 +127,7 @@ class ApplicationControllerListener{
             /**
              * @var $repo ShopRepositoryInterface
              */
-            $repo = $this->objectManager->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+            $repo = $this->objectManager->getRepository('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface');
             $shop = $repo->findOneByNameAndApplication($params['shop'], $appName);
 
             // not installed - throw an error

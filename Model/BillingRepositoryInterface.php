@@ -1,9 +1,9 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
 
 /**
  * Class BillingRepositoryInterface
- * @package DreamCommerce\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
  */
 interface BillingRepositoryInterface extends RepositoryInterface
 {

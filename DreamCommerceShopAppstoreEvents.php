@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle;
 
 
 final class DreamCommerceShopAppstoreEvents

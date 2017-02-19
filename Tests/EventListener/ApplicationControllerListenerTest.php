@@ -62,7 +62,7 @@ class ApplicationControllerListenerTest extends \PHPUnit_Framework_TestCase
         $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\FilterControllerEvent')->disableOriginalConstructor()->getMock();
 
         $method = new ReflectionMethod(
-            'DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener', 'redirect'
+            'DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\ApplicationControllerListener', 'redirect'
         );
         $method->setAccessible(TRUE);
 

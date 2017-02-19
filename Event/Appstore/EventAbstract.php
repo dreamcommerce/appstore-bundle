@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore;
 
 
 use Symfony\Component\EventDispatcher\Event;

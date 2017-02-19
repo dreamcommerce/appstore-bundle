@@ -1,14 +1,14 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Handler;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Handler;
 
 /**
  * Class ApplicationRegistry
  *
  * registry of applications
  *
- * @package DreamCommerce\ShopAppstoreBundle\Handler
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Handler
  */
 class ApplicationRegistry
 {
