@@ -10,5 +10,6 @@
         <field name="shopUrl" type="string" column="shop_url" length="512" nullable="false"/>
         <field name="app" type="string" column="app" length="40" nullable="false"/>
         <field name="version" type="integer" column="version"/>
+        <field name="installed" type="boolean" column="installed"/>
     </mapped-superclass>
 </doctrine-mapping>

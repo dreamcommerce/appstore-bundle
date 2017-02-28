@@ -4,8 +4,9 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler;
 
 
-use Doctrine\ORM\Version;
+
 use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -47,7 +48,7 @@ class DoctrinePass implements CompilerPassInterface
             );
         }
 
-        if (version_compare(Version::VERSION, '2.5.0-DEV') < 0) {
+        if (version_compare(\Doctrine\ORM\Version::VERSION, '2.5.0-DEV') < 0) {
             $def->addTag('doctrine.event_listener', array('event' => 'loadClassMetadata'));
         } else {
             $def->addTag('doctrine.event_subscriber');

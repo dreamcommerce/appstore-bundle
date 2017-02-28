@@ -131,7 +131,7 @@ class ApplicationControllerListener{
             $shop = $repo->findOneByNameAndApplication($params['shop'], $appName);
 
             // not installed - throw an error
-            if(!$shop){
+            if (!$shop || !$shop->getInstalled()){
                 $this->redirect($event, 'not_installed');
             }
 

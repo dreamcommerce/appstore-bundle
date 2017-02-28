@@ -51,6 +51,12 @@ abstract class Shop implements ShopInterface
     protected $version;
 
     /**
+     * is installed
+     * @var bool
+     */
+    protected $installed;
+
+    /**
      * @inheritdoc
      */
     public function setName($name)
@@ -154,5 +160,24 @@ abstract class Shop implements ShopInterface
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * get installed
+     * @return bool
+     */
+    public function getInstalled()
+    {
+        return $this->installed;
+    }
+
+    /**
+     * set installed
+     * @param bool $installed
+     * @return void
+     */
+    public function setInstalled($installed)
+    {
+        $this->installed = $installed;
     }
 }

@@ -8,6 +8,8 @@ Changelog
 
 ``1.4.9``
     - less restrictive version constraint
+    - added ``dream_commerce_shop_appstore:webhooks`` to dump configured webhooks
+    - fixed FQCN in Doctrine Version detection
 
 ``1.4.8``
     - fixed interfaces mapping due to changes in event_listener/event_subscriber

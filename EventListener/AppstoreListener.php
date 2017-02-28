@@ -73,10 +73,14 @@ class AppstoreListener{
 
         // extract shop entity from event
         $shop = $this->getShopByEvent($event);
-
+        $update = false;
         // already installed, skip
         if($shop){
-            return false;
+            if ($shop->getInstalled()) {
+                return false;
+            } else {
+                $update = true;
+            }
         }
 
         $shopChecker = new ShopChecker();
@@ -88,7 +92,8 @@ class AppstoreListener{
 
             $url = $shopChecker->getRealShopUrl($params['shop_url']);
             if(!$url){
-                throw new Exception('Cannot determine real URL for: '.$params['shop_url']);
+                $url = $params['shop_url'];
+                //throw new Exception($url.' - Cannot determine real URL for: '.$params['shop_url']);
             }
 
             // perform client instantiation
@@ -113,22 +118,33 @@ class AppstoreListener{
         }
 
         // region shop
-        /**
-         * @var $shopModel ShopInterface
-         */
-        $shopModel = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface');
+
+        if ($update) {
+            $shopModel = $shop;
+        } else {
+            /**
+             * @var $shopModel ShopInterface
+             */
+            $shopModel = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface');
+        }
+
         $shopModel->setApp($event->getApplicationName());
         $shopModel->setName($params['shop']);
         $shopModel->setShopUrl($url);
         $shopModel->setVersion($params['application_version']);
+        $shopModel->setInstalled(true);
         $this->objectManager->save($shopModel, false);
         // endregion
 
         // region token
-        /**
-         * @var $tokenModel TokenInterface
-         */
-        $tokenModel = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\TokenInterface');
+
+        if ($update) {
+            $tokenModel = $shop->getToken();
+        } else {
+            /** @var $tokenModel TokenInterface */
+            $tokenModel = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\TokenInterface');
+        }
+
         $tokenModel->setAccessToken($token['access_token']);
         $tokenModel->setRefreshToken($token['refresh_token']);
 
@@ -152,12 +168,12 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 
-        // simply delete entity by manager
-        $this->objectManager->delete($shop);
+        $shop->setInstalled(false);
+        $this->objectManager->save($shop);
     }
 
     /**
@@ -169,7 +185,7 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 
@@ -191,7 +207,7 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 
@@ -218,7 +234,7 @@ class AppstoreListener{
     public function onUpgrade(UpgradeEvent $event){
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 
