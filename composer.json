@@ -4,7 +4,10 @@
     "license": "MIT",
     "require": {
         "php": ">=5.4.0",
-        "dreamcommerce/shop-appstore-lib": "~1.2"
+        "dreamcommerce/shop-appstore-lib": "~1.2",
+        "dreamcommerce/common-bundle": "dev-master",
+        "webmozart/assert": "^1.2.0"
+
     },
     "require-dev": {
         "symfony/symfony": "~2.8",

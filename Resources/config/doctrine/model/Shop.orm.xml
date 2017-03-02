@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass
             name="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop"
-            repository-class="DreamCommerce\ShopAppstoreBundle\Doctrine\ShopRepository"
+            repository-class="DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine\ShopRepository"
     >
         <field name="name" type="string" column="name" length="40" nullable="false"/>
         <field name="shopUrl" type="string" column="shop_url" length="512" nullable="false"/>

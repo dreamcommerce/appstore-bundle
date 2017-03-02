@@ -2,7 +2,7 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher;
 
 
-use DreamCommerce\Bundle\ShopAppstoreLib\Resource;
+use DreamCommerce\ShopAppstoreLib\Resource;
 
 /**
  * Class ResourceConnection

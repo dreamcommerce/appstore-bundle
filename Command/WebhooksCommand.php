@@ -2,7 +2,7 @@
 
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Command;
 
-use DreamCommerce\ShopAppstoreBundle\Handler\Application;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
