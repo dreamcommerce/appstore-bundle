@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler;
 
 
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
-use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -38,8 +38,8 @@ class CustomObjectManagerPass implements CompilerPassInterface
         $class = $def->getClass();
         $interfaces = class_implements($class);
 
-        if(!in_array('DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface', $interfaces)){
-            throw new InvalidArgumentException('Specified object manager service class should implement DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface');
+        if(!in_array('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface', $interfaces)){
+            throw new InvalidArgumentException('Specified object manager service class should implement DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface');
         }
 
         /**
@@ -49,7 +49,7 @@ class CustomObjectManagerPass implements CompilerPassInterface
 
         // test required repositories
         foreach(['Billing', 'Shop', 'Subscription', 'Token'] as $object){
-            $objectInterfaceName = sprintf('DreamCommerce\ShopAppstoreBundle\Model\%sInterface', $object);
+            $objectInterfaceName = sprintf('DreamCommerce\Bundle\ShopAppstoreBundle\Model\%sInterface', $object);
 
             // object
             $obj = $manager->create($objectInterfaceName);
@@ -59,7 +59,7 @@ class CustomObjectManagerPass implements CompilerPassInterface
 
             // repository
             $repo = $manager->getRepository($objectInterfaceName);
-            $repoInterfaceName = sprintf('DreamCommerce\ShopAppstoreBundle\Model\%sRepositoryInterface', $object);
+            $repoInterfaceName = sprintf('DreamCommerce\Bundle\ShopAppstoreBundle\Model\%sRepositoryInterface', $object);
             if(!$repo || !is_subclass_of($repo, $repoInterfaceName)){
                 throw new InvalidArgumentException(sprintf('Specified object manager did not return %s repository instance correctly - it does not implement %s', $objectInterfaceName, $repoInterfaceName));
             }

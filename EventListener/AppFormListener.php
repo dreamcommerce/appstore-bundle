@@ -1,15 +1,15 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\EventListener;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
-use DreamCommerce\ShopAppstoreBundle\Utils\Url;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 
 /**
  * Class AppFormListener
  * listener appending needed request variables for forms
- * @package DreamCommerce\ShopAppstoreBundle\EventListener
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\EventListener
  */
 class AppFormListener {
 

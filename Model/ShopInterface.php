@@ -1,12 +1,12 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
 
 /**
  * Interface ShopInterface
  *
  * shop entity interface
  *
- * @package DreamCommerce\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
  */
 interface ShopInterface
 {
@@ -92,4 +92,17 @@ interface ShopInterface
      * @return void
      */
     public function setVersion($version);
+
+    /**
+     * get installed
+     * @return bool
+     */
+    public function getInstalled();
+
+    /**
+     * set installed
+     * @param bool $installed
+     * @return void
+     */
+    public function setInstalled($installed);
 }

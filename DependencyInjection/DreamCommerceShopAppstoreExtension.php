@@ -1,6 +1,6 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

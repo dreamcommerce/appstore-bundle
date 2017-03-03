@@ -1,11 +1,11 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\Controller;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 /**
  * Class DefaultController
  * an example shop-aware controller
- * @package DreamCommerce\ShopAppstoreBundle\Controller
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Controller
  */
 class DefaultController extends ApplicationController
 {

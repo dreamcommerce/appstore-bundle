@@ -1,9 +1,9 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore;
 
 /**
  * Class SubscriptionEvent
- * @package DreamCommerce\ShopAppstoreBundle\Event\Appstore
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore
  */
 class SubscriptionEvent extends PackageEventAbstract{
 }

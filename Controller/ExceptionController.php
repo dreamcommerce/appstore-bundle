@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Controller;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class ExceptionController
  * shows error pages upon various API errors
- * @package DreamCommerce\ShopAppstoreBundle\Controller
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Controller
  */
 class ExceptionController extends Controller{
 

@@ -1,10 +1,10 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 
 
 use DreamCommerce\ShopAppstoreLib\Exception\HandlerException;
 use DreamCommerce\ShopAppstoreLib\Handler;
-use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * validates request against shop/appstore parameters
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils
  */
 class RequestValidator{
 

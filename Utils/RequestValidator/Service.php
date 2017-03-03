@@ -1,8 +1,8 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
 
 
-use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *
  * service for request validator - wraps request handling
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils
  */
 class Service extends RequestValidator{
 

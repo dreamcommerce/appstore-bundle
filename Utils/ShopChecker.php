@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Utils;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
 
 class ShopChecker
 {

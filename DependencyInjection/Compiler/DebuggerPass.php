@@ -1,9 +1,9 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler;
 
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

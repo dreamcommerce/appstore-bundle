@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Doctrine;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
 use Doctrine\ORM\EntityRepository;
-use DreamCommerce\ShopAppstoreBundle\Model\RepositoryInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\RepositoryInterface;
 
 abstract class RepositoryAbstract extends EntityRepository implements RepositoryInterface
 {

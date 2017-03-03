@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher;
 
 
 use DreamCommerce\ShopAppstoreLib\Resource;
@@ -9,7 +9,7 @@ use DreamCommerce\ShopAppstoreLib\Resource;
  *
  * describes connection between two resources for bulk fetching
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils\Fetcher
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher
  */
 class ResourceConnection
 {

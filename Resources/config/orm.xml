@@ -6,7 +6,7 @@
         >
 
     <services>
-        <service id="dream_commerce_shop_appstore.object_manager" class="DreamCommerce\ShopAppstoreBundle\Doctrine\ObjectManager">
+        <service id="dream_commerce_shop_appstore.object_manager" class="DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine\ObjectManager">
             <argument type="service" id="dream_commerce_shop_appstore.entity_manager"/>
             <argument>%dream_commerce_shop_appstore.objects%</argument>
         </service>

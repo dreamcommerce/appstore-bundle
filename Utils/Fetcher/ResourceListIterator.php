@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher;
 
 
 use DreamCommerce\ShopAppstoreLib\Resource\Exception\ResourceException;
@@ -11,7 +11,7 @@ use DreamCommerce\ShopAppstoreLib\ResourceList;
  *
  * Helps doing stuff on auto-lazy-load larger (>1 page) collections
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils\Fetcher
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher
  */
 class ResourceListIterator implements \Iterator, \Countable
 {

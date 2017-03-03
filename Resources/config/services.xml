@@ -6,18 +6,18 @@
 >
 
     <parameters>
-        <parameter key="dream_commerce_shop_appstore.token_refresher.class">DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher</parameter>
-        <parameter key="dream_commerce_shop_appstore.request_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\Service</parameter>
-        <parameter key="dream_commerce_shop_appstore.controller_filter.class">DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener</parameter>
-        <parameter key="dream_commerce_shop_appstore.url.class">DreamCommerce\ShopAppstoreBundle\Utils\Url</parameter>
-        <parameter key="dream_commerce_shop_appstore.locale_listener.class">DreamCommerce\ShopAppstoreBundle\EventListener\LocaleListener</parameter>
-        <parameter key="dream_commerce_shop_appstore.event.handler.class">DreamCommerce\ShopAppstoreBundle\EventListener\AppstoreListener</parameter>
-        <parameter key="dream_commerce_shop_appstore.twig_tags.class">DreamCommerce\ShopAppstoreBundle\Twig\PathExtension</parameter>
-        <parameter key="dream_commerce_shop_appstore.exception_handler.class">DreamCommerce\ShopAppstoreBundle\EventListener\ResourceExceptionListener</parameter>
-        <parameter key="dream_commerce_shop_appstore.application_param_converter.class">DreamCommerce\ShopAppstoreBundle\Request\ApplicationParamConverter</parameter>
-        <parameter key="dream_commerce_shop_appstore.webhook.processor.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Processor</parameter>
-        <parameter key="dream_commerce_shop_appstore.webhook.app_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidator</parameter>
-        <parameter key="dream_commerce_shop_appstore.webhook.global_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidator</parameter>
+        <parameter key="dream_commerce_shop_appstore.token_refresher.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher</parameter>
+        <parameter key="dream_commerce_shop_appstore.request_validator.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator\Service</parameter>
+        <parameter key="dream_commerce_shop_appstore.controller_filter.class">DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\ApplicationControllerListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.url.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url</parameter>
+        <parameter key="dream_commerce_shop_appstore.locale_listener.class">DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\LocaleListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.event.handler.class">DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\AppstoreListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.twig_tags.class">DreamCommerce\Bundle\ShopAppstoreBundle\Twig\PathExtension</parameter>
+        <parameter key="dream_commerce_shop_appstore.exception_handler.class">DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\ResourceExceptionListener</parameter>
+        <parameter key="dream_commerce_shop_appstore.application_param_converter.class">DreamCommerce\Bundle\ShopAppstoreBundle\Request\ApplicationParamConverter</parameter>
+        <parameter key="dream_commerce_shop_appstore.webhook.processor.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Processor</parameter>
+        <parameter key="dream_commerce_shop_appstore.webhook.app_validator.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidator</parameter>
+        <parameter key="dream_commerce_shop_appstore.webhook.global_validator.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidator</parameter>
     </parameters>
 
     <services>

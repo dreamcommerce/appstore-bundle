@@ -1,24 +1,24 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\EventListener;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
-use DreamCommerce\ShopAppstoreBundle\Utils\ShopChecker;
-use DreamCommerce\ShopAppstoreBundle\Handler\Application;
-use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\ShopChecker;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\Client\Exception\Exception;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
-use DreamCommerce\ShopAppstoreBundle\Event\Appstore\EventAbstract;
-use DreamCommerce\ShopAppstoreBundle\Model\BillingInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\InstallEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\EventAbstract;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\BillingInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\SubscriptionInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\TokenInterface;
 
 class AppstoreListener{
     /**
@@ -48,7 +48,7 @@ class AppstoreListener{
     /**
      * get shop by particular event
      * @param EventAbstract $event
-     * @return \DreamCommerce\ShopAppstoreBundle\Model\ShopInterface
+     * @return \DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface
      */
     protected function getShopByEvent(EventAbstract $event){
         $params = $event->getPayload();
@@ -59,7 +59,7 @@ class AppstoreListener{
         /**
          * @var $repo ShopRepositoryInterface
          */
-        $repo = $this->objectManager->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+        $repo = $this->objectManager->getRepository('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface');
         return $repo->findOneByNameAndApplication($shopName, $appName);
     }
 
@@ -73,10 +73,14 @@ class AppstoreListener{
 
         // extract shop entity from event
         $shop = $this->getShopByEvent($event);
-
+        $update = false;
         // already installed, skip
         if($shop){
-            return false;
+            if ($shop->getInstalled()) {
+                return false;
+            } else {
+                $update = true;
+            }
         }
 
         $shopChecker = new ShopChecker();
@@ -88,7 +92,8 @@ class AppstoreListener{
 
             $url = $shopChecker->getRealShopUrl($params['shop_url']);
             if(!$url){
-                throw new Exception('Cannot determine real URL for: '.$params['shop_url']);
+                $url = $params['shop_url'];
+                //throw new Exception($url.' - Cannot determine real URL for: '.$params['shop_url']);
             }
 
             // perform client instantiation
@@ -113,22 +118,33 @@ class AppstoreListener{
         }
 
         // region shop
-        /**
-         * @var $shopModel ShopInterface
-         */
-        $shopModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+
+        if ($update) {
+            $shopModel = $shop;
+        } else {
+            /**
+             * @var $shopModel ShopInterface
+             */
+            $shopModel = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface');
+        }
+
         $shopModel->setApp($event->getApplicationName());
         $shopModel->setName($params['shop']);
         $shopModel->setShopUrl($url);
         $shopModel->setVersion($params['application_version']);
+        $shopModel->setInstalled(true);
         $this->objectManager->save($shopModel, false);
         // endregion
 
         // region token
-        /**
-         * @var $tokenModel TokenInterface
-         */
-        $tokenModel = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\TokenInterface');
+
+        if ($update) {
+            $tokenModel = $shop->getToken();
+        } else {
+            /** @var $tokenModel TokenInterface */
+            $tokenModel = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\TokenInterface');
+        }
+
         $tokenModel->setAccessToken($token['access_token']);
         $tokenModel->setRefreshToken($token['refresh_token']);
 
@@ -152,12 +168,12 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 
-        // simply delete entity by manager
-        $this->objectManager->delete($shop);
+        $shop->setInstalled(false);
+        $this->objectManager->save($shop);
     }
 
     /**
@@ -169,14 +185,14 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 
         /**
          * @var $billing BillingInterface
          */
-        $billing = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\BillingInterface');
+        $billing = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\BillingInterface');
         $billing->setShop($shop);
 
         $this->objectManager->save($billing);
@@ -191,14 +207,14 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 
         /**
          * @var $subscription SubscriptionInterface
          */
-        $subscription = $this->objectManager->create('DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface');
+        $subscription = $this->objectManager->create('DreamCommerce\Bundle\ShopAppstoreBundle\Model\SubscriptionInterface');
 
         // convert date string to an object
         $expiresAt = new \DateTime($event->getPayload()['subscription_end_time']);
@@ -218,7 +234,7 @@ class AppstoreListener{
     public function onUpgrade(UpgradeEvent $event){
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop){
+        if(!$shop || !$shop->getInstalled()){
             return false;
         }
 

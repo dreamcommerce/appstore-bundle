@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Doctrine;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
-use DreamCommerce\ShopAppstoreBundle\Model\Billing as BillingBase;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Billing as BillingBase;
 
 class Billing extends BillingBase
 {

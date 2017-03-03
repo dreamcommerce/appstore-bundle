@@ -1,12 +1,13 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\Command;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Command;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
-use DreamCommerce\ShopAppstoreBundle\Handler\Application;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
-use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -54,7 +55,7 @@ class RefreshTokensCommand extends ContainerAwareCommand
         /**
          * @var $repo ShopRepositoryInterface
          */
-        $repo = $om->getRepository('DreamCommerce\ShopAppstoreBundle\Model\ShopInterface');
+        $repo = $om->getRepository(ShopInterface::class);
 
         foreach ($app as $id => $obj) {
 
@@ -63,15 +64,22 @@ class RefreshTokensCommand extends ContainerAwareCommand
             $shops = $repo->findByApplication($id);
 
             foreach ($shops as $s) {
-                $client = $obj->getClient($s);
-                $refresher->setClient($client);
+                if ($s->getInstalled()) {
+                    if ($s->getToken()->getExpiresAt()->getTimestamp() <= time() + 604800
+                    && $s->getToken()->getExpiresAt()->getTimestamp() >= time()
+                    ) {
+                        $client = $obj->getClient($s);
+                        $refresher->setClient($client);
 
-                try {
-                    $output->writeln(sprintf('Refreshing shop: %s # %s', $s->getShopUrl(), $s->getName()));
-                    $refresher->refresh($s);
-                    $output->writeln('Done');
-                } catch (\Exception $ex) {
-                    $output->writeln('<error>An error occurred during the token refresh</error>');
+                        try {
+                            $output->writeln(sprintf('Refreshing shop: %s # %s', $s->getShopUrl(), $s->getName()));
+                            $refresher->refresh($s);
+                            $output->writeln('Done');
+                        } catch (\Exception $ex) {
+                            $output->writeln('<error>An error occurred during the token refresh</error>');
+                        }
+                    }
+
                 }
             }
         }

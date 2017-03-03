@@ -3,12 +3,13 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass
-            name="DreamCommerce\ShopAppstoreBundle\Model\Shop"
-            repository-class="DreamCommerce\ShopAppstoreBundle\Doctrine\ShopRepository"
+            name="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop"
+            repository-class="DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine\ShopRepository"
     >
         <field name="name" type="string" column="name" length="40" nullable="false"/>
         <field name="shopUrl" type="string" column="shop_url" length="512" nullable="false"/>
         <field name="app" type="string" column="app" length="40" nullable="false"/>
         <field name="version" type="integer" column="version"/>
+        <field name="installed" type="boolean" column="installed"/>
     </mapped-superclass>
 </doctrine-mapping>

@@ -1,10 +1,10 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
 
 /**
  * Class Shop
- * @package DreamCommerce\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
  */
 abstract class Shop implements ShopInterface
 {
@@ -49,6 +49,12 @@ abstract class Shop implements ShopInterface
      * @var integer
      */
     protected $version;
+
+    /**
+     * is installed
+     * @var bool
+     */
+    protected $installed;
 
     /**
      * @inheritdoc
@@ -154,5 +160,24 @@ abstract class Shop implements ShopInterface
     public function setVersion($version)
     {
         $this->version = $version;
+    }
+
+    /**
+     * get installed
+     * @return bool
+     */
+    public function getInstalled()
+    {
+        return $this->installed;
+    }
+
+    /**
+     * set installed
+     * @param bool $installed
+     * @return void
+     */
+    public function setInstalled($installed)
+    {
+        $this->installed = $installed;
     }
 }

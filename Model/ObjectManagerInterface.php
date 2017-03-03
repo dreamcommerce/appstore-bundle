@@ -1,12 +1,12 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
 
 /**
  * Interface ObjectManagerInterface
  *
  * object manager used to manipulate data
  *
- * @package DreamCommerce\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
  */
 interface ObjectManagerInterface
 {
