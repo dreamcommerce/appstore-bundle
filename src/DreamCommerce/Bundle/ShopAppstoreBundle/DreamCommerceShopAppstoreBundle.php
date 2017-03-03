@@ -67,7 +67,7 @@ class DreamCommerceShopAppstoreBundle extends Bundle
         if (class_exists('\Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
 
             $mappings = array(
-                realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\Bundle\ShopAppstoreBundle\Model'
+                realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\Component\ShopAppstore\Model'
             );
 
             // hint: DO NOT shorthand this import - it will screw up environments with no Doctrine installed

@@ -4,7 +4,7 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 
 
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 
 class ShopChecker
 {

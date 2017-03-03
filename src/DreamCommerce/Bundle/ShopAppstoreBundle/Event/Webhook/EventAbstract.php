@@ -3,7 +3,7 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Webhook;
 
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 class EventAbstract extends Event

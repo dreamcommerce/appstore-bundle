@@ -5,7 +5,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
 use Doctrine\ORM\EntityManager;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ObjectManagerInterface;
 
 class ObjectManager implements ObjectManagerInterface
 {

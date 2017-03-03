@@ -6,7 +6,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Handler;
 
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use Psr\Log\LoggerInterface;
 
 /**

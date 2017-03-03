@@ -4,7 +4,7 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Token as TokenBase;
+use DreamCommerce\Component\ShopAppstore\Model\Token as TokenBase;
 
 class Token extends TokenBase
 {

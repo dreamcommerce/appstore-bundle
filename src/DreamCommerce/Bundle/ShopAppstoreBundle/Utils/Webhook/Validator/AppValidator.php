@@ -5,7 +5,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator;
 
 
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 
 class AppValidator extends ValidatorAbstract implements AppValidatorInterface
 {

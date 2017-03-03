@@ -5,7 +5,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
 use Doctrine\ORM\EntityRepository;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 
 class ShopRepository extends RepositoryAbstract implements ShopRepositoryInterface
 {

@@ -6,8 +6,9 @@ use Doctrine\Common\Collections\Collection;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopDependInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopDependTrait;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use Sylius\Component\Resource\Model\ResourceInterface;
 
-class Metafield implements MetafieldInterface, ShopDependInterface
+class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInterface
 {
     use ShopDependTrait;
 

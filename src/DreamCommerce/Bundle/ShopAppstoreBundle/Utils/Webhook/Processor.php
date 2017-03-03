@@ -6,8 +6,8 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook;
 
 use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Webhook\EventAbstract;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Processor\Exception;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\ValidatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

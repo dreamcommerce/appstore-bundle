@@ -8,8 +8,8 @@ use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\ApplicationControllerInte
 use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\PaidControllerInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\ApplicationRegistry;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ObjectManagerInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
@@ -127,7 +127,7 @@ class ApplicationControllerListener{
             /**
              * @var $repo ShopRepositoryInterface
              */
-            $repo = $this->objectManager->getRepository('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface');
+            $repo = $this->objectManager->getRepository('DreamCommerce\Component\ShopAppstore\Model\ShopInterface');
             $shop = $repo->findOneByNameAndApplication($params['shop'], $appName);
 
             // not installed - throw an error

@@ -2,7 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity
           repository-class="DreamCommerce\Bundle\ShopAppstoreBundle\Repository\Shop\MetafieldValueFloatRepositoryBase"
-          name="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\MetafieldValueFloat"
+          name="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueFloat"
           table="metafield_values_float"
   >
 

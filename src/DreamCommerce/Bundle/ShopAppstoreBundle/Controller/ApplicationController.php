@@ -5,7 +5,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\AppFormListener;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormEvents;

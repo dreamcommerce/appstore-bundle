@@ -38,7 +38,7 @@ class DoctrinePass implements CompilerPassInterface
 
         foreach ($container->getParameter(DreamCommerceShopAppstoreExtension::ALIAS . '.objects') as $interface => $class) {
 
-            $interface = 'DreamCommerce\Bundle\ShopAppstoreBundle\Model\\' . ucfirst($interface).'Interface';
+            $interface = 'DreamCommerce\Component\ShopAppstore\Model\\' . ucfirst($interface).'Interface';
 
             $objects[$interface] = $class;
 

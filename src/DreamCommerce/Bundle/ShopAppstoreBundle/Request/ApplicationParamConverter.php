@@ -23,7 +23,7 @@ class ApplicationParamConverter implements ParamConverterInterface
     {
         if($configuration->getClass()=='DreamCommerce\ShopAppstoreLib\ClientInterface'){
             $this->mapAttribute('_dream_commerce_shop_appstore_client', $configuration, $request);
-        }else if($configuration->getClass()=='DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface'){
+        }else if($configuration->getClass()=='DreamCommerce\Component\ShopAppstore\Model\ShopInterface'){
             $this->mapAttribute('_dream_commerce_shop_appstore_shop', $configuration, $request);
         }else{
             return false;
@@ -60,7 +60,7 @@ class ApplicationParamConverter implements ParamConverterInterface
         $class = $configuration->getClass();
 
         return $class=='DreamCommerce\ShopAppstoreLib\ClientInterface'
-            || $class=='DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface';
+            || $class=='DreamCommerce\Component\ShopAppstore\Model\ShopInterface';
 
     }
 }

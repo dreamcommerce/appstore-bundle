@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity
-          name="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\MetafieldValue"
+          name="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValue"
           repository-class="DreamCommerce\Bundle\ShopAppstoreBundle\Repository\Shop\MetafieldValueRepositoryBase"
           table="metafield_values"
           inheritance-type="JOINED"
@@ -9,10 +9,10 @@
 
     <discriminator-column name="type" type="enumMetafieldValueType"></discriminator-column>
     <discriminator-map>
-      <discriminator-mapping value="TYPE_INT" class="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\MetafieldValueInt"/>
-      <discriminator-mapping value="TYPE_FLOAT" class="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\MetafieldValueFloat" />
-      <discriminator-mapping value="TYPE_STRING" class="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\MetafieldValueString" />
-      <discriminator-mapping value="TYPE_BLOB" class="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\MetafieldValueBlob" />
+      <discriminator-mapping value="TYPE_INT" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueInt"/>
+      <discriminator-mapping value="TYPE_FLOAT" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueFloat" />
+      <discriminator-mapping value="TYPE_STRING" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueString" />
+      <discriminator-mapping value="TYPE_BLOB" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueBlob" />
     </discriminator-map>
 
 
@@ -23,7 +23,7 @@
 
     <field name="externalObjectId" type="integer" column="external_object_id"/>
 
-    <many-to-one target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\Metafield" field="metafield" inversed-by="metafieldValues">
+    <many-to-one target-entity="DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield" field="metafield" inversed-by="metafieldValues">
         <join-column name="metafield_id" referenced-column-name="id" />
     </many-to-one>
 

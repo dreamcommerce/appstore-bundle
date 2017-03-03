@@ -2,7 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <mapped-superclass name="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Token">
+    <mapped-superclass name="DreamCommerce\Component\ShopAppstore\Model\Token">
         <field name="expiresAt" type="datetime" column="expires_at" nullable="true"/>
         <field name="accessToken" type="string" column="access_token" length="50" nullable="true"/>
         <field name="refreshToken" type="string" column="refresh_token" length="50" nullable="true"/>

@@ -3,7 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     <mapped-superclass
-            name="DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop"
+            name="DreamCommerce\Component\ShopAppstore\Model\Shop"
             repository-class="DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine\ShopRepository"
     >
         <field name="name" type="string" column="name" length="40" nullable="false"/>

@@ -5,9 +5,9 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 use DreamCommerce\ShopAppstoreLib\Client\OAuth;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\ShopAppstoreLib\Exception\ClientException;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\TokenInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ObjectManagerInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\TokenInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher\Exception;
 
 /**

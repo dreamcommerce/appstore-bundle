@@ -4,10 +4,10 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopRepositoryInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidatorInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidatorInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreLib\Resource\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

@@ -50,7 +50,7 @@ Billing
 
 namespace Acme\UserBundle\Entity;
 
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Billing as BaseBilling;
+use DreamCommerce\Component\ShopAppstore\Model\Billing as BaseBilling;
 
 /**
  * Billing
@@ -78,7 +78,7 @@ class Billing extends BaseBilling
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <one-to-one field="shop" target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface" inversed-by="billing">
+        <one-to-one field="shop" target-entity="DreamCommerce\Component\ShopAppstore\Model\ShopInterface" inversed-by="billing">
             <join-columns>
                 <join-column name="shop_id" referenced-column-name="id"/>
             </join-columns>
@@ -96,7 +96,7 @@ Shop
 
 namespace Acme\UserBundle\Entity;
 
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop as BaseShop;
+use DreamCommerce\Component\ShopAppstore\Model\Shop as BaseShop;
 
 /**
  * Shop
@@ -125,13 +125,13 @@ class Shop extends BaseShop
             <generator strategy="IDENTITY"/>
         </id>
 
-        <one-to-one field="token" target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\TokenInterface" mapped-by="shop" inversed-by="token">
+        <one-to-one field="token" target-entity="DreamCommerce\Component\ShopAppstore\Model\TokenInterface" mapped-by="shop" inversed-by="token">
         </one-to-one>
 
-        <one-to-one target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\BillingInterface" mapped-by="shop" field="billing" inversed-by="billing">
+        <one-to-one target-entity="DreamCommerce\Component\ShopAppstore\Model\BillingInterface" mapped-by="shop" field="billing" inversed-by="billing">
         </one-to-one>
 
-        <one-to-many target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\SubscriptionInterface" mapped-by="shop" field="subscriptions">
+        <one-to-many target-entity="DreamCommerce\Component\ShopAppstore\Model\SubscriptionInterface" mapped-by="shop" field="subscriptions">
             <order-by>
                 <order-by-field name="expiresAt"/>
             </order-by>
@@ -149,7 +149,7 @@ Subscription
 
 namespace Acme\UserBundle\Entity;
 
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Subscription as BaseSubscription;
+use DreamCommerce\Component\ShopAppstore\Model\Subscription as BaseSubscription;
 
 /**
  * Subscription
@@ -177,7 +177,7 @@ class Subscription extends BaseSubscription
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <many-to-one field="shop" target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface" inversed-by="subscriptions">
+        <many-to-one field="shop" target-entity="DreamCommerce\Component\ShopAppstore\Model\ShopInterface" inversed-by="subscriptions">
             <join-columns>
                 <join-column name="shop_id" referenced-column-name="id"/>
             </join-columns>
@@ -195,7 +195,7 @@ Token
 
 namespace Acme\UserBundle\Entity;
 
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Token as BaseToken;
+use DreamCommerce\Component\ShopAppstore\Model\Token as BaseToken;
 
 /**
  * Token
@@ -223,7 +223,7 @@ class Token extends BaseToken
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <one-to-one field="shop" target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface" inversed-by="token">
+        <one-to-one field="shop" target-entity="DreamCommerce\Component\ShopAppstore\Model\ShopInterface" inversed-by="token">
             <join-columns>
                 <join-column name="shop_id" referenced-column-name="id"/>
             </join-columns>

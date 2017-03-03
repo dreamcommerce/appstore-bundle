@@ -2,7 +2,7 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine\DBAL\Types;
 
 use DreamCommerce\Component\Common\Doctrine\DBAL\Types\EnumType;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop\MetafieldValueInterface;
+use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueInterface;
 
 class MetafieldValueTypeEnum extends EnumType
 {

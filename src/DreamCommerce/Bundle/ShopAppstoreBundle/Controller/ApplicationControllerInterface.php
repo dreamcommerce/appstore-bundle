@@ -4,7 +4,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 
 /**
  * Interface ApplicationControllerInterface

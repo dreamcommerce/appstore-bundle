@@ -2,7 +2,9 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop;
 
 
-interface MetafieldValueInterface
+use Sylius\Component\Resource\Model\ResourceInterface;
+
+interface MetafieldValueInterface extends ResourceInterface
 {
     const TYPE_INT      = 'TYPE_INT';
     const TYPE_FLOAT    = 'TYPE_FLOAT';
