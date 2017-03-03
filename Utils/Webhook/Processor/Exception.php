@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DreamCommerce\SShopAppstoreBundle\Utils\Webhook\Processor;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Processor;
 
 
 class Exception extends \Exception
