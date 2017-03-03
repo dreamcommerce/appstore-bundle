@@ -3,7 +3,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 
 use DreamCommerce\ShopAppstoreLib\Resource;
-use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
+use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper\ArrayCollectionWrapper;
 use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher;
 
 /**
@@ -121,7 +121,7 @@ class RelatedResourceListIterator extends ResourceListIterator
             // fetch collection for iteration
             $fetcher = new Fetcher($resource);
             $items = $fetcher->fetchAll();
-            $wrapper = new CollectionWrapper($items);
+            $wrapper = new ArrayCollectionWrapper($items);
 
             // inject connections data
             $class = $connection->getClassName();
