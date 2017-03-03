@@ -1,18 +1,18 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 
 
 use DreamCommerce\ShopAppstoreLib\Client\OAuth;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\ShopAppstoreLib\Exception\ClientException;
-use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
-use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher\Exception;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\TokenInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher\Exception;
 
 /**
  * Class TokenRefresher
- * @package DreamCommerce\ShopAppstoreBundle\Utils
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils
  */
 class TokenRefresher {
 

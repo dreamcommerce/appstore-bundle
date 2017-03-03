@@ -1,17 +1,17 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Handler;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Handler;
 
 
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
-use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class Application
- * @package DreamCommerce\ShopAppstoreBundle\Handler
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Handler
  */
 class Application
 {

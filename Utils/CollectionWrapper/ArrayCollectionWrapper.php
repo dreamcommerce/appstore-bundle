@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\CollectionWrapper;
 
 use \Traversable;
 
@@ -8,7 +8,7 @@ use \Traversable;
  *
  * adds some helper methods for fetched collection of arrays
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils
  */
 class ArrayCollectionWrapper extends AbstractCollectionWrapper
 {

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Doctrine;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
-use DreamCommerce\ShopAppstoreBundle\Model\Token as TokenBase;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\Token as TokenBase;
 
 class Token extends TokenBase
 {

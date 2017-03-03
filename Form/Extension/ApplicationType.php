@@ -1,9 +1,9 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Form\Extension;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Form\Extension;
 
 
-use DreamCommerce\ShopAppstoreBundle\EventListener\AppFormListener;
-use DreamCommerce\ShopAppstoreBundle\Utils\Url;
+use DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\AppFormListener;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;

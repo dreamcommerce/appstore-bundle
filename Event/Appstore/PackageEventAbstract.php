@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore;
 
 
 class PackageEventAbstract extends EventAbstract

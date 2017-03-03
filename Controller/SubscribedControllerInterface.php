@@ -1,10 +1,10 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Controller;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 /**
  * Interface SubscribedControllerInterface
  * tells the controlled action is considered as a subscription-aware
- * @package DreamCommerce\ShopAppstoreBundle\Controller
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Controller
  */
 interface SubscribedControllerInterface {
 

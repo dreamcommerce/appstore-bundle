@@ -6,7 +6,7 @@
  * Time: 18:33
  */
 
-namespace DreamCommerce\ShopAppstoreBundle\Tests\Utils\CollectionWrapper;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Tests\Utils\CollectionWrapper;
 
 
 class SomeObject

@@ -1,9 +1,9 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Tests\EventListener;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Tests\EventListener;
 
-use DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener;
+use DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\ApplicationControllerListener;
 use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionMethod;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -45,9 +45,9 @@ class ApplicationControllerListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->router = $this->getMockBuilder('Symfony\Component\Routing\RouterInterface')->disableOriginalConstructor()->getMock();
         $this->applications = ['app' => ['appId' => 'id', 'appSecret' => 'secret', 'appstoreSecret' => 'secret', 'minimalVersion' => 1]];
-        $this->applicationRegistry = $this->getMockBuilder('DreamCommerce\ShopAppstoreBundle\Handler\ApplicationRegistry')->disableOriginalConstructor()->getMock();
-        $this->shopManager = $this->getMockBuilder('DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface')->disableOriginalConstructor()->getMock();
-        $this->tokenRefresher = $this->getMockBuilder('DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher')->disableOriginalConstructor()->getMock();
+        $this->applicationRegistry = $this->getMockBuilder('DreamCommerce\Bundle\ShopAppstoreBundle\Handler\ApplicationRegistry')->disableOriginalConstructor()->getMock();
+        $this->shopManager = $this->getMockBuilder('DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface')->disableOriginalConstructor()->getMock();
+        $this->tokenRefresher = $this->getMockBuilder('DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher')->disableOriginalConstructor()->getMock();
         $this->routes = [
             'route'=>'value'
         ];
@@ -62,7 +62,7 @@ class ApplicationControllerListenerTest extends \PHPUnit_Framework_TestCase
         $event = $this->getMockBuilder('Symfony\Component\HttpKernel\Event\FilterControllerEvent')->disableOriginalConstructor()->getMock();
 
         $method = new ReflectionMethod(
-            'DreamCommerce\ShopAppstoreBundle\EventListener\ApplicationControllerListener', 'redirect'
+            'DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\ApplicationControllerListener', 'redirect'
         );
         $method->setAccessible(TRUE);
 

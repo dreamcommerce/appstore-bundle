@@ -1,18 +1,18 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Utils;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 
 
 use DreamCommerce\ShopAppstoreLib\Resource;
-use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\RelatedResourceListIterator;
-use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceConnection;
-use DreamCommerce\ShopAppstoreBundle\Utils\Fetcher\ResourceListIterator;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher\RelatedResourceListIterator;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher\ResourceConnection;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Fetcher\ResourceListIterator;
 
 /**
  * Class Fetcher
  *
  * takes care of fetching data with records exceeding single page
  *
- * @package DreamCommerce\ShopAppstoreBundle\Utils
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils
  */
 class Fetcher {
 

@@ -6,10 +6,10 @@
  * Time: 17:07
  */
 
-namespace DreamCommerce\ShopAppstoreBundle\Tests\Utils\CollectionWrapper;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Tests\Utils\CollectionWrapper;
 
 
-use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper\ObjectCollectionWrapper;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\CollectionWrapper\ObjectCollectionWrapper;
 use PHPUnit\Framework\TestCase;
 
 class ObjectCollectionWrapperTest extends TestCase

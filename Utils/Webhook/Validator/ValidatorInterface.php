@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator;
 
 
 use Symfony\Component\HttpFoundation\Request;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\EventListener;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
 use DreamCommerce\ShopAppstoreLib\Resource\Exception\ResourceException;

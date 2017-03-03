@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DreamCommerce\ShopAppstoreBundle\Doctrine;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
 
 
 use Doctrine\ORM\EntityManager;
-use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ObjectManagerInterface;
 
 class ObjectManager implements ObjectManagerInterface
 {

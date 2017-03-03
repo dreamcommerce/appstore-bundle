@@ -1,7 +1,7 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Tests\Utils\CollectionWrapper;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Tests\Utils\CollectionWrapper;
 
-use DreamCommerce\ShopAppstoreBundle\Utils\CollectionWrapper\ArrayCollectionWrapper;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\CollectionWrapper\ArrayCollectionWrapper;
 use PHPUnit\Framework\TestCase;
 
 

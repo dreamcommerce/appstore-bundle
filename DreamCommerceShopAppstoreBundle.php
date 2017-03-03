@@ -1,18 +1,43 @@
 <?php
 
-namespace DreamCommerce\ShopAppstoreBundle;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle;
 
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\ApplicationsPass;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\CustomObjectManagerPass;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DebuggerPass;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
-use DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler\WebhooksPass;
+
+
+use DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine\DBAL\Types\MetafieldValueTypeUInt16;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Type;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\ApplicationsPass;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\CustomObjectManagerPass;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\DebuggerPass;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\WebhooksPass;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class DreamCommerceShopAppstoreBundle extends Bundle
 {
+    private $ormTypes = [
+        'enumMetafieldValueType' => MetafieldValueTypeUInt16::class
+    ];
+
+
+    public function boot()
+    {
+        $registry = $this->container->get('doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE);
+
+        if ($registry !== null) {
+            /** @var Connection $connection */
+            foreach ($registry->getConnections() as $connection) {
+                $platform = $connection->getDatabasePlatform();
+
+                $this->registerOrmTypes($platform);
+            }
+        }
+    }
 
     public function build(ContainerBuilder $container)
     {
@@ -39,7 +64,7 @@ class DreamCommerceShopAppstoreBundle extends Bundle
         if (class_exists('\Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
 
             $mappings = array(
-                realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\ShopAppstoreBundle\Model'
+                realpath(__DIR__ . '/Resources/config/doctrine/model') => 'DreamCommerce\Bundle\ShopAppstoreBundle\Model'
             );
 
             // hint: DO NOT shorthand this import - it will screw up environments with no Doctrine installed
@@ -48,5 +73,19 @@ class DreamCommerceShopAppstoreBundle extends Bundle
             );
             $container->addCompilerPass(new DoctrinePass());
         }
+    }
+
+    /**
+     * @param AbstractPlatform $platform
+     */
+    private function registerOrmTypes(AbstractPlatform $platform)
+    {
+        foreach ($this->ormTypes as $type => $className) {
+            if (!Type::hasType($type)) {
+                Type::addType($type, $className);
+                $platform->registerDoctrineTypeMapping($type, $type);
+            }
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\ShopAppstoreBundle\Form;
+namespace DreamCommerce\Bundle\ShopAppstoreBundle\Form;
 
 
 use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
@@ -10,7 +10,7 @@ use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
  *
  * choice from resource result
  *
- * @package DreamCommerce\ShopAppstoreBundle\Form
+ * @package DreamCommerce\Bundle\ShopAppstoreBundle\Form
  */
 class CollectionChoiceListLoader implements ChoiceLoaderInterface{
 
