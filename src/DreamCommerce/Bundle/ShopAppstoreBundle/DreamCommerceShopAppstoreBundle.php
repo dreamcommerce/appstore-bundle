@@ -27,6 +27,9 @@ class DreamCommerceShopAppstoreBundle extends Bundle
 
     public function boot()
     {
+        parent::boot();
+
+
         $registry = $this->container->get('doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE);
 
         if ($registry !== null) {

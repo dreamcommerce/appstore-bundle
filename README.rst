@@ -8,7 +8,13 @@ Installation
 ------------
 Add below lines to your registerBundles function in AppKernel.php
 ```php
-    new \DreamCommerce\Bundle\ShopAppstoreBundle\DreamCommerceShopAppstoreBundle()
+new \JMS\SerializerBundle\JMSSerializerBundle(),
+new \FOS\RestBundle\FOSRestBundle(),
+new \Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
+new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
+new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
+new winzou\Bundle\StateMachineBundle\winzouStateMachineBundle(),
+new \DreamCommerce\Bundle\ShopAppstoreBundle\DreamCommerceShopAppstoreBundle(),
 ```
 
 
