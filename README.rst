@@ -3,6 +3,15 @@ DreamCommerceShopAppstore
 
 Bundle used with DreamCommerce's Symfony applications. More documentation coming soon.
 
+
+Installation
+------------
+Add below lines to your registerBundles function in AppKernel.php
+```php
+    new \DreamCommerce\Bundle\ShopAppstoreBundle\DreamCommerceShopAppstoreBundle()
+```
+
+
 Changelog
 ---------
 
