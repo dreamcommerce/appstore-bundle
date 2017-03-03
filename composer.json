@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DreamCommerce\\Bundle\\ShopAppstoreBundle\\": "src/DreamCommerce/Bundle/ShopAppstoreBundle"
+            "DreamCommerce\\Bundle\\ShopAppstoreBundle\\": "src/DreamCommerce/Bundle/ShopAppstoreBundle",
             "DreamCommerce\\Bundle\\ShopAppstore\\": "src/DreamCommerce/Component/ShopAppstore"
         }
     },
