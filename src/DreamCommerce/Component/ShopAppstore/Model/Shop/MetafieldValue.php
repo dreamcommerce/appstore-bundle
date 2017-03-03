@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop;
+namespace DreamCommerce\Component\ShopAppstore\Model\Shop;
 
 
 abstract class MetafieldValue implements MetafieldValueInterface

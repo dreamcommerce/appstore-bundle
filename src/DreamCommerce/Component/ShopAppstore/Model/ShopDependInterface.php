@@ -1,5 +1,5 @@
 <?php
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Component\ShopAppstore\Model;
 
 
 interface ShopDependInterface

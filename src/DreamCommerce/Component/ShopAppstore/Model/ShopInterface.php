@@ -1,12 +1,12 @@
 <?php
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Component\ShopAppstore\Model;
 
 /**
  * Interface ShopInterface
  *
  * shop entity interface
  *
- * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Component\ShopAppstore\Model
  */
 interface ShopInterface
 {

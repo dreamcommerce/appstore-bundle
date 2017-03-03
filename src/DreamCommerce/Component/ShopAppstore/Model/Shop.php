@@ -1,10 +1,10 @@
 <?php
 
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Component\ShopAppstore\Model;
 
 /**
  * Class Shop
- * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Component\ShopAppstore\Model
  */
 abstract class Shop implements ShopInterface
 {

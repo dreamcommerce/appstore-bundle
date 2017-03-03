@@ -1,12 +1,12 @@
 <?php
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Component\ShopAppstore\Model;
 
 /**
  * Class RepositoryInterface
  *
  * base interface for repositories
  *
- * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Component\ShopAppstore\Model
  */
 interface RepositoryInterface
 {

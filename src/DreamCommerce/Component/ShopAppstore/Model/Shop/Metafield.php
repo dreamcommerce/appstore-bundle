@@ -1,11 +1,11 @@
 <?php
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model\Shop;
+namespace DreamCommerce\Component\ShopAppstore\Model\Shop;
 
 
 use Doctrine\Common\Collections\Collection;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopDependInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopDependTrait;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopDependInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopDependTrait;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
 class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInterface
@@ -48,7 +48,7 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
     protected $metafieldValues;
 
     /**
-     * @var \DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+     * @var \DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
      */
     protected $shop;
 

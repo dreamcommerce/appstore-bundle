@@ -1,17 +1,17 @@
 <?php
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Component\ShopAppstore\Model;
 
-use DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 
 trait ShopDependTrait
 {
     /**
-     * @var \DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface
+     * @var \DreamCommerce\Component\ShopAppstore\Model\ShopInterface
      */
     protected $shop;
 
     /**
-     * @return \DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface
+     * @return \DreamCommerce\Component\ShopAppstore\Model\ShopInterface
      */
     public function getShop(): ShopInterface
     {
@@ -19,7 +19,7 @@ trait ShopDependTrait
     }
 
     /**
-     * @param \DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface $shop
+     * @param \DreamCommerce\Component\ShopAppstore\Model\ShopInterface $shop
      */
     public function setShop(ShopInterface $shop)
     {

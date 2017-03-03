@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Component\ShopAppstore\Model;
 
 /**
  * Interface TokenRepositoryInterface
- * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Component\ShopAppstore\Model
  */
 interface TokenRepositoryInterface extends RepositoryInterface
 {

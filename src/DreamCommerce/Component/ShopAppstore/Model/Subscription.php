@@ -1,13 +1,13 @@
 <?php
 
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Model;
+namespace DreamCommerce\Component\ShopAppstore\Model;
 
 /**
  * Class Subscription
  *
  * subscription information
  *
- * @package DreamCommerce\Bundle\ShopAppstoreBundle\Model
+ * @package DreamCommerce\Component\ShopAppstore\Model
  */
 abstract class Subscription implements SubscriptionInterface
 {
