@@ -1,11 +1,13 @@
 <?php
 namespace DreamCommerce\Component\ShopAppstore\Model;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
+
 /**
  * Interface SubscriptionInterface
  * @package DreamCommerce\Component\ShopAppstore\Model
  */
-interface SubscriptionInterface
+interface SubscriptionInterface extends ResourceInterface
 {
     /**
      * set expiration date

@@ -9,8 +9,14 @@ namespace DreamCommerce\Component\ShopAppstore\Model;
  *
  * @package DreamCommerce\Component\ShopAppstore\Model
  */
-abstract class Subscription implements SubscriptionInterface
+class Subscription implements SubscriptionInterface
 {
+
+    /**
+     * @var int
+     */
+    protected $id;
+
     /**
      * expiration date
      * @var \DateTime
@@ -22,6 +28,14 @@ abstract class Subscription implements SubscriptionInterface
      * @var ShopInterface
      */
     protected $shop;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @inheritdoc

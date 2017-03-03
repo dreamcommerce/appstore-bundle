@@ -1,6 +1,8 @@
 <?php
 namespace DreamCommerce\Component\ShopAppstore\Model;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
+
 /**
  * Interface TokenInterface
  *
@@ -8,7 +10,7 @@ namespace DreamCommerce\Component\ShopAppstore\Model;
  *
  * @package DreamCommerce\Component\ShopAppstore\Model
  */
-interface TokenInterface
+interface TokenInterface extends ResourceInterface
 {
     /**
      * set expiration date

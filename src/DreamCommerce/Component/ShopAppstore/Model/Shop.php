@@ -2,12 +2,30 @@
 
 namespace DreamCommerce\Component\ShopAppstore\Model;
 
+
+
+
 /**
  * Class Shop
  * @package DreamCommerce\Component\ShopAppstore\Model
  */
-abstract class Shop implements ShopInterface
+class Shop implements ShopInterface
 {
+    /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @var int
+     */
+    protected $settings;
+
+    /**
+     * @var
+     */
+    protected $register;
+
     /**
      * shop identifier
      * @var string
@@ -55,6 +73,14 @@ abstract class Shop implements ShopInterface
      * @var bool
      */
     protected $installed;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @inheritdoc
@@ -180,4 +206,38 @@ abstract class Shop implements ShopInterface
     {
         $this->installed = $installed;
     }
+
+    /**
+     * @return int
+     */
+    public function getSettings(): int
+    {
+        return $this->settings;
+    }
+
+    /**
+     * @param int $settings
+     */
+    public function setSettings(int $settings)
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegister()
+    {
+        return $this->register;
+    }
+
+    /**
+     * @param mixed $register
+     */
+    public function setRegister($register)
+    {
+        $this->register = $register;
+    }
 }
+
+

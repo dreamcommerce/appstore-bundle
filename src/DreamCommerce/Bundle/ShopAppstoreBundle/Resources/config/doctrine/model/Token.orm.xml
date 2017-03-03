@@ -2,9 +2,26 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <mapped-superclass name="DreamCommerce\Component\ShopAppstore\Model\Token">
+    <entity name="DreamCommerce\Component\ShopAppstore\Model\Token" table="tokens">
+
+        <indexes>
+            <index name="shop_id" columns="shop_id"/>
+        </indexes>
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+
         <field name="expiresAt" type="datetime" column="expires_at" nullable="true"/>
         <field name="accessToken" type="string" column="access_token" length="50" nullable="true"/>
         <field name="refreshToken" type="string" column="refresh_token" length="50" nullable="true"/>
-    </mapped-superclass>
+
+        <one-to-one field="shop" target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface" inversed-by="token">
+            <join-columns>
+                <join-column name="shop_id" referenced-column-name="id"/>
+            </join-columns>
+        </one-to-one>
+
+    </entity>
 </doctrine-mapping>

@@ -2,6 +2,8 @@
 
 namespace DreamCommerce\Component\ShopAppstore\Model;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
+
 /**
  * Class Billing
  *
@@ -9,7 +11,7 @@ namespace DreamCommerce\Component\ShopAppstore\Model;
  *
  * @package DreamCommerce\Component\ShopAppstore\Model
  */
-abstract class Billing implements BillingInterface
+class Billing implements BillingInterface
 {
     /**
      * shop this information is bound to
@@ -18,12 +20,27 @@ abstract class Billing implements BillingInterface
     protected $shop;
 
     /**
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+
+    /**
      * when event occurred
      * @var \DateTime
      */
     protected $createdAt;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->createdAt = new \DateTime();
     }
 
@@ -48,7 +65,8 @@ abstract class Billing implements BillingInterface
     /**
      * @inheritdoc
      */
-    public function getCreatedAt(){
+    public function getCreatedAt() : \DateTime
+    {
         return $this->createdAt;
     }
 

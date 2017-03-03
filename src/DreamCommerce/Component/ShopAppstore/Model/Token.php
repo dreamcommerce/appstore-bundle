@@ -2,6 +2,7 @@
 
 namespace DreamCommerce\Component\ShopAppstore\Model;
 
+
 /**
  * Class Token
  *
@@ -9,8 +10,13 @@ namespace DreamCommerce\Component\ShopAppstore\Model;
  *
  * @package DreamCommerce\Component\ShopAppstore\Model
  */
-abstract class Token implements TokenInterface
+class Token implements TokenInterface
 {
+    /**
+     * @var int
+     */
+    protected $id;
+
     /**
      * expiration date
      * @var \DateTime
@@ -34,6 +40,14 @@ abstract class Token implements TokenInterface
      * @var ShopInterface
      */
     protected $shop;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
 
     /**
      * @inheritdoc

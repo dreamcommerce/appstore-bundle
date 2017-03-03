@@ -1,11 +1,13 @@
 <?php
 namespace DreamCommerce\Component\ShopAppstore\Model;
 
+use Sylius\Component\Resource\Model\ResourceInterface;
+
 /**
  * Interface BillingInterface
  * @package DreamCommerce\Component\ShopAppstore\Model
  */
-interface BillingInterface
+interface BillingInterface extends ResourceInterface
 {
     /**
      * set shop
@@ -24,6 +26,6 @@ interface BillingInterface
      * get event creation date
      * @return \DateTime
      */
-    public function getCreatedAt();
+    public function getCreatedAt(): \DateTime;
 
 }
