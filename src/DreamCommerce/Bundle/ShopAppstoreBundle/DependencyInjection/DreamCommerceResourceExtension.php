@@ -18,21 +18,26 @@ use Symfony\Component\Yaml\Parser;
  */
 class DreamCommerceResourceExtension extends AbstractResourceExtension
 {
-
     const ALIAS = 'dream_commerce_shop_resources';
 
     /**
      * {@inheritdoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $appConfig, ContainerBuilder $container)
     {
+        $resourceConfiguration = new ResourceConfiguration();
+
         $locator = new FileLocator(__DIR__. '/../Resources/config');
         $yamlParser = new Parser();
 
         $config = $yamlParser->parse(file_get_contents($locator->locate('resources.yml')));
-        $config = $this->processConfiguration(new ResourceConfiguration(), $config);
-
+        $config = $this->processConfiguration($resourceConfiguration, $config);
         $this->registerResources('dream_commerce', $config['driver'], $config['resources'], $container);
+
+
+
+        $appConfig = $this->processConfiguration($resourceConfiguration, $appConfig);
+        $this->registerResources('dream_commerce', $appConfig['driver'], $appConfig['resources'], $container);
     }
 
     public function getAlias(){

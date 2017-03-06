@@ -16,7 +16,7 @@ class ResourceConfiguration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
 
 
-        $rootNode = $treeBuilder->root('dream_commerce_shop_appstore1');
+        $rootNode = $treeBuilder->root('dream_commerce_shop_resources');
 
         $rootNode->addDefaultsIfNotSet()
             ->children()
