@@ -1,0 +1,35 @@
+dream_commerce_shop_resources:
+    resources:
+        billing:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Billing
+                interface: DreamCommerce\Component\ShopAppstore\Model\BillingInterface
+        Shop:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Shop
+                interface: DreamCommerce\Component\ShopAppstore\Model\ShopInterface
+        subscription:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Subscription
+                interface: DreamCommerce\Component\ShopAppstore\Model\SubscriptionInterface
+        token:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Token
+                interface: DreamCommerce\Component\ShopAppstore\Model\TokenInterface
+
+        shop_metafield:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield
+                interface: DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldInterface
+        shop_metafield_value_blob:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueBlob
+        shop_metafield_value_float:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueFloat
+        shop_metafield_value_int:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueInt
+        shop_metafield_value_string:
+            classes:
+                model:     DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueString

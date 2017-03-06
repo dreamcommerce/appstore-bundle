@@ -4,12 +4,12 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle;
 
 
 
+use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceResourceExtension;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine\DBAL\Types\MetafieldValueTypeUInt16;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\ApplicationsPass;
-use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\CustomObjectManagerPass;
 use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\DebuggerPass;
 use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\DoctrinePass;
 use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\Compiler\WebhooksPass;
@@ -45,18 +45,18 @@ class DreamCommerceShopAppstoreBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+        $container->registerExtension(new DreamCommerceResourceExtension());
 
         // add Doctrine passes if available
         $this->addDoctrinePass($container);
 
-        // verify and set object manager
-        $container->addCompilerPass(new CustomObjectManagerPass(), PassConfig::TYPE_BEFORE_REMOVING);
         // instantiate a debugger is enabled
         $container->addCompilerPass(new DebuggerPass(), PassConfig::TYPE_BEFORE_REMOVING);
         // add applications services
         $container->addCompilerPass(new ApplicationsPass(), PassConfig::TYPE_BEFORE_REMOVING);
         // webhooks
         $container->addCompilerPass(new WebhooksPass(), PassConfig::TYPE_OPTIMIZE);
+
     }
 
     /**

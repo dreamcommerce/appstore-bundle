@@ -3,6 +3,7 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection;
 
 use DreamCommerce\Bundle\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
+use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -118,4 +119,6 @@ class Configuration implements ConfigurationInterface
 
         return $root;
     }
+
+
 }
