@@ -1,13 +1,11 @@
 <?php
+namespace DreamCommerce\Component\ShopAppstore\Repository;
 
 
-namespace DreamCommerce\Bundle\ShopAppstoreBundle\Doctrine;
-
-
-use Doctrine\ORM\EntityRepository;
 use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
-class ShopRepository extends RepositoryAbstract implements ShopRepositoryInterface
+class ShopRepository extends EntityRepository implements ShopRepositoryInterface
 {
 
     public function findByApplication($application){

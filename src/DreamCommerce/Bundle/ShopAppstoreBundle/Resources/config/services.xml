@@ -23,7 +23,7 @@
     <services>
         <service id="dream_commerce_shop_appstore.token_refresher"
                  class="%dream_commerce_shop_appstore.token_refresher.class%">
-            <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
         </service>
         <service id="dream_commerce_shop_appstore.request_validator"
                  class="%dream_commerce_shop_appstore.request_validator.class%">
@@ -34,9 +34,13 @@
             <argument>%dream_commerce_shop_appstore.apps%</argument>
             <argument>%dream_commerce_shop_appstore.routes%</argument>
             <argument type="service" id="dream_commerce_shop_appstore.apps"/>
-            <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
             <argument type="service" id="router"/>
+
+            <call method="setShopRepository">
+                <argument type="service" id="dream_commerce.repository.shop"/>
+            </call>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
         </service>
@@ -45,6 +49,7 @@
             <argument type="service" id="dream_commerce_shop_appstore.request_validator"/>
             <argument type="service" id="router"/>
         </service>
+
         <service id="dream_commerce_shop_appstore.locale_listener"
                  class="%dream_commerce_shop_appstore.locale_listener.class%">
             <argument>%locale%</argument>
@@ -52,9 +57,19 @@
         </service>
         <service id="dream_commerce_shop_appstore.event.handler"
                  class="%dream_commerce_shop_appstore.event.handler.class%">
-            <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="expression">"%dream_commerce_shop_appstore.skip_ssl%"</argument>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
+
+            <call method="setShopRepository">
+                <argument type="service" id="dream_commerce.repository.shop"/>
+            </call>
+            <call method="setFactories">
+                <argument type="service" id="dream_commerce.factory.shop"/>
+                <argument type="service" id="dream_commerce.factory.token"/>
+                <argument type="service" id="dream_commerce.factory.billing"/>
+                <argument type="service" id="dream_commerce.factory.subscription"/>
+            </call>
 
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.install" method="onInstall"/>
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.uninstall"

@@ -2,10 +2,10 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils;
 
 
+use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\ShopAppstoreLib\Client\OAuth;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\ShopAppstoreLib\Exception\ClientException;
-use DreamCommerce\Component\ShopAppstore\Model\ObjectManagerInterface;
 use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use DreamCommerce\Component\ShopAppstore\Model\TokenInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher\Exception;
@@ -23,9 +23,9 @@ class TokenRefresher {
     protected $shop;
     /**
      * data persistence layer
-     * @var ObjectManagerInterface
+     * @var ObjectManager
      */
-    protected $manager;
+    protected $objectManager;
 
     /**
      * shop communication library
@@ -34,15 +34,15 @@ class TokenRefresher {
     protected $client;
 
     /**
-     * @param ObjectManagerInterface $manager
+     * @param ObjectManager $manager
      */
-    public function __construct(ObjectManagerInterface $manager){
-        $this->manager = $manager;
+    public function __construct(ObjectManager $manager){
+        $this->objectManager = $manager;
     }
 
     /**
-     * shop client library
-     * @param ClientInterface $client
+     * shop clienshopt library
+     * @param OAuth $client
      */
     public function setClient(OAuth $client){
         $this->client = $client;
@@ -71,7 +71,9 @@ class TokenRefresher {
             $token->setAccessToken($newToken['access_token']);
             $token->setRefreshToken($newToken['refresh_token']);
 
-            $this->manager->save($token);
+            $this->objectManager->persist($token);
+            $this->objectManager->flush();
+
         }catch (ClientException $ex){
             throw new Exception('', 0, $ex);
         }

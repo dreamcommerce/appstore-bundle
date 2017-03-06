@@ -4,10 +4,11 @@ dream_commerce_shop_resources:
             classes:
                 model:     DreamCommerce\Component\ShopAppstore\Model\Billing
                 interface: DreamCommerce\Component\ShopAppstore\Model\BillingInterface
-        Shop:
+        shop:
             classes:
-                model:     DreamCommerce\Component\ShopAppstore\Model\Shop
-                interface: DreamCommerce\Component\ShopAppstore\Model\ShopInterface
+                model:      DreamCommerce\Component\ShopAppstore\Model\Shop
+                interface:  DreamCommerce\Component\ShopAppstore\Model\ShopInterface
+                repository: DreamCommerce\Component\ShopAppstore\Repository\ShopRepository
         subscription:
             classes:
                 model:     DreamCommerce\Component\ShopAppstore\Model\Subscription

@@ -2,13 +2,13 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
+use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\PaidControllerInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\ApplicationRegistry;
-use DreamCommerce\Component\ShopAppstore\Model\ObjectManagerInterface;
 use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
@@ -31,7 +31,7 @@ class ApplicationControllerListener{
      */
     protected $applications;
     /**
-     * @var ObjectManagerInterface
+     * @var ObjectManager
      */
     protected $objectManager;
     /**
@@ -46,7 +46,7 @@ class ApplicationControllerListener{
 
     /**
      * used when token is invalid
-     * @var FilterControllerEvent
+     * @var FilterControllerEven
      */
     protected $lastEvent;
     /**
@@ -58,20 +58,34 @@ class ApplicationControllerListener{
      */
     protected $router;
 
+    /**
+     * @var ShopRepositoryInterface
+     */
+    protected $shopRepository;
+
     public function __construct(
         $applications,
         $routes,
         ApplicationRegistry $applicationRegistry,
-        ObjectManagerInterface $shopManager,
+        ObjectManager $objectManager,
         TokenRefresher $refresher,
         RouterInterface $router
-    ){
+    )
+    {
         $this->applications = $applications;
         $this->routes = $routes;
-        $this->objectManager = $shopManager;
+        $this->objectManager = $objectManager;
         $this->refresher = $refresher;
         $this->applicationRegistry = $applicationRegistry;
         $this->router = $router;
+    }
+
+    /**
+     * @param ShopRepositoryInterface $shopRepository
+     */
+    public function setShopRepository(ShopRepositoryInterface $shopRepository)
+    {
+        $this->shopRepository = $shopRepository;
     }
 
     /**
@@ -127,8 +141,7 @@ class ApplicationControllerListener{
             /**
              * @var $repo ShopRepositoryInterface
              */
-            $repo = $this->objectManager->getRepository('DreamCommerce\Component\ShopAppstore\Model\ShopInterface');
-            $shop = $repo->findOneByNameAndApplication($params['shop'], $appName);
+            $shop = $this->shopRepository->findOneByNameAndApplication($params['shop'], $appName);
 
             // not installed - throw an error
             if (!$shop || !$shop->getInstalled()){

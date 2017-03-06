@@ -5,9 +5,6 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Yaml\Parser;
 
 
@@ -35,7 +32,6 @@ class DreamCommerceResourceExtension extends AbstractResourceExtension
         $this->registerResources('dream_commerce', $config['driver'], $config['resources'], $container);
 
 
-
         $appConfig = $this->processConfiguration($resourceConfiguration, $appConfig);
         $this->registerResources('dream_commerce', $appConfig['driver'], $appConfig['resources'], $container);
     }
@@ -44,3 +40,4 @@ class DreamCommerceResourceExtension extends AbstractResourceExtension
         return self::ALIAS;
     }
 }
+

@@ -2,8 +2,6 @@
 
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
-use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
 use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidatorInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidatorInterface;
@@ -53,13 +51,9 @@ class WebhookController extends Controller
         }
 
         /**
-         * @var $om ObjectManager
-         */
-        $om = $this->get(DreamCommerceShopAppstoreExtension::ALIAS . '.object_manager');
-        /**
          * @var $repo ShopRepositoryInterface
          */
-        $repo = $om->getRepository(ShopInterface::class);
+        $repo = $this->get('dream_commerce.repository.shop');
 
         $shopName = $request->headers->get('X-Shop-License');
         $shop = $repo->findOneByNameAndApplication($shopName, $appId);

@@ -2,6 +2,8 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
+use ClassesWithParents\F;
+use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\ShopChecker;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
@@ -14,15 +16,15 @@ use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\EventAbstract;
 use DreamCommerce\Component\ShopAppstore\Model\BillingInterface;
-use DreamCommerce\Component\ShopAppstore\Model\ObjectManagerInterface;
 use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Component\ShopAppstore\Model\SubscriptionInterface;
 use DreamCommerce\Component\ShopAppstore\Model\TokenInterface;
+use Sylius\Component\Resource\Factory\Factory;
 
 class AppstoreListener{
     /**
-     * @var ObjectManagerInterface
+     * @var ObjectManager
      */
     protected $objectManager;
     /**
@@ -35,14 +37,73 @@ class AppstoreListener{
     protected $tokenRefresher;
 
     /**
-     * @param ObjectManagerInterface $objectManager
+     * @var ShopRepositoryInterface
+     */
+    protected $shopRepository;
+
+    /**
+     * @var Factory
+     */
+    protected $shopFactory;
+
+    /**
+     * @var Factory
+     */
+    protected $tokenFactory;
+
+    /**
+     * @var Factory
+     */
+    protected $billingFactory;
+
+    /**
+     * @var Factory
+     */
+    protected $subscriptionFactory;
+
+    /**
+     * @param ObjectManager $objectManager
      * @param $skipSsl
      * @param TokenRefresher $tokenRefresher
      */
-    public function __construct(ObjectManagerInterface $objectManager, $skipSsl, TokenRefresher $tokenRefresher){
+    public function __construct(ObjectManager $objectManager, $skipSsl, TokenRefresher $tokenRefresher){
         $this->objectManager = $objectManager;
         $this->skipSsl = $skipSsl;
         $this->tokenRefresher = $tokenRefresher;
+    }
+
+    /**
+     * @param ShopRepositoryInterface $shopRepository
+     */
+    public function setShopRepository(ShopRepositoryInterface $shopRepository)
+    {
+        $this->shopRepository = $shopRepository;
+    }
+
+    /**
+     * @param Factory $shopFactory
+     * @param Factory $tokenFactory
+     * @param Factory $billingFactory
+     * @param Factory $subscriptionFactory
+     */
+    public function setFactories(
+        Factory $shopFactory,
+        Factory $tokenFactory,
+        Factory $billingFactory,
+        Factory $subscriptionFactory
+    )
+    {
+        $this->shopFactory          = $shopFactory;
+        $this->tokenFactory         = $tokenFactory;
+        $this->billingFactory       = $billingFactory;
+        $this->subscriptionFactory  = $subscriptionFactory;
+    }
+
+    /**
+     * @param Factory $factory
+     */
+    public function setTokenFactory(Factory $factory) {
+
     }
 
     /**
@@ -59,8 +120,7 @@ class AppstoreListener{
         /**
          * @var $repo ShopRepositoryInterface
          */
-        $repo = $this->objectManager->getRepository('DreamCommerce\Component\ShopAppstore\Model\ShopInterface');
-        return $repo->findOneByNameAndApplication($shopName, $appName);
+        return $this->shopRepository->findOneByNameAndApplication($shopName, $appName);
     }
 
     /**
@@ -125,7 +185,7 @@ class AppstoreListener{
             /**
              * @var $shopModel ShopInterface
              */
-            $shopModel = $this->objectManager->create('DreamCommerce\Component\ShopAppstore\Model\ShopInterface');
+            $shopModel = $this->shopFactory->createNew();
         }
 
         $shopModel->setApp($event->getApplicationName());
@@ -133,16 +193,13 @@ class AppstoreListener{
         $shopModel->setShopUrl($url);
         $shopModel->setVersion($params['application_version']);
         $shopModel->setInstalled(true);
-        $this->objectManager->save($shopModel, false);
-        // endregion
-
-        // region token
+        $this->objectManager->persist($shopModel);
 
         if ($update) {
             $tokenModel = $shop->getToken();
         } else {
             /** @var $tokenModel TokenInterface */
-            $tokenModel = $this->objectManager->create('DreamCommerce\Component\ShopAppstore\Model\TokenInterface');
+            $tokenModel = $this->tokenFactory->createNew();
         }
 
         $tokenModel->setAccessToken($token['access_token']);
@@ -154,9 +211,8 @@ class AppstoreListener{
         $tokenModel->setExpiresAt($expiresAt);
         $tokenModel->setShop($shopModel);
 
-        $this->objectManager->save($tokenModel);
-        // endregion
-
+        $this->objectManager->persist($tokenModel);
+        $this->objectManager->flush();
     }
 
     /**
@@ -173,7 +229,8 @@ class AppstoreListener{
         }
 
         $shop->setInstalled(false);
-        $this->objectManager->save($shop);
+        $this->objectManager->persist($shop);
+        $this->objectManager->flush();
     }
 
     /**
@@ -192,10 +249,11 @@ class AppstoreListener{
         /**
          * @var $billing BillingInterface
          */
-        $billing = $this->objectManager->create('DreamCommerce\Component\ShopAppstore\Model\BillingInterface');
+        $billing = $this->billingFactory->createNew();
         $billing->setShop($shop);
 
-        $this->objectManager->save($billing);
+        $this->objectManager->persist($billing);
+        $this->objectManager->flush();
     }
 
     /**
@@ -214,7 +272,7 @@ class AppstoreListener{
         /**
          * @var $subscription SubscriptionInterface
          */
-        $subscription = $this->objectManager->create('DreamCommerce\Component\ShopAppstore\Model\SubscriptionInterface');
+        $subscription = $this->subscriptionFactory->createNew();
 
         // convert date string to an object
         $expiresAt = new \DateTime($event->getPayload()['subscription_end_time']);
@@ -222,8 +280,8 @@ class AppstoreListener{
         $subscription->setExpiresAt($expiresAt);
         $subscription->setShop($shop);
 
-        $this->objectManager->save($subscription);
-
+        $this->objectManager->persist($subscription);
+        $this->objectManager->flush();
     }
 
     /**
@@ -256,7 +314,9 @@ class AppstoreListener{
         $this->tokenRefresher->refresh($shop);
 
         $shop->setVersion($event->getPayload()['application_version']);
-        $this->objectManager->save($shop);
+        $this->objectManager->persist($shop);
+        $this->objectManager->flush();
+        
     }
 
 }
