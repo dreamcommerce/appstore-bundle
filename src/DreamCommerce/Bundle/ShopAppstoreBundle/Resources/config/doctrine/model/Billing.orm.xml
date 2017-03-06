@@ -9,7 +9,7 @@
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
-        <one-to-one field="shop" target-entity="DreamCommerce\Bundle\ShopAppstoreBundle\Model\ShopInterface" inversed-by="billing">
+        <one-to-one field="shop" target-entity="DreamCommerce\Component\ShopAppstore\Model\ShopInterface" inversed-by="billing">
             <join-columns>
                 <join-column name="shop_id" referenced-column-name="id"/>
             </join-columns>

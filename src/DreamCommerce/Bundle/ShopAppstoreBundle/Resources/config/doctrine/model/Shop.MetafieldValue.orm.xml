@@ -2,7 +2,6 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity
           name="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValue"
-          repository-class="DreamCommerce\Bundle\ShopAppstoreBundle\Repository\Shop\MetafieldValueRepositoryBase"
           table="metafield_values"
           inheritance-type="JOINED"
   >
