@@ -109,9 +109,16 @@ interface ShopInterface extends ResourceInterface
     public function setInstalled($installed);
 
     /**
-     * Unique shop identifier that can be showing on shop front by metafield.__NAMESPACE__.shop_hash metafield.
+     * Unique shop identifier that can be showing on shop front by metafield.system.__NAMESPACE__.shop_hash metafield.
      * __NAMESPACE__ is parameter you define in config.yml under key dream_commerce_shop_appstore.application_namespace.
      * default application_namespace value is "dream_commerce_appstore".
+     *
+     * e.g for my rma namespace snippet code is:
+     * {if metafield.system.rma.shop_hash}
+     *      <script type="text/javascript">
+     *      var __METAFIELD_SHOP_HASH = {metafield.system.rma.shop_hash}
+     *      </script>
+     * {/if}
      *
      * @param string $hash
      * @return mixed

@@ -38,7 +38,8 @@ class RequestValidator{
      * return request object
      * @return Request
      */
-    protected function getRequest(){
+    public function getRequest(): Request
+    {
         return $this->request;
     }
 

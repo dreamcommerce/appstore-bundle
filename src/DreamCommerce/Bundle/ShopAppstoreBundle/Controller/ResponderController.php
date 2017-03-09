@@ -23,10 +23,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class ResponderController extends Controller
 {
-
     public function indexAction(Request $request)
     {
-
         // get applications configuration list
         $apps = $this->container->getParameter('dream_commerce_shop_appstore.apps');
 

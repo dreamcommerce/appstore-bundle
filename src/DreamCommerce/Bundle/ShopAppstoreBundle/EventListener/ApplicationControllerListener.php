@@ -3,6 +3,8 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
 use Doctrine\Common\Persistence\ObjectManager;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\RestApplicationController;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\Types\StandardApplicationControllerInterface;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\Types\ApplicationControllerInterface;
@@ -110,8 +112,18 @@ class ApplicationControllerListener{
             return;
         }
 
+        $controllerObject = $controller[0];
+
         // if latest controller on stack is a filtered instance
-        if ($controller[0] instanceof ApplicationControllerInterface) {
+        if ($controllerObject instanceof ApplicationControllerInterface) {
+
+
+            if ($controllerObject instanceof StandardApplicationControllerInterface) {
+
+            } elseif ($controllerObject instanceof RestApplicationController) {
+
+            }
+
             // get current request data
             $request = $event->getRequest();
 
