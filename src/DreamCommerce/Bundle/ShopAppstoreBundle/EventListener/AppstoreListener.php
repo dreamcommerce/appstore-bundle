@@ -7,9 +7,12 @@ use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\ShopChecker;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
 use DreamCommerce\Component\ShopAppstore\Model\ApplicationPayload;
-use DreamCommerce\Component\ShopAppstore\Model\ApplicationPayloadInterface;
-use DreamCommerce\Component\ShopAppstore\Model\ShopHashGenerator\Sha512ShopHashGenerator;
+use DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield;
+use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldInterface;
+use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueInterface;
+use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueString;
 use DreamCommerce\Component\ShopAppstore\Model\ShopHashGenerator\ShopHashGenerator;
+use DreamCommerce\Component\ShopAppstore\Repository\MetafieldRepository;
 use DreamCommerce\Component\ShopAppstore\Services\ResourceService;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\Client\Exception\Exception;
@@ -52,6 +55,11 @@ class AppstoreListener{
     protected $resourceService;
 
     /**
+     * @var MetafieldRepository
+     */
+    protected $metafieldRepository;
+
+    /**
      * @var Factory
      */
     protected $shopFactory;
@@ -82,6 +90,16 @@ class AppstoreListener{
     protected $shopHashGenerator;
 
     /**
+     * @var Factory
+     */
+    protected $metafieldFactory;
+
+    /**
+     * @var string
+     */
+    protected $applicationNamespace;
+
+    /**
      * @param ObjectManager $objectManager
      * @param $skipSsl
      * @param TokenRefresher $tokenRefresher
@@ -96,9 +114,13 @@ class AppstoreListener{
     /**
      * @param ShopRepositoryInterface $shopRepository
      */
-    public function setShopRepository(ShopRepositoryInterface $shopRepository)
+    public function setRepositories(
+        ShopRepositoryInterface $shopRepository,
+        MetafieldRepository $metafieldRepository
+    )
     {
         $this->shopRepository = $shopRepository;
+        $this->metafieldRepository = $metafieldRepository;
     }
 
     /**
@@ -106,18 +128,21 @@ class AppstoreListener{
      * @param Factory $tokenFactory
      * @param Factory $billingFactory
      * @param Factory $subscriptionFactory
+     * @param Factory $metafieldFactory
      */
     public function setFactories(
         Factory $shopFactory,
         Factory $tokenFactory,
         Factory $billingFactory,
-        Factory $subscriptionFactory
+        Factory $subscriptionFactory,
+        Factory $metafieldFactory
     )
     {
         $this->shopFactory          = $shopFactory;
         $this->tokenFactory         = $tokenFactory;
         $this->billingFactory       = $billingFactory;
         $this->subscriptionFactory  = $subscriptionFactory;
+        $this->metafieldFactory     = $metafieldFactory;
     }
 
     public function setResourceService(ResourceService $resourceService) {
@@ -126,6 +151,11 @@ class AppstoreListener{
 
     public function setShopHashGenerator(ShopHashGenerator $generator) {
         $this->shopHashGenerator = $generator;
+    }
+
+    public function setApplicationNamespace(string $namespace)
+    {
+        $this->applicationNamespace = $namespace;
     }
 
     /**
@@ -236,11 +266,31 @@ class AppstoreListener{
         $this->objectManager->persist($tokenModel);
         $this->objectManager->flush();
 
-        $this->insertMetafields($client, $params);
+        $this->insertMetafields($client, $shopModel);
     }
 
-    private function insertMetafields(Client\OAuth $client, ApplicationPayload $params)
+    private function insertMetafields(Client\OAuth $client, ShopInterface $shop)
     {
+        /** @var Metafield $metafield */
+        $metafield = $this->metafieldFactory->createNew();
+        $metafield->setType(MetafieldValueInterface::TYPE_STRING);
+        $metafield->setShop($shop);
+        $metafield->setDescription('');
+        $metafield->setMetafieldKey('shop_hash', $shop->getHash());
+        $metafield->setNamespace($this->applicationNamespace);
+        $metafield->setObject(MetafieldInterface::OBJECT_SYSTEM);
+
+        $metafieldValue = new MetafieldValueString();
+        $metafieldValue->setMetafield($metafield);
+        $metafieldValue->setExternalObjectId(0);
+        $metafieldValue->setValue($shop->getHash());
+
+        $this->resourceService->insertMetafield($client, $metafield);
+        $this->resourceService->insertMetafieldValue($client, $metafieldValue);
+
+        $this->objectManager->persist($metafield);
+        $this->objectManager->persist($metafieldValue);
+        $this->objectManager->flush();
     }
 
     /**
@@ -259,6 +309,9 @@ class AppstoreListener{
         $shop->setInstalled(false);
         $this->objectManager->persist($shop);
         $this->objectManager->flush();
+
+
+        $this->metafieldRepository->removeByShop($shop);
     }
 
     /**
@@ -344,6 +397,5 @@ class AppstoreListener{
         $shop->setVersion($event->getPayload()['application_version']);
         $this->objectManager->persist($shop);
         $this->objectManager->flush();
-        
     }
 }

@@ -46,7 +46,7 @@ class DreamCommerceShopAppstoreExtension extends Extension
 
         $container->setParameter($this->getAlias().'.debug', $config['debug']);
         $container->setParameter($this->getAlias().'.skip_ssl', $config['skip_ssl']);
-
+        $container->setParameter($this->getAlias().'.application_namespace', $config['application_namespace']);
     }
 
     public function getAlias(){

@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('application_namespace')->defaultValue('dream_commerce_appstore')->end()
                 ->scalarNode('debug')->info('false - disable debug completely; null - depends on kernel.debug. string - logger service')->defaultNull()->end()
                 ->scalarNode('skip_ssl')->defaultValue(false)->end()
                 ->scalarNode('db_driver')

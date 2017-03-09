@@ -94,7 +94,7 @@ abstract class MetafieldValue implements MetafieldValueInterface
     public function setMetafield(Metafield $metafield)
     {
         $metafieldType = $metafield->getType();
-        $mapClass      = self::getMap()[$metafieldType];
+        $mapClass      = self::getMapClass()[$metafieldType];
 
         if (static::class !== $mapClass) {
             throw new MetafieldTypeException(

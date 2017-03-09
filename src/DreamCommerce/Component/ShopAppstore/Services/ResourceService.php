@@ -2,7 +2,7 @@
 namespace DreamCommerce\Component\ShopAppstore\Services;
 
 
-use DreamCommerce\Component\Common\Http\ClientInterface;
+use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield;
 use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValue;
 
@@ -21,6 +21,7 @@ class ResourceService
         ]);
 
         $metafield->setMetafieldExternalId((int)$metafieldId);
+
     }
 
     public function insertMetafieldValue(ClientInterface $client, MetafieldValue $metafieldValue)
@@ -33,5 +34,6 @@ class ResourceService
         ]);
 
         $metafieldValue->setExternalMetafieldValueId((int)$metafieldValueId);
+
     }
 }

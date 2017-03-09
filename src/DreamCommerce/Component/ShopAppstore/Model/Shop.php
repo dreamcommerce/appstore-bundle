@@ -253,7 +253,7 @@ class Shop implements ShopInterface
     }
 
     /**
-     * @param string $hash
+     * {@inheritdoc}
      */
     public function setHash(string $hash)
     {

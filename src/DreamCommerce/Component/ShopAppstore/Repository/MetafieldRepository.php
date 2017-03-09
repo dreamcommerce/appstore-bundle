@@ -1,9 +1,11 @@
 <?php
 namespace DreamCommerce\Component\ShopAppstore\Repository;
 
-
 use DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield;
+use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldInterface;
 use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValue;
+use DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class MetafieldRepository extends EntityRepository
@@ -23,6 +25,23 @@ class MetafieldRepository extends EntityRepository
         }
 
         return $metafieldValues;
+    }
+
+    public function removeByShop(ShopInterface $shop)
+    {
+        $metafields = $this->findBy(['shop'  => $shop]);
+
+        /** @var MetafieldInterface $metafield */
+        foreach ($metafields as $metafield) {
+            /** @var MetafieldValueInterface $mv */
+            foreach ($metafield->getMetafieldValues() as $mv) {
+                $this->getEntityManager()->remove($mv);
+            }
+
+            $this->getEntityManager()->remove($metafield);
+        }
+
+        $this->getEntityManager()->flush();
     }
 
 

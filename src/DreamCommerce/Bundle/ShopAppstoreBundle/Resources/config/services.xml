@@ -68,16 +68,19 @@
         <service id="dream_commerce_shop_appstore.event.handler"
                  class="%dream_commerce_shop_appstore.event.handler.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
-            <argument type="expression">"%dream_commerce_shop_appstore.skip_ssl%"</argument>
+            <argument>%dream_commerce_shop_appstore.skip_ssl%</argument>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
             <argument type="service" id="logger" />
 
+            <call method="setApplicationNamespace">
+                <argument>%dream_commerce_shop_appstore.application_namespace%</argument>
+            </call>
             <call method="setShopHashGenerator">
                 <argument type="service" id="dream_commerce_shop_appstore.shop_hash_generator"/>
             </call>
-
-            <call method="setShopRepository">
+            <call method="setRepositories">
                 <argument type="service" id="dream_commerce.repository.shop"/>
+                <argument type="service" id="dream_commerce.repository.shop_metafield"/>
             </call>
             <call method="setResourceService">
                 <argument type="service" id="dream_commerce_shop_appstore.resource_service"/>
@@ -87,6 +90,7 @@
                 <argument type="service" id="dream_commerce.factory.token"/>
                 <argument type="service" id="dream_commerce.factory.billing"/>
                 <argument type="service" id="dream_commerce.factory.subscription"/>
+                <argument type="service" id="dream_commerce.factory.shop_metafield"/>
             </call>
 
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.install" method="onInstall"/>

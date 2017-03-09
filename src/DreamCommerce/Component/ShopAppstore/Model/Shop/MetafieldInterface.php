@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\Collection;
 
 interface MetafieldInterface
 {
+    const OBJECT_SYSTEM = 'system';
+
     public function setMetafieldExternalId(int $metafieldId);
     public function getMetafieldExternalId();
     public function setMetafieldKey(string $metafieldKey);
