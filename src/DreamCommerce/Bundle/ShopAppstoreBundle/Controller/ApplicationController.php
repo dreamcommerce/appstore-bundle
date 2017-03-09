@@ -2,10 +2,8 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 
-use DreamCommerce\ShopAppstoreLib\Client;
-use DreamCommerce\ShopAppstoreLib\ClientInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\Types\StandardApplicationControllerInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\EventListener\AppFormListener;
-use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Url;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormEvents;
@@ -17,27 +15,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * provides shop-protected, generic controller class
  * @package DreamCommerce\Bundle\ShopAppstoreBundle\Controller
  */
-abstract class ApplicationController extends Controller implements ApplicationControllerInterface{
-
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var ShopInterface
-     */
-    protected $shop;
-
-    /**
-     * method used by request filter - injects current client and shop instance
-     * @param Client $client
-     * @param ShopInterface $shop
-     */
-    public function injectClient(ClientInterface $client, ShopInterface $shop){
-        $this->client = $client;
-        $this->shop = $shop;
-    }
+abstract class ApplicationController extends Controller implements StandardApplicationControllerInterface
+{
+    use ApplicationControllerTrait;
 
     /**
      * generates URL injecting iframe params to the query

@@ -2,21 +2,22 @@
 namespace DreamCommerce\Component\ShopAppstore\Model\Shop;
 
 
+use DreamCommerce\Component\ShopAppstore\Model\DiscriminatorMappingInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-interface MetafieldValueInterface extends ResourceInterface
+interface MetafieldValueInterface extends ResourceInterface, DiscriminatorMappingInterface
 {
-    const TYPE_INT      = 'TYPE_INT';
-    const TYPE_FLOAT    = 'TYPE_FLOAT';
-    const TYPE_STRING   = 'TYPE_STRING';
-    const TYPE_BLOB     = 'TYPE_BLOB';
+    const TYPE_INT      = 'INT';
+    const TYPE_FLOAT    = 'FLOAT';
+    const TYPE_STRING   = 'STRING';
+    const TYPE_BLOB     = 'BLOB';
 
-    public function getType(): int;
+    public function getType();
 
-    public function getMetafield(): Metafield;
+    public function getMetafield();
     public function setMetafield(Metafield $metafield);
 
-    public function getExternalObjectId(): int;
+    public function getExternalObjectId();
     public function setExternalObjectId(int $id);
 
     public function getValue();

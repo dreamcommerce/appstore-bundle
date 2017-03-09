@@ -7,6 +7,7 @@ use DreamCommerce\Component\ShopAppstore\Model\ShopDependInterface;
 use DreamCommerce\Component\ShopAppstore\Model\ShopDependTrait;
 use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInterface
 {
@@ -53,12 +54,16 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
     protected $shop;
 
     /**
+     * @var string
+     */
+    protected $type;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->metafieldsString = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->metafieldValues = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->metafieldValues = new ArrayCollection();
     }
 
     /**
@@ -80,7 +85,7 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
      *
      * @return integer
      */
-    public function getMetafieldExternalId(): int
+    public function getMetafieldExternalId()
     {
         return $this->metafieldExternalId;
     }
@@ -104,7 +109,7 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
      *
      * @return string
      */
-    public function getMetafieldKey(): string
+    public function getMetafieldKey()
     {
         return $this->metafieldKey;
     }
@@ -128,7 +133,7 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
      *
      * @return string
      */
-    public function getNamespace(): string
+    public function getNamespace()
     {
         return $this->namespace;
     }
@@ -152,7 +157,7 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
      *
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
@@ -186,22 +191,29 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
      *
      * @return integer
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
+
     /**
-     * Add metafieldValue
-     *
-     * @param MetafieldValue $metafield
-     *
-     * @return Metafield
+     * @param MetafieldValue $metafieldValues
+     * @return $this
      */
     public function addMetafieldValue(MetafieldValue $metafieldValues)
     {
-        $this->metafieldValues[] = $metafieldValues;
+        $this->tryToSetTypeByClassName(get_class($metafieldValues));
+
+        if (!$this->hasMetafieldValue($metafieldValues)) {
+            $this->metafieldValues->set($metafieldValues->getId(), $metafieldValues);
+        }
 
         return $this;
+    }
+
+    public function hasMetafieldValue(MetafieldValue $metafieldValue)
+    {
+        return $this->metafieldValues->offsetExists($metafieldValue->getId());
     }
 
     /**
@@ -238,8 +250,56 @@ class Metafield implements MetafieldInterface, ShopDependInterface, ResourceInte
     /**
      * @return ShopInterface
      */
-    public function getShop(): ShopInterface
+    public function getShop()
     {
         return $this->shop;
+    }
+
+    /**
+     * @return string
+     * @throws MetafieldTypeException
+     */
+    public function getType()
+    {
+        if (!isset($this->type) || empty($this->type)) {
+            throw new MetafieldTypeException('Metafield type cannot be empty when Metafield object is set to MetafieldValue Object');
+        }
+
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @throws MetafieldTypeException
+     */
+    public function setType(string $type)
+    {
+        
+        if (isset($this->type) && !empty($this->type) && $this->type !== $type) {
+            throw new MetafieldTypeException('You can not change metafield type');
+        }
+
+        $this->type = $type;
+    }
+
+    /**
+     * @param $className
+     * @throws MetafieldTypeException
+     */
+    private function tryToSetTypeByClassName($className)
+    {
+        $types = array_flip(MetafieldValue::getMap());
+
+        if (!isset($types[$className])) {
+            throw new MetafieldTypeException('Metafield type class is not supported');
+        }
+
+        //the same type
+        if ((isset($this->type) || !empty($this->type)) && $this->type == $types[$className]) {
+            return;
+        }
+
+
+        $this->setType($types[$className]);
     }
 }

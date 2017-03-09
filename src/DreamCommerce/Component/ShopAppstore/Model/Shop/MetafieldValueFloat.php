@@ -7,7 +7,7 @@ class MetafieldValueFloat extends MetafieldValue
     /**
      * @var int
      */
-    protected $type = MetafieldValueInterface::TYPE_FLOAT;
+    protected $type;// = MetafieldValueInterface::TYPE_FLOAT;
 
     /**
      * @var float
@@ -17,7 +17,7 @@ class MetafieldValueFloat extends MetafieldValue
     /**
      * @return float
      */
-    public function getValue(): float
+    public function getValue()
     {
         return $this->value;
     }

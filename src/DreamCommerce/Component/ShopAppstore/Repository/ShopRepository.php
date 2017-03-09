@@ -7,7 +7,6 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class ShopRepository extends EntityRepository implements ShopRepositoryInterface
 {
-
     public function findByApplication($application){
         return $this->findBy([
             'app'=>$application

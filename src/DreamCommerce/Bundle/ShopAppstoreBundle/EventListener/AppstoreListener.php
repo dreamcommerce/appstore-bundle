@@ -2,11 +2,11 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 
 
-use ClassesWithParents\F;
 use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\ShopChecker;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
+use DreamCommerce\Component\Services\ResourceService;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\Client\Exception\Exception;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
@@ -40,6 +40,11 @@ class AppstoreListener{
      * @var ShopRepositoryInterface
      */
     protected $shopRepository;
+
+    /**
+     * @var ResourceService
+     */
+    protected $resourceService;
 
     /**
      * @var Factory
@@ -99,12 +104,10 @@ class AppstoreListener{
         $this->subscriptionFactory  = $subscriptionFactory;
     }
 
-    /**
-     * @param Factory $factory
-     */
-    public function setTokenFactory(Factory $factory) {
-
+    public function setResourceService(ResourceService $resourceService) {
+        $this->resourceService = $resourceService;
     }
+
 
     /**
      * get shop by particular event

@@ -16,13 +16,13 @@
         <field name="version" type="integer" column="version"/>
         <field name="installed" type="boolean" column="installed"/>
 
-        <one-to-one field="token" target-entity="DreamCommerce\Component\ShopAppstore\Model\TokenInterface" mapped-by="shop" inversed-by="token">
+        <one-to-one field="token" target-entity="DreamCommerce\Component\ShopAppstore\Model\Token" mapped-by="shop" inversed-by="token">
             <cascade>
                 <cascade-remove/>
             </cascade>
         </one-to-one>
 
-        <one-to-one target-entity="DreamCommerce\Component\ShopAppstore\Model\BillingInterface" mapped-by="shop" field="billing" inversed-by="billing">
+        <one-to-one target-entity="DreamCommerce\Component\ShopAppstore\Model\Billing" mapped-by="shop" field="billing" inversed-by="billing">
             <cascade>
                 <cascade-remove/>
             </cascade>
@@ -34,7 +34,7 @@
             <!--</cascade>-->
         <!--</one-to-one>-->
 
-        <one-to-many target-entity="DreamCommerce\Component\ShopAppstore\Model\SubscriptionInterface" mapped-by="shop"
+        <one-to-many target-entity="DreamCommerce\Component\ShopAppstore\Model\Subscription" mapped-by="shop"
                      field="subscriptions">
             <cascade>
                 <cascade-remove/>

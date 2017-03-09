@@ -1,6 +1,7 @@
 <?php
 namespace DreamCommerce\Component\ShopAppstore\Model\Shop;
 
+use DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield;
 
 abstract class MetafieldValue implements MetafieldValueInterface
 {
@@ -15,7 +16,7 @@ abstract class MetafieldValue implements MetafieldValueInterface
     protected $id;
 
     /**
-     * @var \AppBundle\Entity\Metafield
+     * @var Metafield
      */
     protected $metafield;
 
@@ -25,18 +26,37 @@ abstract class MetafieldValue implements MetafieldValueInterface
     protected $externalObjectId;
 
     /**
-     * @return int
+     * @var int
      */
-    public function getType(): int
-    {
-        return $this->type;
-    }
+    protected $externalMetafieldValueId;
 
+    /**
+     * Return discriminator mapping information
+     *
+     * @return array
+     */
+    public static function getMap() : array
+    {
+        return [
+            MetafieldValueInterface::TYPE_INT       => MetafieldValueInt::class,
+            MetafieldValueInterface::TYPE_FLOAT     => MetafieldValueFloat::class,
+            MetafieldValueInterface::TYPE_STRING    => MetafieldValueString::class,
+            MetafieldValueInterface::TYPE_BLOB      => MetafieldValueBlob::class
+        ];
+    }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
     {
         return $this->id;
     }
@@ -52,23 +72,34 @@ abstract class MetafieldValue implements MetafieldValueInterface
     /**
      * @return Metafield
      */
-    public function getMetafield(): Metafield
+    public function getMetafield()
     {
         return $this->metafield;
     }
 
     /**
-     * @param Metafield $metafield
+     * @param \DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield $metafield
+     * @throws MetafieldTypeException
      */
     public function setMetafield(Metafield $metafield)
     {
+        $metafieldType = $metafield->getType();
+        $mapClass      = self::getMap()[$metafieldType];
+
+        if (static::class !== $mapClass) {
+            throw new MetafieldTypeException(
+                sprintf('Metafield accept only values that are instance of %s. You are trying set instance of %s', $mapClass, static::class)
+            );
+        }
+
+
         $this->metafield = $metafield;
     }
 
     /**
      * @return int
      */
-    public function getExternalObjectId(): int
+    public function getExternalObjectId()
     {
         return $this->externalObjectId;
     }
@@ -81,5 +112,23 @@ abstract class MetafieldValue implements MetafieldValueInterface
         $this->externalObjectId = $externalObjectId;
     }
 
+    /**
+     * @return int
+     */
+    public function getExternalMetafieldValueId()
+    {
+        return $this->externalMetafieldValueId;
+    }
 
+    /**
+     * @param int $externalMetafieldValueId
+     */
+    public function setExternalMetafieldValueId(int $externalMetafieldValueId)
+    {
+        $this->externalMetafieldValueId = $externalMetafieldValueId;
+    }
+
+    public function setType($type) {
+        $this->type = $type;
+    }
 }

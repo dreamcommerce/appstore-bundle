@@ -17,7 +17,7 @@
     <field name="namespace" type="string" column="namespace" length="40"/>
     <field name="description" type="string" column="description" length="255"/>
     <field name="object" type="string" nullable="true" column="object" length="255"/>
-
+    <field name="type" type="enumMetafieldValueType" nullable="false" />
 
     <one-to-many field="metafieldValues" target-entity="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValue" mapped-by="metafield">
     </one-to-many>

@@ -17,7 +17,7 @@ class MetafieldValueInt extends MetafieldValue
     /**
      * @return int
      */
-    public function getValue(): int
+    public function getValue()
     {
         return $this->value;
     }

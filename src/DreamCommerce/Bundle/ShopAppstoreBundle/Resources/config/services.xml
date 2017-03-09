@@ -18,9 +18,14 @@
         <parameter key="dream_commerce_shop_appstore.webhook.processor.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Processor</parameter>
         <parameter key="dream_commerce_shop_appstore.webhook.app_validator.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidator</parameter>
         <parameter key="dream_commerce_shop_appstore.webhook.global_validator.class">DreamCommerce\Bundle\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidator</parameter>
+        <parameter key="dream_commerce_shop_appstore.resource_service.class">DreamCommerce\Component\ShopAppstore\Services\ResourceService</parameter>
     </parameters>
 
     <services>
+        <service id="dream_commerce_shop_appstore.resource_service"
+                 class="%dream_commerce_shop_appstore.resource_service.class%">
+        </service>
+
         <service id="dream_commerce_shop_appstore.token_refresher"
                  class="%dream_commerce_shop_appstore.token_refresher.class%">
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
@@ -63,6 +68,9 @@
 
             <call method="setShopRepository">
                 <argument type="service" id="dream_commerce.repository.shop"/>
+            </call>
+            <call method="setResourceService">
+                <argument type="service" id="dream_commerce_shop_appstore.resource_service"/>
             </call>
             <call method="setFactories">
                 <argument type="service" id="dream_commerce.factory.shop"/>

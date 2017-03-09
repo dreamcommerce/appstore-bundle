@@ -5,9 +5,9 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\EventListener;
 use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\ApplicationControllerInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\PaidControllerInterface;
-use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\SubscribedControllerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\Types\ApplicationControllerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\Types\PaidControllerInterface;
+use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\Types\SubscribedControllerInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\ApplicationRegistry;
 use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
@@ -94,7 +94,6 @@ class ApplicationControllerListener{
      */
     public function onKernelController(FilterControllerEvent $event)
     {
-
         // last event used before token invalid exception is thrown
         $this->lastEvent = $event;
 
@@ -113,7 +112,6 @@ class ApplicationControllerListener{
 
         // if latest controller on stack is a filtered instance
         if ($controller[0] instanceof ApplicationControllerInterface) {
-
             // get current request data
             $request = $event->getRequest();
 

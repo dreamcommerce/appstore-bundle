@@ -8,12 +8,11 @@
 
     <discriminator-column name="type" type="enumMetafieldValueType"></discriminator-column>
     <discriminator-map>
-      <discriminator-mapping value="TYPE_INT" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueInt"/>
-      <discriminator-mapping value="TYPE_FLOAT" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueFloat" />
-      <discriminator-mapping value="TYPE_STRING" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueString" />
-      <discriminator-mapping value="TYPE_BLOB" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueBlob" />
+      <discriminator-mapping value="INT" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueInt"/>
+      <discriminator-mapping value="FLOAT" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueFloat" />
+      <discriminator-mapping value="STRING" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueString" />
+      <discriminator-mapping value="BLOB" class="DreamCommerce\Component\ShopAppstore\Model\Shop\MetafieldValueBlob" />
     </discriminator-map>
-
 
 
     <id name="id" type="integer" column="id">
@@ -21,6 +20,7 @@
     </id>
 
     <field name="externalObjectId" type="integer" column="external_object_id"/>
+    <field name="externalMetafieldValueId" type="integer" column="external_metafield_value_id"/>
 
     <many-to-one target-entity="DreamCommerce\Component\ShopAppstore\Model\Shop\Metafield" field="metafield" inversed-by="metafieldValues">
         <join-column name="metafield_id" referenced-column-name="id" />
