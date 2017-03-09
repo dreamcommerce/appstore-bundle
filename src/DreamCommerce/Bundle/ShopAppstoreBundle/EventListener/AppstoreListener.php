@@ -6,7 +6,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\ShopChecker;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
-use DreamCommerce\Component\Services\ResourceService;
+use DreamCommerce\Component\ShopAppstore\Model\ApplicationPayload;
+use DreamCommerce\Component\ShopAppstore\Model\ApplicationPayloadInterface;
+use DreamCommerce\Component\ShopAppstore\Model\ShopHashGenerator\Sha512ShopHashGenerator;
+use DreamCommerce\Component\ShopAppstore\Model\ShopHashGenerator\ShopHashGenerator;
+use DreamCommerce\Component\ShopAppstore\Services\ResourceService;
 use DreamCommerce\ShopAppstoreLib\Client;
 use DreamCommerce\ShopAppstoreLib\Client\Exception\Exception;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
@@ -20,6 +24,7 @@ use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Component\ShopAppstore\Model\SubscriptionInterface;
 use DreamCommerce\Component\ShopAppstore\Model\TokenInterface;
+use Monolog\Logger;
 use Sylius\Component\Resource\Factory\Factory;
 
 class AppstoreListener{
@@ -67,14 +72,25 @@ class AppstoreListener{
     protected $subscriptionFactory;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * @var ShopHashGenerator
+     */
+    protected $shopHashGenerator;
+
+    /**
      * @param ObjectManager $objectManager
      * @param $skipSsl
      * @param TokenRefresher $tokenRefresher
      */
-    public function __construct(ObjectManager $objectManager, $skipSsl, TokenRefresher $tokenRefresher){
+    public function __construct(ObjectManager $objectManager, $skipSsl, TokenRefresher $tokenRefresher, Logger $logger){
         $this->objectManager = $objectManager;
         $this->skipSsl = $skipSsl;
         $this->tokenRefresher = $tokenRefresher;
+        $this->logger = $logger;
     }
 
     /**
@@ -108,6 +124,9 @@ class AppstoreListener{
         $this->resourceService = $resourceService;
     }
 
+    public function setShopHashGenerator(ShopHashGenerator $generator) {
+        $this->shopHashGenerator = $generator;
+    }
 
     /**
      * get shop by particular event
@@ -149,13 +168,12 @@ class AppstoreListener{
         $shopChecker = new ShopChecker();
 
         try {
-
-            $params = $event->getPayload();
+            $params = $event->getApplicationPayload();
             $app = $event->getApplication();
 
-            $url = $shopChecker->getRealShopUrl($params['shop_url']);
+            $url = $shopChecker->getRealShopUrl($params->getShopUrl());
             if(!$url){
-                $url = $params['shop_url'];
+                $url = $params->getShopUrl();
                 //throw new Exception($url.' - Cannot determine real URL for: '.$params['shop_url']);
             }
 
@@ -166,7 +184,7 @@ class AppstoreListener{
                     'entrypoint'=>$url,
                     'client_id'=>$app['app_id'],
                     'client_secret'=>$app['app_secret'],
-                    'auth_code'=>$params['auth_code'],
+                    'auth_code'=>$params->getAuthCode(),
                     'skip_ssl'=>$this->skipSsl,
                     'user_agent'=>$app['user_agent']
                 ]
@@ -174,7 +192,6 @@ class AppstoreListener{
 
             // and get tokens
             $token = $client->authenticate(true);
-
         }catch(Exception $ex){
             // allow error to be logged
             throw $ex;
@@ -191,11 +208,13 @@ class AppstoreListener{
             $shopModel = $this->shopFactory->createNew();
         }
 
+
         $shopModel->setApp($event->getApplicationName());
-        $shopModel->setName($params['shop']);
+        $shopModel->setName($params->getShop());
         $shopModel->setShopUrl($url);
-        $shopModel->setVersion($params['application_version']);
+        $shopModel->setVersion($params->getApplicationVersion());
         $shopModel->setInstalled(true);
+        $shopModel->setHash($this->shopHashGenerator->generate($params));
         $this->objectManager->persist($shopModel);
 
         if ($update) {
@@ -216,6 +235,12 @@ class AppstoreListener{
 
         $this->objectManager->persist($tokenModel);
         $this->objectManager->flush();
+
+        $this->insertMetafields($client, $params);
+    }
+
+    private function insertMetafields(Client\OAuth $client, ApplicationPayload $params)
+    {
     }
 
     /**
@@ -321,5 +346,4 @@ class AppstoreListener{
         $this->objectManager->flush();
         
     }
-
 }

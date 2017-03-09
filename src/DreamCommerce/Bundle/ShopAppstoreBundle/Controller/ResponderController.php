@@ -64,7 +64,7 @@ class ResponderController extends Controller
                 break;
 
             case 'uninstall':
-                $event = new UninstallEvent($appName, $params);
+                $event = new UninstallEvent($appName, $apps[$appName], $params);
                 $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_UNINSTALLED, $event);
             break;
 

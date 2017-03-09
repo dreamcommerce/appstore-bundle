@@ -5,5 +5,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore;
  * Class SubscriptionEvent
  * @package DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore
  */
-class SubscriptionEvent extends PackageEventAbstract{
+final class SubscriptionEvent extends PackageEventAbstract
+{
+    const ACTION = 'billing_subscription';
 }

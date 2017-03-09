@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: daniel
- * Date: 08.03.17
- * Time: 14:47
- */
-
-namespace DreamCommerce\Component\Services;
+namespace DreamCommerce\Component\ShopAppstore\Services;
 
 
 use DreamCommerce\Component\Common\Http\ClientInterface;
@@ -20,11 +13,25 @@ class ResourceService
     public function insertMetafield(ClientInterface $client, Metafield $metafield)
     {
         $resource = new Resource\Metafield($client);
+        $metafieldId = $resource->post($metafield->getObject(), [
+            'namespace'     => $metafield->getNamespace(),
+            'key'           => $metafield->getMetafieldKey(),
+            'description'   => $metafield->getDescription(),
+            'type'          => MetafieldValue::getMapDatabase()[$metafield->getType()]
+        ]);
 
+        $metafield->setMetafieldExternalId((int)$metafieldId);
     }
 
     public function insertMetafieldValue(ClientInterface $client, MetafieldValue $metafieldValue)
     {
+        $resource = new Resource\MetafieldValue($client);
+        $metafieldValueId = $resource->post([
+            'object_id'     => $metafieldValue->getExternalObjectId(),
+            'metafield_id'  => $metafieldValue->getMetafield()->getMetafieldExternalId(),
+            'value'         => $metafieldValue->getValue()
+        ]);
 
+        $metafieldValue->setExternalMetafieldValueId((int)$metafieldValueId);
     }
 }

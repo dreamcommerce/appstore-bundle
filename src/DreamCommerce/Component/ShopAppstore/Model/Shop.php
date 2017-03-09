@@ -75,6 +75,11 @@ class Shop implements ShopInterface
     protected $installed;
 
     /**
+     * @var string
+     */
+    protected $hash;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -237,6 +242,22 @@ class Shop implements ShopInterface
     public function setRegister($register)
     {
         $this->register = $register;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash(): string
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function setHash(string $hash)
+    {
+        $this->hash = $hash;
     }
 }
 

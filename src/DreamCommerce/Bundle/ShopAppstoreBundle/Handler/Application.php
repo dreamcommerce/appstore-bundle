@@ -45,6 +45,7 @@ class Application
      * @var bool
      */
     protected $skipSsl;
+
     /**
      * @var null|integer
      */

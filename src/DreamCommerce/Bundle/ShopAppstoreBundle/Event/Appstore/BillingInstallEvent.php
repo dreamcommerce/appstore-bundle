@@ -6,5 +6,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore;
  * billing user paid for application
  * @package DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore
  */
-class BillingInstallEvent extends PackageEventAbstract{
+final class BillingInstallEvent extends PackageEventAbstract
+{
+    const ACTION = 'billing_install';
 }

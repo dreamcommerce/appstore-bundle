@@ -35,13 +35,23 @@ abstract class MetafieldValue implements MetafieldValueInterface
      *
      * @return array
      */
-    public static function getMap() : array
+    public static function getMapClass() : array
     {
         return [
             MetafieldValueInterface::TYPE_INT       => MetafieldValueInt::class,
             MetafieldValueInterface::TYPE_FLOAT     => MetafieldValueFloat::class,
             MetafieldValueInterface::TYPE_STRING    => MetafieldValueString::class,
             MetafieldValueInterface::TYPE_BLOB      => MetafieldValueBlob::class
+        ];
+    }
+
+    public static function getMapDatabase() : array
+    {
+        return [
+            MetafieldValueInterface::TYPE_INT       => 1,
+            MetafieldValueInterface::TYPE_FLOAT     => 2,
+            MetafieldValueInterface::TYPE_STRING    => 3,
+            MetafieldValueInterface::TYPE_BLOB      => 4
         ];
     }
 
