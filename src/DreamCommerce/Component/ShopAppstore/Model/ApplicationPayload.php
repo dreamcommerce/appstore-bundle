@@ -168,7 +168,9 @@ final class ApplicationPayload implements ArrayableInterface
 
     private function decodeDate($time) : \DateTime
     {
-        if (is_string($time)) {
+        if (is_numeric($time)) {
+            return \DateTime::createFromFormat('U', $time);
+        } elseif (is_string($time)) {
             return new \DateTime($time);
         } elseif ($time instanceof \DateTime) {
             return $time;

@@ -3,6 +3,7 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
 
 
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\RequestValidator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -28,7 +29,7 @@ class Service extends RequestValidator{
      * override parent::getRequest in order to fetch Request from stack
      * @return null|\Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequest()
+    public function getRequest(): Request
     {
         return $this->requestStack->getMasterRequest();
     }

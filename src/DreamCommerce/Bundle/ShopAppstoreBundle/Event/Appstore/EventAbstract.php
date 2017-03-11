@@ -2,6 +2,7 @@
 namespace DreamCommerce\Bundle\ShopAppstoreBundle\Event\Appstore;
 
 
+use DreamCommerce\Component\ShopAppstore\Model\ApplicationPayload;
 use Symfony\Component\EventDispatcher\Event;
 
 abstract class EventAbstract extends Event
@@ -31,7 +32,7 @@ abstract class EventAbstract extends Event
      * get appstore packet
      * @return array
      */
-    public function getPayload()
+    public function getPayload(): ApplicationPayload
     {
         return $this->payload;
     }

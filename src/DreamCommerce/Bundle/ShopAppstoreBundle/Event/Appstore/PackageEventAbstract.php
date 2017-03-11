@@ -24,9 +24,9 @@ class PackageEventAbstract extends EventAbstract
      * @param array $application application config data
      * @param array $payload appstore payload
      */
-    public function __construct($applicationName, $application, $payload){
+    public function __construct($applicationName, $application, ApplicationPayload $payload){
         $this->application          = $application;
-        $this->applicationPayload   = new ApplicationPayload($payload);
+        $this->applicationPayload   = $payload;
 
         parent::__construct($applicationName, $payload);
     }

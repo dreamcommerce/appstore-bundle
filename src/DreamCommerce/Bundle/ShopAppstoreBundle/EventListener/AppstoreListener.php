@@ -167,7 +167,7 @@ class AppstoreListener{
         $params = $event->getPayload();
 
         $appName = $event->getApplicationName();
-        $shopName = $params['shop'];
+        $shopName = $params->getShop();
 
         /**
          * @var $repo ShopRepositoryInterface
@@ -356,7 +356,7 @@ class AppstoreListener{
         $subscription = $this->subscriptionFactory->createNew();
 
         // convert date string to an object
-        $expiresAt = new \DateTime($event->getPayload()['subscription_end_time']);
+        $expiresAt = new \DateTime($event->getPayload()->getSubscriptionEndTime());
 
         $subscription->setExpiresAt($expiresAt);
         $subscription->setShop($shop);
@@ -394,7 +394,7 @@ class AppstoreListener{
         $this->tokenRefresher->setClient($app->getClient($shop));
         $this->tokenRefresher->refresh($shop);
 
-        $shop->setVersion($event->getPayload()['application_version']);
+        $shop->setVersion($event->getPayload()->getApplicationVersion());
         $this->objectManager->persist($shop);
         $this->objectManager->flush();
     }

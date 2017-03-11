@@ -53,6 +53,7 @@
             </call>
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
         </service>
         <service id="dream_commerce_shop_appstore.url" class="%dream_commerce_shop_appstore.url.class%">
             <argument type="service" id="request_stack"/>

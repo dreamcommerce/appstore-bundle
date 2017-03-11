@@ -14,7 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package DreamCommerce\Bundle\ShopAppstoreBundle\Utils
  */
-class RequestValidator{
+class RequestValidator
+{
 
     /**
      * Symfony request object
@@ -44,7 +45,8 @@ class RequestValidator{
     }
 
     /**
-     * tests request against applications information
+     * Tests request against applications information
+     *
      * @param array $applications configuration data
      * @return string
      * @throws InvalidRequestException
