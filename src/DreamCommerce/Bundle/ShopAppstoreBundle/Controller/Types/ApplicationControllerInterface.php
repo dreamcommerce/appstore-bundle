@@ -12,5 +12,7 @@ use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
 interface ApplicationControllerInterface {
 
     public function injectClient(ClientInterface $client, ShopInterface $shop);
+    public function getClient();
+    public function getShop();
 
 }

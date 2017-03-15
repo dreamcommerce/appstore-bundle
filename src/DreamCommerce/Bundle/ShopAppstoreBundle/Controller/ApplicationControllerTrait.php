@@ -32,4 +32,14 @@ trait ApplicationControllerTrait
         $this->client = $client;
         $this->shop = $shop;
     }
+
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    public function getShop()
+    {
+        return $this->shop;
+    }
 }

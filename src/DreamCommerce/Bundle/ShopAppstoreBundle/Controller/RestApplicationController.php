@@ -10,10 +10,9 @@ namespace DreamCommerce\Bundle\ShopAppstoreBundle\Controller;
 
 
 use DreamCommerce\Bundle\ShopAppstoreBundle\Controller\Types\RestApplicationControllerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-abstract class RestApplicationController implements RestApplicationControllerInterface
+abstract class RestApplicationController extends Controller implements RestApplicationControllerInterface
 {
     use ApplicationControllerTrait;
-
-    //...
 }
