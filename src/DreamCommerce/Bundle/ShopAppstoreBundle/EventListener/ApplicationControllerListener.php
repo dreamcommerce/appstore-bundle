@@ -124,7 +124,6 @@ class ApplicationControllerListener{
 
     /**
      * @param FilterControllerEvent $event
-     * @throws HttpException
      */
     public function onKernelController(FilterControllerEvent $event)
     {
@@ -137,6 +136,10 @@ class ApplicationControllerListener{
             return;
         }
         $request = $event->getRequest();
+        if ($request->getMethod() === Request::METHOD_OPTIONS && $request->headers->has('access-control-request-method')) {
+            return;
+        }
+
         $this->validateRequest($request);
         $shop = $this->getShop();
         $application = $this->requestValidator->getApplication();
@@ -254,7 +257,7 @@ class ApplicationControllerListener{
                 $this->payload = $this->requestValidator->validate();
             }
         } catch(InvalidRequestException $ex) {
-            throw new BadRequestHttpException('Invalid request', $ex);
+            throw new BadRequestHttpException(sprintf('Invalid request: "%s")', $ex->getMessage()), $ex);
         }
     }
 
