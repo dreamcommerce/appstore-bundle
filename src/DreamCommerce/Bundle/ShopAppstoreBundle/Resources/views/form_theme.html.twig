@@ -7,17 +7,36 @@
     {{- parent() -}}
 {%- endblock %}
 
-{%- block form_errors -%}
-    {%- if errors|length > 0 -%}
+
+{% block form_errors %}
+    {% spaceless %}
         <ul class="error-list">
-            {%- for error in errors -%}
-                <li>
-                    <label class="aicon-exclamation error" for="">{{ error.message }}</label>
-                </li>
-            {%- endfor -%}
+            {% for children in form.children %}
+                {% if not children.vars.valid %}
+                    {% for error in children.vars.errors %}
+                        <li><label class="aicon-exclamation error">{{ children.vars.label ~ ' ' ~
+                                error.messagePluralization is null
+                                ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                                : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                                }}</label></li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
         </ul>
-    {%- endif %}
-{%- endblock form_errors %}
+
+        {% if errors|length > 0 %}
+            <ul class="error-list">
+                {% for error in errors %}
+                    <li><label class="aicon-exclamation error">{{
+                            error.messagePluralization is null
+                            ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                            : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                            }}</label></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
 
 {%- block form_row -%}
 <div class="edition-form-line{% if (not compound or force_error|default(false)) and not valid %} input-warning{% endif %}">
