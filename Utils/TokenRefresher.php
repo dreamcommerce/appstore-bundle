@@ -4,7 +4,7 @@ namespace DreamCommerce\ShopAppstoreBundle\Utils;
 
 use DreamCommerce\ShopAppstoreLib\Client\OAuth;
 use DreamCommerce\ShopAppstoreLib\ClientInterface;
-use DreamCommerce\ShopAppstoreLib\Exception\ClientException;
+use DreamCommerce\ShopAppstoreLib\Exception\Exception as ClientException;
 use DreamCommerce\ShopAppstoreBundle\Model\ObjectManagerInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
@@ -73,7 +73,7 @@ class TokenRefresher {
 
             $this->manager->save($token);
         }catch (ClientException $ex){
-            throw new Exception('', 0, $ex);
+            throw new Exception('Unable to refresh tokens: '.$ex->getHttpError(), 0, $ex);
         }
 
         return $token;
