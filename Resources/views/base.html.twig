@@ -4,6 +4,9 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="referrer" content="origin">
         <title>{% block title %}{% endblock %}</title>
+
+        {% block stylesheets %}{% endblock %}
+
         <script src="//cdn.dcsaas.net/js/appstore-sdk.js"></script>
         <script>
             var events = [];
@@ -30,10 +33,10 @@
         </script>
     </head>
     <body>
-        <main class="rwd-layout-width rwd-layout-container">
+        <main class="rwd-layout-container">
             <section class="rwd-layout-col-12">
 
-                <div class="edition-form">
+                <div>
 
                     {% block body %}{% endblock %}
 

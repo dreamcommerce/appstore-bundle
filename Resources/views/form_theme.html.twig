@@ -3,14 +3,8 @@
 {%- block button_widget -%}
     {% import 'DreamCommerceShopAppstoreBundle::ui.html.twig' as ui %}
 
-    {% if custom is not defined %}
-        {{ ui.buttons_start() }}
-    {% endif %}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' button button-bg button-larger save-button')|trim}) %}
     {{- parent() -}}
-    {% if custom is defined %}
-        {{ ui.buttons_end() }}
-    {% endif %}
 {%- endblock %}
 
 {%- block form_errors -%}
