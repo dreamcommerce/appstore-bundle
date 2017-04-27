@@ -25,6 +25,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class ApplicationControllerListener
@@ -86,12 +87,18 @@ class ApplicationControllerListener{
      */
     protected $shopRepository;
 
+    /**
+     * @var TranslatorInterface
+     */
+    protected $translator;
+
     public function __construct(
         $applications,
         $routes,
         ApplicationRegistry $applicationRegistry,
         ObjectManager $objectManager,
         TokenRefresher $refresher,
+        TranslatorInterface $translator,
         RouterInterface $router
     )
     {
@@ -100,6 +107,7 @@ class ApplicationControllerListener{
         $this->objectManager = $objectManager;
         $this->refresher = $refresher;
         $this->applicationRegistry = $applicationRegistry;
+        $this->translator = $translator;
         $this->router = $router;
     }
 
@@ -209,6 +217,10 @@ class ApplicationControllerListener{
         // pass shop and client
         $this->controller->injectClient($client, $shop);
 
+        // set locale if set
+        $locale = $event->getRequest()->get('locale', $event->getRequest()->get('lang', ''));
+        $this->setLocale($locale);
+
         // save variables
         $event->getRequest()->attributes->set('_dream_commerce_shop_appstore_client', $client);
         $event->getRequest()->attributes->set('_dream_commerce_shop_appstore_shop', $shop);
@@ -297,6 +309,13 @@ class ApplicationControllerListener{
      */
     public function invalidTokenRedirect(ClientInterface $client, \Exception $ex){
         $this->redirect($this->lastEvent, 'reinstall');
+    }
+
+    protected function setLocale(string $locale)
+    {
+        if (!empty($locale)) {
+            $this->translator->setLocale($locale);
+        }
     }
 
 }
