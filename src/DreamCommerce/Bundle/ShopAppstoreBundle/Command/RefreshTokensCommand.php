@@ -7,7 +7,7 @@ use DreamCommerce\Bundle\ShopAppstoreBundle\DependencyInjection\DreamCommerceSho
 use DreamCommerce\Bundle\ShopAppstoreBundle\Handler\Application;
 use DreamCommerce\Component\ShopAppstore\Model\ShopRepositoryInterface;
 use DreamCommerce\Bundle\ShopAppstoreBundle\Utils\TokenRefresher;
-use DreamCommerce\Component\ShopAppstore\Model\ShopInterface;
+use DreamCommerce\Component\ShopAppstore\Model\Shop;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,7 +47,7 @@ class RefreshTokensCommand extends ContainerAwareCommand
         /**
          * @var $om ObjectManager
          */
-        $om = $container->get(DreamCommerceShopAppstoreExtension::ALIAS . '.object_manager');
+        $om = $container->get('doctrine');
         /**
          * @var $refresher TokenRefresher
          */
@@ -55,7 +55,7 @@ class RefreshTokensCommand extends ContainerAwareCommand
         /**
          * @var $repo ShopRepositoryInterface
          */
-        $repo = $om->getRepository(ShopInterface::class);
+        $repo = $om->getRepository(Shop::class);
 
         foreach ($app as $id => $obj) {
 
