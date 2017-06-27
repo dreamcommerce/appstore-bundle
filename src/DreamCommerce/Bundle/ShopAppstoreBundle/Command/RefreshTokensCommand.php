@@ -45,17 +45,13 @@ class RefreshTokensCommand extends ContainerAwareCommand
         }
 
         /**
-         * @var $om ObjectManager
-         */
-        $om = $container->get(DreamCommerceShopAppstoreExtension::ALIAS . '.object_manager');
-        /**
          * @var $refresher TokenRefresher
          */
         $refresher = $container->get(DreamCommerceShopAppstoreExtension::ALIAS . '.token_refresher');
         /**
          * @var $repo ShopRepositoryInterface
          */
-        $repo = $om->getRepository(ShopInterface::class);
+        $repo = $container->get('dream_commerce.repository.shop');
 
         foreach ($app as $id => $obj) {
 
