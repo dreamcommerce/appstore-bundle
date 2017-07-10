@@ -355,8 +355,7 @@ class AppstoreListener{
          */
         $subscription = $this->subscriptionFactory->createNew();
 
-        // convert date string to an object
-        $expiresAt = new \DateTime($event->getPayload()->getSubscriptionEndTime());
+        $expiresAt = $event->getPayload()->getSubscriptionEndTime();
 
         $subscription->setExpiresAt($expiresAt);
         $subscription->setShop($shop);

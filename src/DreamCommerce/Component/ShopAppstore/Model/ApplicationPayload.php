@@ -47,7 +47,7 @@ final class ApplicationPayload implements ArrayableInterface
     private $timestamp;
 
     /**
-     * @var /DateTime
+     * @var \DateTime
      */
     private $subscriptionEndTime;
 
