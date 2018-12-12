@@ -4,9 +4,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services
         http://symfony.com/schema/dic/services/services-1.0.xsd"
         >
-
     <services>
-        <service id="dream_commerce_shop_appstore.object_manager" class="DreamCommerce\ShopAppstoreBundle\Doctrine\ObjectManager">
+        <service id="dream_commerce_shop_appstore.object_manager" class="DreamCommerce\ShopAppstoreBundle\Doctrine\ObjectManager" public="true">
             <argument type="service" id="dream_commerce_shop_appstore.entity_manager"/>
             <argument>%dream_commerce_shop_appstore.objects%</argument>
         </service>
@@ -15,7 +14,5 @@
             <factory service="doctrine" method="getManager"/>
             <!-- manager name injected by compiler pass -->
         </service>
-
     </services>
-
-    </container>
+</container>

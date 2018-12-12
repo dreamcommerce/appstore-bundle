@@ -1,21 +1,16 @@
 <?php
 
-
 namespace DreamCommerce\ShopAppstoreBundle\DependencyInjection\Compiler;
 
-
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
-use DreamCommerce\ShopAppstoreBundle\Handler\ApplicationRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
 class ApplicationsPass implements CompilerPassInterface
 {
-
     /**
      * You can modify the container here before it is dumped to PHP code.
      *
@@ -28,11 +23,12 @@ class ApplicationsPass implements CompilerPassInterface
 
         // create definition for application registry
         $applicationsDefinition = new Definition('DreamCommerce\ShopAppstoreBundle\Handler\ApplicationRegistry');
+        $applicationsDefinition->setPublic(true);
 
         // configuration for every app
-        foreach($applications as $app=>$data){
-
+        foreach($applications as $app=>$data) {
             $definition = new Definition('DreamCommerce\\ShopAppstoreBundle\\Handler\\Application');
+            $definition->setPublic(true);
             $definition->addArgument($app);
             $definition->addArgument($data['app_id']);
             $definition->addArgument($data['app_secret']);

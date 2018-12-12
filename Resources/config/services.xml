@@ -21,16 +21,13 @@
     </parameters>
 
     <services>
-        <service id="dream_commerce_shop_appstore.token_refresher"
-                 class="%dream_commerce_shop_appstore.token_refresher.class%">
+        <service id="dream_commerce_shop_appstore.token_refresher" class="%dream_commerce_shop_appstore.token_refresher.class%" public="true">
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
         </service>
-        <service id="dream_commerce_shop_appstore.request_validator"
-                 class="%dream_commerce_shop_appstore.request_validator.class%">
+        <service id="dream_commerce_shop_appstore.request_validator" class="%dream_commerce_shop_appstore.request_validator.class%" public="true">
             <argument type="service" id="request_stack"/>
         </service>
-        <service id="dream_commerce_shop_appstore.controller_filter"
-                 class="%dream_commerce_shop_appstore.controller_filter.class%">
+        <service id="dream_commerce_shop_appstore.controller_filter" class="%dream_commerce_shop_appstore.controller_filter.class%" public="true">
             <argument>%dream_commerce_shop_appstore.apps%</argument>
             <argument>%dream_commerce_shop_appstore.routes%</argument>
             <argument type="service" id="dream_commerce_shop_appstore.apps"/>
@@ -40,18 +37,16 @@
 
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
         </service>
-        <service id="dream_commerce_shop_appstore.url" class="%dream_commerce_shop_appstore.url.class%">
+        <service id="dream_commerce_shop_appstore.url" class="%dream_commerce_shop_appstore.url.class%" public="true">
             <argument type="service" id="request_stack"/>
             <argument type="service" id="dream_commerce_shop_appstore.request_validator"/>
             <argument type="service" id="router"/>
         </service>
-        <service id="dream_commerce_shop_appstore.locale_listener"
-                 class="%dream_commerce_shop_appstore.locale_listener.class%">
+        <service id="dream_commerce_shop_appstore.locale_listener" class="%dream_commerce_shop_appstore.locale_listener.class%" public="true">
             <argument>%locale%</argument>
             <tag name="kernel.event_subscriber"/>
         </service>
-        <service id="dream_commerce_shop_appstore.event.handler"
-                 class="%dream_commerce_shop_appstore.event.handler.class%">
+        <service id="dream_commerce_shop_appstore.event.handler" class="%dream_commerce_shop_appstore.event.handler.class%" public="true">
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
             <argument type="expression">"%dream_commerce_shop_appstore.skip_ssl%"</argument>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
@@ -64,24 +59,22 @@
                  method="onSubscribe"/>
             <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.upgrade" method="onUpgrade"/>
         </service>
-        <service id="dream_commerce_shop_appstore.twig_tags" class="%dream_commerce_shop_appstore.twig_tags.class%"
-                 public="false">
+        <service id="dream_commerce_shop_appstore.twig_tags" class="%dream_commerce_shop_appstore.twig_tags.class%" public="false">
             <argument type="service" id="dream_commerce_shop_appstore.url"/>
             <tag name="twig.extension"/>
         </service>
-        <service id="dream_commerce_shop_appstore.exception_handler"
-                 class="%dream_commerce_shop_appstore.exception_handler.class%">
+        <service id="dream_commerce_shop_appstore.exception_handler" class="%dream_commerce_shop_appstore.exception_handler.class%" public="true">
             <tag name="kernel.event_listener" event="kernel.exception" method="onAppException" priority="1"/>
             <tag name="kernel.event_listener" event="console.exception"  method="onConsoleException" priority="1"/>
             <argument type="service" id="logger"/>
         </service>
-        <service id="dream_commerce_shop_appstore.application_param_converter" class="%dream_commerce_shop_appstore.application_param_converter.class%">
+        <service id="dream_commerce_shop_appstore.application_param_converter" class="%dream_commerce_shop_appstore.application_param_converter.class%" public="true">
             <tag name="request.param_converter" priority="-100" />
         </service>
-        <service id="dream_commerce_shop_appstore.webhook.processor" class="%dream_commerce_shop_appstore.webhook.processor.class%">
+        <service id="dream_commerce_shop_appstore.webhook.processor" class="%dream_commerce_shop_appstore.webhook.processor.class%" public="true">
             <argument type="service" id="event_dispatcher"/>
         </service>
-        <service id="dream_commerce_shop_appstore.webhook.app_validator" class="%dream_commerce_shop_appstore.webhook.app_validator.class%"/>
-        <service id="dream_commerce_shop_appstore.webhook.global_validator" class="%dream_commerce_shop_appstore.webhook.global_validator.class%"/>
+        <service id="dream_commerce_shop_appstore.webhook.app_validator" class="%dream_commerce_shop_appstore.webhook.app_validator.class%" public="true" />
+        <service id="dream_commerce_shop_appstore.webhook.global_validator" class="%dream_commerce_shop_appstore.webhook.global_validator.class%" public="true" />
     </services>
 </container>
