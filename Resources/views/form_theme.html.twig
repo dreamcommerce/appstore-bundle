@@ -98,3 +98,12 @@
     </ul>
     {{ form_errors(form) }}
 {%- endblock choice_widget_expanded -%}
+
+{%- block choice_widget_collapsed -%}
+    <div class="edition-form-line-field">
+        <div class="select-wrapper">
+            {{- parent() -}}
+        </div>
+        {{ form_errors(form) }}
+    </div>
+{%- endblock choice_widget_collapsed -%}

@@ -18,6 +18,9 @@
         <parameter key="dream_commerce_shop_appstore.webhook.processor.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Processor</parameter>
         <parameter key="dream_commerce_shop_appstore.webhook.app_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidator</parameter>
         <parameter key="dream_commerce_shop_appstore.webhook.global_validator.class">DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidator</parameter>
+        <parameter key="dream_commerce_shop_appstore.command.log_view.class">DreamCommerce\ShopAppstoreBundle\Command\LogViewCommand</parameter>
+        <parameter key="dream_commerce_shop_appstore.command.refresh_tokens.class">DreamCommerce\ShopAppstoreBundle\Command\RefreshTokensCommand</parameter>
+        <parameter key="dream_commerce_shop_appstore.command.webhooks.class">DreamCommerce\ShopAppstoreBundle\Command\WebhooksCommand</parameter>
     </parameters>
 
     <services>
@@ -76,5 +79,17 @@
         </service>
         <service id="dream_commerce_shop_appstore.webhook.app_validator" class="%dream_commerce_shop_appstore.webhook.app_validator.class%" public="true" />
         <service id="dream_commerce_shop_appstore.webhook.global_validator" class="%dream_commerce_shop_appstore.webhook.global_validator.class%" public="true" />
+
+        <!-- Commands -->
+
+        <service id="dream_commerce_shop_appstore.command.log_view" class="%dream_commerce_shop_appstore.command.log_view.class%">
+            <tag name="console.command" />
+        </service>
+        <service id="dream_commerce_shop_appstore.command.refresh_tokens" class="%dream_commerce_shop_appstore.command.refresh_tokens.class%">
+            <tag name="console.command" />
+        </service>
+        <service id="dream_commerce_shop_appstore.command.webhooks" class="%dream_commerce_shop_appstore.command.webhooks.class%">
+            <tag name="console.command" />
+        </service>
     </services>
 </container>
