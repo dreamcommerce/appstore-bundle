@@ -7,7 +7,7 @@
         "dreamcommerce/shop-appstore-lib": "~1.2",
         "dreamcommerce/common-bundle": "dev-master",
         "webmozart/assert": "^1.2.0",
-        "sylius/resource-bundle": "v1.0.0-beta.1"
+        "sylius/resource-bundle": "^1.0"
     },
     "require-dev": {
         "symfony/symfony": "~2.8",
