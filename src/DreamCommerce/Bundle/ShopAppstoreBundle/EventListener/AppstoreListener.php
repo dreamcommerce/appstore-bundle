@@ -302,7 +302,7 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop || !$shop->getInstalled()){
+        if(!$shop){
             return false;
         }
 
@@ -323,7 +323,7 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop || !$shop->getInstalled()){
+        if(!$shop){
             return false;
         }
 
@@ -346,7 +346,7 @@ class AppstoreListener{
 
         $shop = $this->getShopByEvent($event);
 
-        if(!$shop || !$shop->getInstalled()){
+        if(!$shop){
             return false;
         }
 
