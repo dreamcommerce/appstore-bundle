@@ -10,6 +10,7 @@ use DreamCommerce\ShopAppstoreBundle\Utils\Url;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * Class ApplicationController
@@ -62,7 +63,7 @@ abstract class ApplicationController extends Controller implements ApplicationCo
      * @param array $options
      * @return \Symfony\Component\Form\FormBuilder
      */
-    public function createFormBuilder($data = null, array $options = array())
+    public function createFormBuilder($data = null, array $options = array()): FormBuilderInterface
     {
         $builder = parent::createFormBuilder($data, $options);
 
