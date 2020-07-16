@@ -6,6 +6,9 @@ Bundle used with DreamCommerce's Symfony applications. More documentation coming
 Changelog
 ---------
 
+``1.4.11``
+    - bump SDK JS version to 1.0.5
+
 ``1.4.10``
     - less restrictive version constraint
 
