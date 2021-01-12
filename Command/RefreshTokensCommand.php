@@ -2,18 +2,30 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Command;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
 use DreamCommerce\ShopAppstoreBundle\Handler\Application;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class RefreshTokensCommand extends ContainerAwareCommand
+class RefreshTokensCommand extends Command
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct();
+        $this->container = $container;
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -33,7 +45,7 @@ class RefreshTokensCommand extends ContainerAwareCommand
 
         // get application name if specified
         $appName = $input->getArgument('application');
-        $container = $this->getContainer();
+        $container = $this->container;
 
         // get applications list
         try {
@@ -44,7 +56,7 @@ class RefreshTokensCommand extends ContainerAwareCommand
         }
 
         /**
-         * @var $om ObjectManager
+         * @var $om \Doctrine\Persistence\ObjectManager
          */
         $om = $container->get(DreamCommerceShopAppstoreExtension::ALIAS . '.object_manager');
         /**
@@ -87,7 +99,7 @@ class RefreshTokensCommand extends ContainerAwareCommand
      */
     protected function getApplications($appName = null)
     {
-        $container = $this->getContainer();
+        $container = $this->container;
 
         $app = [];
 

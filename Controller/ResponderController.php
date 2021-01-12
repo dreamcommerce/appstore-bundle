@@ -2,7 +2,6 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
-use DreamCommerce\ShopAppstoreBundle\DreamCommerceShopAppstoreEvents;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\BillingInstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\InstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\SubscriptionEvent;
@@ -10,7 +9,7 @@ use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UninstallEvent;
 use DreamCommerce\ShopAppstoreBundle\Event\Appstore\UpgradeEvent;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * responder for appstore events
  * @package DreamCommerce\ShopAppstoreBundle\Controller
  */
-class ResponderController extends Controller
+class ResponderController extends AbstractController
 {
 
     public function indexAction(Request $request)
@@ -50,27 +49,27 @@ class ResponderController extends Controller
         switch($params['action']){
             case 'install':
                 $event = new InstallEvent($appName, $apps[$appName], $params);
-                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_INSTALLED, $event);
+                $eventDispatcher->dispatch($event);
             break;
 
             case 'billing_install':
                 $event = new BillingInstallEvent($appName, $apps[$appName], $params);
-                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_PAID, $event);
+                $eventDispatcher->dispatch($event);
                 break;
 
             case 'billing_subscription':
                 $event = new SubscriptionEvent($appName, $apps[$appName], $params);
-                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_SUBSCRIPTION, $event);
+                $eventDispatcher->dispatch($event);
                 break;
 
             case 'uninstall':
                 $event = new UninstallEvent($appName, $params);
-                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_UNINSTALLED, $event);
+                $eventDispatcher->dispatch($event);
             break;
 
             case 'upgrade':
                 $event = new UpgradeEvent($appName, $apps[$appName], $params);
-                $eventDispatcher->dispatch(DreamCommerceShopAppstoreEvents::APPLICATION_UPGRADED, $event);
+                $eventDispatcher->dispatch($event);
             break;
 
             default:

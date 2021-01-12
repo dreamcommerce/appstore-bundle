@@ -13,7 +13,7 @@ use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator;
 use DreamCommerce\ShopAppstoreBundle\Utils\RequestValidator\InvalidRequestException;
 use DreamCommerce\ShopAppstoreBundle\Utils\TokenRefresher;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\RouterInterface;
@@ -46,7 +46,7 @@ class ApplicationControllerListener{
 
     /**
      * used when token is invalid
-     * @var FilterControllerEvent
+     * @var ControllerEvent
      */
     protected $lastEvent;
     /**
@@ -75,10 +75,9 @@ class ApplicationControllerListener{
     }
 
     /**
-     * @param FilterControllerEvent $event
      * @throws HttpException
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
 
         // last event used before token invalid exception is thrown
@@ -196,10 +195,10 @@ class ApplicationControllerListener{
 
     /**
      * redirect to error page info
-     * @param FilterControllerEvent $event kept for backwards compatibility
+     * @param ControllerEvent $event kept for backwards compatibility
      * @param $routeName
      */
-    protected function redirect(FilterControllerEvent $event, $routeName){
+    protected function redirect(ControllerEvent $event, $routeName){
 
         $route = $this->routes[$routeName];
 

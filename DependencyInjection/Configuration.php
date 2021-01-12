@@ -18,8 +18,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('dream_commerce_shop_appstore');
+        $rootNode = new TreeBuilder('dream_commerce_shop_appstore');
 
         $supportedDrivers = array('orm', 'custom');
 
@@ -78,7 +77,7 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
-        return $treeBuilder;
+        return $rootNode;
     }
 
     protected function injectWebhooksStructure($appContext = false)

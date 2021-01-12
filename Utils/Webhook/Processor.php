@@ -21,7 +21,7 @@ class Processor
     protected $shop;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
 
@@ -93,7 +93,7 @@ class Processor
          */
         $class = new $fqcn($body, $this->shop, $this->application);
 
-        $this->dispatcher->dispatch(sprintf('dream_commerce_shop_appstore.webhook.%s', $eventName), $class);
+        $this->dispatcher->dispatch($class);
     }
 
     /**

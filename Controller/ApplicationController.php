@@ -7,7 +7,7 @@ use DreamCommerce\ShopAppstoreLib\ClientInterface;
 use DreamCommerce\ShopAppstoreBundle\EventListener\AppFormListener;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\Url;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * provides shop-protected, generic controller class
  * @package DreamCommerce\ShopAppstoreBundle\Controller
  */
-abstract class ApplicationController extends Controller implements ApplicationControllerInterface{
+abstract class ApplicationController extends AbstractController implements ApplicationControllerInterface{
 
     /**
      * @var ClientInterface
