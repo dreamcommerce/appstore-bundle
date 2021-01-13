@@ -1,5 +1,5 @@
 {
-    "name": "dreamcommerce/shop-appstore-bundle",
+    "name": "h2ppl/shoper-appstore-bundle",
     "description": "Symfony bundle for DreamCommerce-based shops application",
     "license": "MIT",
     "require": {
