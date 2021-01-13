@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
         $supportedDrivers = array('orm', 'custom');
 
         $rootNode
+            ->getRootNode()
             ->children()
                 ->scalarNode('debug')->info('false - disable debug completely; null - depends on kernel.debug. string - logger service')->defaultNull()->end()
                 ->scalarNode('skip_ssl')->defaultValue(false)->end()
