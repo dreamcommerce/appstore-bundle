@@ -68,7 +68,7 @@
         </service>
         <service id="dream_commerce_shop_appstore.exception_handler" class="%dream_commerce_shop_appstore.exception_handler.class%" public="true">
             <tag name="kernel.event_listener" event="kernel.exception" method="onAppException" priority="1"/>
-            <tag name="kernel.event_listener" event="console.exception"  method="onConsoleException" priority="1"/>
+            <tag name="kernel.event_listener" event="console.exception"  method="onAppException" priority="1"/>
             <argument type="service" id="logger"/>
         </service>
         <service id="dream_commerce_shop_appstore.application_param_converter" class="%dream_commerce_shop_appstore.application_param_converter.class%" public="true">
