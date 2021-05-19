@@ -8,7 +8,6 @@ use DreamCommerce\ShopAppstoreLib\Resource\Exception\ResourceException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
-
 class ResourceExceptionListener
 {
 
@@ -23,12 +22,6 @@ class ResourceExceptionListener
         $this->logger = $logger;
     }
 
-    public function onConsoleException(ExceptionEvent $event)
-    {
-        $ex = $event->getThrowable();
-        $this->handleException($ex);
-    }
-
     public function handleException(\Throwable $ex){
 
         if(!($ex instanceof ResourceException)){
@@ -40,4 +33,9 @@ class ResourceExceptionListener
         $this->logger->error($ex->getMessage(), [(string)$httpException]);
     }
 
+    public function onAppException(ExceptionEvent $event)
+    {
+        $ex = $event->getThrowable();
+        $this->handleException($ex);
+    }
 }
