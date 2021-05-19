@@ -3,15 +3,28 @@
 namespace DreamCommerce\ShopAppstoreBundle\Command;
 
 use DreamCommerce\ShopAppstoreBundle\Handler\Application;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class WebhooksCommand extends ContainerAwareCommand
+class WebhooksCommand extends Command
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(\Symfony\Component\DependencyInjection\ContainerInterface $container)
+    {
+        parent::__construct();
+        $this->container = $container;
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -34,8 +47,8 @@ class WebhooksCommand extends ContainerAwareCommand
             return;
         }
 
-        $apps = $this->getContainer()->getParameter('dream_commerce_shop_appstore.apps');
-        $registry = $this->getContainer()->get('dream_commerce_shop_appstore.apps');
+        $apps = $this->container->getParameter('dream_commerce_shop_appstore.apps');
+        $registry = $this->container->get('dream_commerce_shop_appstore.apps');
 
         $app = $input->getArgument('app');
         if(!$app){
@@ -74,7 +87,7 @@ class WebhooksCommand extends ContainerAwareCommand
 
             $result[] = [
                 $k,
-                $this->getContainer()->get('router')->generate($routeName, $routeParams),
+                $this->container->get('router')->generate($routeName, $routeParams),
                 $v['secret'],
                 $events
             ];
@@ -91,7 +104,7 @@ class WebhooksCommand extends ContainerAwareCommand
     protected function displayGlobalWebhooks(OutputInterface $output){
 
         $output->writeln('<info>Globally registered webhooks</info>');
-        $globalWebhooks = $this->getContainer()->getParameter('dream_commerce_shop_appstore.webhooks');
+        $globalWebhooks = $this->container->getParameter('dream_commerce_shop_appstore.webhooks');
 
         $this->renderWebhooks($globalWebhooks, $output);
 

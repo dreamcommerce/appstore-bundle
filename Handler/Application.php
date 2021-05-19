@@ -178,9 +178,8 @@ class Application
         if($webhook){
             if(isset($this->webhooks[$webhook])){
                 return $this->webhooks[$webhook];
-            }else{
-                return null;
             }
+            return null;
         }
         return $this->webhooks;
     }

@@ -2,13 +2,14 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LogViewCommand extends ContainerAwareCommand
+class LogViewCommand extends Command
 {
     /**
      * @var OutputInterface
@@ -18,6 +19,17 @@ class LogViewCommand extends ContainerAwareCommand
      * @var InputInterface
      */
     protected $input;
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct();
+        $this->container = $container;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -54,14 +66,14 @@ class LogViewCommand extends ContainerAwareCommand
 
     protected function showLog($file){
 
-        $path = sprintf('%s/%s', $this->getContainer()->get('kernel')->getLogDir(), $file);
+        $path = sprintf('%s/%s', $this->container->get('kernel')->getLogDir(), $file);
 
         $log = new \SplFileObject($path);
 
         $type = $this->input->getOption('type');
 
         foreach($log as $i){
-            if(!preg_match("/\\[[^\\[]+\\] [^\\.]+\\.".preg_quote($type)."/i", $i)){
+            if(!preg_match("/\\[[^\\[]+\\] [^\\.]+\\.".preg_quote($type, '/')."/i", $i)){
                 continue;
             }
 
@@ -73,7 +85,7 @@ class LogViewCommand extends ContainerAwareCommand
 
     protected function getLogsList(){
         $result = [];
-        $dir = $this->getContainer()->get('kernel')->getLogDir();
+        $dir = $this->container->get('kernel')->getLogDir();
         $iterator = new \DirectoryIterator($dir);
 
         foreach($iterator as $i){

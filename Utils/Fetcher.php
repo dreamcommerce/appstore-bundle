@@ -37,7 +37,6 @@ class Fetcher {
     /**
      * fetches all data transparently
      * @return ResourceListIterator
-     * @throws \DreamCommerce\Exception\ResourceException
      */
     public function fetchAll(){
 
@@ -63,7 +62,6 @@ class Fetcher {
     /**
      * executes callback for each record from collection, callback param - record
      * @param callable $callback
-     * @throws \DreamCommerce\Exception\ResourceException
      */
     public function walk(Callable $callback){
         $page = 1;

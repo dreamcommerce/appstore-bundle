@@ -15,7 +15,6 @@ class DebuggerPass implements CompilerPassInterface
      * You can modify the container here before it is dumped to PHP code.
      *
      * @param ContainerBuilder $container
-     * @throws Exception
      */
     public function process(ContainerBuilder $container)
     {

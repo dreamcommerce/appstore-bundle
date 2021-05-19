@@ -22,8 +22,9 @@
         <parameter key="dream_commerce_shop_appstore.command.refresh_tokens.class">DreamCommerce\ShopAppstoreBundle\Command\RefreshTokensCommand</parameter>
         <parameter key="dream_commerce_shop_appstore.command.webhooks.class">DreamCommerce\ShopAppstoreBundle\Command\WebhooksCommand</parameter>
     </parameters>
-
+    
     <services>
+
         <service id="dream_commerce_shop_appstore.token_refresher" class="%dream_commerce_shop_appstore.token_refresher.class%" public="true">
             <argument type="service" id="dream_commerce_shop_appstore.object_manager"/>
         </service>
@@ -83,13 +84,17 @@
         <!-- Commands -->
 
         <service id="dream_commerce_shop_appstore.command.log_view" class="%dream_commerce_shop_appstore.command.log_view.class%">
+            <argument key="$container" type="service" id="service_container"/>
             <tag name="console.command" />
         </service>
         <service id="dream_commerce_shop_appstore.command.refresh_tokens" class="%dream_commerce_shop_appstore.command.refresh_tokens.class%">
+            <argument key="$container" type="service" id="service_container"/>
             <tag name="console.command" />
         </service>
         <service id="dream_commerce_shop_appstore.command.webhooks" class="%dream_commerce_shop_appstore.command.webhooks.class%">
+            <argument key="$container" type="service" id="service_container"/>
             <tag name="console.command" />
         </service>
+
     </services>
 </container>

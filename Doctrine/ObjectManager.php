@@ -51,9 +51,8 @@ class ObjectManager implements ObjectManagerInterface
         if(!isset($this->classMappings[$arg])){
             if(!in_array($arg, array_values($this->classMappings))) {
                 throw new \Exception(sprintf('Class %s not exists', $arg));
-            }else{
-                $class = $arg;
             }
+            $class = $arg;
         }else{
             $class = $this->classMappings[$arg];
         }

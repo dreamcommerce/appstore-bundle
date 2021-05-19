@@ -3,12 +3,14 @@ namespace DreamCommerce\ShopAppstoreBundle\Twig;
 
 use DreamCommerce\ShopAppstoreBundle\Utils\Url;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Class PathExtension
  * @package DreamCommerce\ShopAppstoreBundle\Twig
  */
-class PathExtension extends \Twig_Extension{
+class PathExtension extends AbstractExtension{
 
     /**
      * Url service
@@ -31,13 +33,13 @@ class PathExtension extends \Twig_Extension{
     {
 
         return array(
-            new \Twig_SimpleFunction('app_path', array($this, 'getPath'))
+            new TwigFunction('app_path', array($this, 'getPath'))
         );
 
     }
 
     /**
-     * @see DreamCommerce\ShopAppstoreBundle\Utils\Url::generateUrl
+     * @see \DreamCommerce\ShopAppstoreBundle\Utils\Url::generateUrl
      * @param $name
      * @param array $parameters
      * @param bool|false $relative

@@ -6,9 +6,8 @@ namespace DreamCommerce\ShopAppstoreBundle\EventListener;
 
 use DreamCommerce\ShopAppstoreLib\Resource\Exception\ResourceException;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+
 
 class ResourceExceptionListener
 {
@@ -24,13 +23,13 @@ class ResourceExceptionListener
         $this->logger = $logger;
     }
 
-    public function onConsoleException(ConsoleExceptionEvent $event)
+    public function onConsoleException(ExceptionEvent $event)
     {
-        $ex = $event->getException();
+        $ex = $event->getThrowable();
         $this->handleException($ex);
     }
 
-    public function handleException(\Exception $ex){
+    public function handleException(\Throwable $ex){
 
         if(!($ex instanceof ResourceException)){
             return;
@@ -41,9 +40,4 @@ class ResourceExceptionListener
         $this->logger->error($ex->getMessage(), [(string)$httpException]);
     }
 
-    public function onAppException(GetResponseForExceptionEvent $event)
-    {
-        $ex = $event->getException();
-        $this->handleException($ex);
-    }
 }

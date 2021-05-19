@@ -41,7 +41,6 @@ class RelatedResourceListIterator extends ResourceListIterator
     /**
      * fetches collection for particular page
      * @param $page
-     * @throws \DreamCommerce\Exception\ResourceException
      */
     protected function fetch($page){
         parent::fetch($page);

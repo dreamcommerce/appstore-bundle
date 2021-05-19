@@ -2,14 +2,14 @@
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Class ExceptionController
  * shows error pages upon various API errors
  * @package DreamCommerce\ShopAppstoreBundle\Controller
  */
-class ExceptionController extends Controller{
+class ExceptionController extends AbstractController {
 
     public function unpaidAction(){
         return $this->render('DreamCommerceShopAppstoreBundle::exception/unpaid.html.twig');

@@ -2,17 +2,17 @@
 
 namespace DreamCommerce\ShopAppstoreBundle\Controller;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use DreamCommerce\ShopAppstoreBundle\DependencyInjection\DreamCommerceShopAppstoreExtension;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\AppValidatorInterface;
 use DreamCommerce\ShopAppstoreBundle\Utils\Webhook\Validator\GlobalValidatorInterface;
 use DreamCommerce\ShopAppstoreLib\Resource\Exception\NotFoundException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class WebhookController extends Controller
+class WebhookController extends AbstractController
 {
     public function globalAction($webhookId, Request $request)
     {

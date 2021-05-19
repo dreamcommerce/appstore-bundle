@@ -95,10 +95,10 @@ class ResourceListIterator implements \Iterator, \Countable
             if($this->collection->pages==$this->currentPage){
                 $this->row = null;
                 return;
-            }else {
-                $this->currentPage++;
-                $this->fetch($this->currentPage);
             }
+
+            $this->currentPage++;
+            $this->fetch($this->currentPage);
         }
 
         $this->row = $this->transformRow($this->iterator->current());
