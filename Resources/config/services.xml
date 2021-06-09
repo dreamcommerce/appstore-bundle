@@ -55,13 +55,7 @@
             <argument type="expression">"%dream_commerce_shop_appstore.skip_ssl%"</argument>
             <argument type="service" id="dream_commerce_shop_appstore.token_refresher"/>
 
-            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.install" method="onInstall"/>
-            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.uninstall"
-                 method="onUninstall"/>
-            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.pay" method="onPay"/>
-            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.subscribe"
-                 method="onSubscribe"/>
-            <tag name="kernel.event_listener" event="dream_commerce_shop_appstore.event.upgrade" method="onUpgrade"/>
+            <tag name="kernel.event_subscriber"/>
         </service>
         <service id="dream_commerce_shop_appstore.twig_tags" class="%dream_commerce_shop_appstore.twig_tags.class%" public="false">
             <argument type="service" id="dream_commerce_shop_appstore.url"/>

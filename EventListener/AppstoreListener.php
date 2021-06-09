@@ -19,8 +19,10 @@ use DreamCommerce\ShopAppstoreBundle\Model\ShopInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\ShopRepositoryInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\SubscriptionInterface;
 use DreamCommerce\ShopAppstoreBundle\Model\TokenInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class AppstoreListener{
+class AppstoreListener implements EventSubscriberInterface
+{
     /**
      * @var ObjectManagerInterface
      */
@@ -33,6 +35,17 @@ class AppstoreListener{
      * @var TokenRefresher
      */
     protected $tokenRefresher;
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            InstallEvent::class => 'onInstall',
+            UninstallEvent::class => 'onUninstall',
+            BillingInstallEvent::class => 'onPay',
+            SubscriptionEvent::class => 'onSubscribe',
+            UpgradeEvent::class => 'onUpgrade'
+        ];
+    }
 
     /**
      * @param ObjectManagerInterface $objectManager
@@ -47,7 +60,6 @@ class AppstoreListener{
 
     /**
      * get shop by particular event
-     * @param EventAbstract $event
      * @return \DreamCommerce\ShopAppstoreBundle\Model\ShopInterface
      */
     protected function getShopByEvent(EventAbstract $event){
@@ -65,9 +77,6 @@ class AppstoreListener{
 
     /**
      * handle installation event
-     * @param InstallEvent $event
-     * @return bool
-     * @throws Exception
      */
     public function onInstall(InstallEvent $event){
 
@@ -121,6 +130,7 @@ class AppstoreListener{
         $shopModel->setName($params['shop']);
         $shopModel->setShopUrl($url);
         $shopModel->setVersion($params['application_version']);
+
         $this->objectManager->save($shopModel, false);
         // endregion
 
@@ -145,8 +155,6 @@ class AppstoreListener{
 
     /**
      * uninstall shop from application
-     * @param UninstallEvent $event
-     * @return bool
      */
     public function onUninstall(UninstallEvent $event){
 
@@ -162,8 +170,6 @@ class AppstoreListener{
 
     /**
      * application installation got paid
-     * @param BillingInstallEvent $event
-     * @return bool
      */
     public function onPay(BillingInstallEvent $event){
 
@@ -184,8 +190,6 @@ class AppstoreListener{
 
     /**
      * application subscription got paid
-     * @param SubscriptionEvent $event
-     * @return bool
      */
     public function onSubscribe(SubscriptionEvent $event){
 
@@ -242,5 +246,4 @@ class AppstoreListener{
         $shop->setVersion($event->getPayload()['application_version']);
         $this->objectManager->save($shop);
     }
-
 }
