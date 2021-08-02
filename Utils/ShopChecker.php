@@ -67,7 +67,7 @@ class ShopChecker
 
         $url = $this->toHttp($target, true);
         if($url!=$target) {
-            $sslHeaders = get_headers($url, true);
+            $sslHeaders = @get_headers($url, true);
         }else{
             $sslHeaders = $headers;
         }
