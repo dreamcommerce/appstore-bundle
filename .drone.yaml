@@ -1,0 +1,17 @@
+kind: pipeline
+type: kubernetes
+name: tests
+
+steps:
+    -   name: push_to_nexus
+        image: registry.dev.h2p.pl/php/dev:7.4
+        environment:
+            NEXUS_USERNAME:
+                from_secret: NEXUS_USERNAME
+            NEXUS_PASSWORD:
+                from_secret: NEXUS_PASSWORD
+            NEXUS_URL:
+                from_secret: NEXUS_URL
+        commands:
+            - composer global require elendev/nexus-composer-push
+            - echo composer nexus-push --username=$$NEXUS_USERNAME --password=$$NEXUS_PASSWORD --url=$$NEXUS_URL ${DRONE_TAG##v}
