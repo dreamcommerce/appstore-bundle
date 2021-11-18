@@ -85,8 +85,8 @@ class Configuration implements ConfigurationInterface
     {
         $eventsListClass = new DreamCommerceShopAppstoreEvents();
 
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('webhooks');
+        $treeBuilder = new TreeBuilder('webhooks');
+        $root = $treeBuilder->getRootNode();
 
         $events = $eventsListClass->getSupportedWebhooks();
         $root
