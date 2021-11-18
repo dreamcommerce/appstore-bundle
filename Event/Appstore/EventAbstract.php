@@ -2,9 +2,9 @@
 namespace DreamCommerce\ShopAppstoreBundle\Event\Appstore;
 
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
-abstract class EventAbstract extends Event{
+abstract class EventAbstract extends Event {
 
     /**
      * shop automatic message payload
