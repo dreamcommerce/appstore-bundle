@@ -13,6 +13,6 @@ steps:
             NEXUS_URL:
                 from_secret: NEXUS_URL
         commands:
-            - apk add --no-cache php-zip
+            - apk add --no-cache libzip-dev && docker-php-ext-configure zip --with-libzip=/usr/include && docker-php-ext-install zip
             - composer global require elendev/nexus-composer-push
             - echo composer nexus-push --username=$$NEXUS_USERNAME --password=$$NEXUS_PASSWORD --url=$$NEXUS_URL ${DRONE_TAG##v}
