@@ -14,4 +14,5 @@ steps:
                 from_secret: NEXUS_URL
         commands:
             - composer global require elendev/nexus-composer-push
-            - echo composer nexus-push --username=$$NEXUS_USERNAME --password=$$NEXUS_PASSWORD --url=$$NEXUS_URL ${DRONE_TAG##v}
+            #- composer nexus-push --username=$$NEXUS_USERNAME --password=$$NEXUS_PASSWORD --url=$$NEXUS_URL ${DRONE_TAG##v}
+            - composer nexus-push --help
